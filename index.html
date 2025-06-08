@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hub Pedagógico SLAP</title>
+    <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,7 +58,7 @@
             border-radius: 0.75rem; /* rounded-xl */
             box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* shadow-sm */
             border: 1px solid #e7e5e4; /* border-stone-200 */
-            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         .method-phase-card:hover {
             transform: translateY(-5px);
@@ -68,11 +69,6 @@
         .method-phase-learn { background-color: #84C7DF; color: #44403c; }
         .method-phase-apply { background-color: #8671D1; color: #ffffff; }
         .method-phase-perform { background-color: #FF5C3D; color: #ffffff; }
-        
-        .method-phase-spark:hover { background-color: #fce588; }
-        .method-phase-learn:hover { background-color: #a6e3f4; }
-        .method-phase-apply:hover { background-color: #9d8de2; }
-        .method-phase-perform:hover { background-color: #ff7a63; }
 
         .method-phase-card h3 { font-weight: 700; }
         .method-phase-card p { line-height: 1.5; text-align: left; }
@@ -765,8 +761,8 @@
                 <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="space-y-8">
                         <div class="method-phase-card method-phase-spark md:flex md:items-center p-6 gap-6">
-                            <div class="md:w-1/4 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+                            <div class="md:w-1/3 flex-shrink-0 text-center">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
                             </div>
                             <div class="md:flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-left">SPARK</h3>
@@ -776,8 +772,8 @@
                             </div>
                         </div>
                         <div class="method-phase-card method-phase-learn md:flex md:flex-row-reverse md:items-center p-6 gap-6">
-                            <div class="md:w-1/4 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+                            <div class="md:w-1/3 flex-shrink-0 text-center">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
                             </div>
                             <div class="md:flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-right">LEARN</h3>
@@ -787,8 +783,8 @@
                             </div>
                         </div>
                         <div class="method-phase-card method-phase-apply md:flex md:items-center p-6 gap-6">
-                            <div class="md:w-1/4 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+                            <div class="md:w-1/3 flex-shrink-0 text-center">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
                             </div>
                             <div class="md:flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-left">APPLY</h3>
@@ -798,8 +794,8 @@
                             </div>
                         </div>
                         <div class="method-phase-card method-phase-perform md:flex md:flex-row-reverse md:items-center p-6 gap-6">
-                            <div class="md:w-1/4 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+                            <div class="md:w-1/3 flex-shrink-0 text-center">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
                             </div>
                             <div class="md:flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-right">PERFORM</h3>
@@ -891,18 +887,22 @@
         const crisisKits = [
           {
             title: "Meu aluno fala muito pouco na aula. E agora?",
+            description: "Estratégias para incentivar a participação e criar um ambiente seguro para alunos mais quietos.",
             audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_alunos_quietos_cp50tu.mp3"
           },
           {
             title: "Meu aluno falta muito. Como lidar com isso?",
+            description: "Orientações sobre como abordar a ausência, reconectar com o aluno e entender as causas.",
             audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_aluno_que_falta_muito_otdojp.mp3"
           },
            {
             title: "Meu aluno está desnivelado da turma. O que faço?",
+            description: "Dicas para adaptar atividades e garantir que todos os alunos, independentemente do nível, se sintam incluídos.",
             audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_aluno_desnivelado_nhh80r.mp3"
           },
           {
             title: "Como sei se estou dando uma aula boa?",
+            description: "Uma reflexão sobre indicadores de uma aula de sucesso, indo além da participação visível.",
             audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_como_sei_se_dei_uma_aula_boa_anea8n.mp3"
           }
         ];
@@ -989,7 +989,8 @@
                 <section class="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 gap-6">
                     ${crisisKits.map((kit, index) => `
                         <div class="crisis-card">
-                            <h3 class="text-lg font-bold mb-4">${kit.title}</h3>
+                            <h3 class="text-lg font-bold">${kit.title}</h3>
+                            <p class="text-sm text-stone-600 mb-4">${kit.description}</p>
                             <div class="flex items-center gap-4">
                                <button class="audio-player-button" data-audio-id="crisis-audio-${index}">
                                     <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
