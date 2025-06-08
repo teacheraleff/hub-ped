@@ -16,14 +16,6 @@
             font-family: 'DM Sans', sans-serif;
             line-height: 1.25; /* leading-tight */
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
         .nav-button.active, .hub-nav-button.active, .creators-tab.active {
             background-color: #FFFBEB; /* yellow-50 */
             color: #F1D24B;
@@ -54,10 +46,7 @@
             color: #44403c; /* stone-800 */
         }
         .method-phase-card {
-            padding: 1.5rem; /* p-6 */
             border-radius: 0.75rem; /* rounded-xl */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* shadow-sm */
-            border: 1px solid #e7e5e4; /* border-stone-200 */
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
         .method-phase-card:hover {
@@ -93,15 +82,17 @@
         .faq-arrow.rotate { transform: rotate(90deg); }
         
         /* PDI Section */
-        .info-box { background-color: #EBF5FA; border-left: 4px solid #84C7DF; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; border-radius: 0.25rem; color: #164e63; }
-        .info-box svg { flex-shrink: 0; width: 1.25rem; height: 1.25rem; margin-top: 0.125rem; color: #84C7DF; }
+        .info-box { background-color: #f3f4f6; border-left: 4px solid #9ca3af; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; border-radius: 0.25rem; color: #4b5563; }
+        .info-box-yellow { background-color: #fffbeb; border-left: 4px solid #F1D24B; color: #b45309; }
+        .info-box svg { flex-shrink: 0; width: 1.25rem; height: 1.25rem; margin-top: 0.125rem; color: #9ca3af; }
+        .info-box-yellow svg { color: #F1D24B; }
         .pdi-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
         .pdi-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .pdi-card-yellow { border-left: 4px solid #F1D24B; }
         .pdi-card-orange { border-left: 4px solid #FF5C3D; }
         .pdi-card-purple { border-left: 4px solid #8671D1; }
 
-        /* Níveis SLAP > Foco do Nível Card */
+        /* Níveis SLAP > Objetivos do Nível Card */
         .focus-point-card {
             padding: 1rem;
             border-radius: 0.5rem;
@@ -142,20 +133,31 @@
             border-top: 15px solid #a8a29e; /* stone-400 */
         }
         
-        /* Regimento Interno Styles */
-        .regimento-section h4 {
+        /* Regimento Interno & Links Úteis Styles */
+        .regimento-section h4, .links-uteis-section h4 {
             font-size: 1.125rem; /* text-lg */
             font-weight: 600; /* font-semibold */
             margin-top: 1.5rem; /* mt-6 */
             margin-bottom: 0.5rem; /* mb-2 */
         }
-        .regimento-section p, .regimento-section ul {
+        .regimento-section p, .regimento-section ul, .links-uteis-section ul {
             line-height: 1.75; /* leading-loose */
             margin-bottom: 1rem; /* mb-4 */
         }
-        .regimento-section ul {
+        .regimento-section ul, .links-uteis-section ul {
             list-style-type: disc;
             padding-left: 1.5rem;
+        }
+        .links-uteis-section .faq-item {
+            background-color: #fffbeb; /* yellow-50 */
+        }
+         .links-uteis-section a {
+            color: #84C7DF;
+            font-weight: 500;
+        }
+         .links-uteis-section a:hover {
+            text-decoration: underline;
+            color: #55b7d1;
         }
 
     </style>
@@ -170,6 +172,10 @@
             </div>
             <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico SLAP</h1>
             <nav id="main-navigation" class="space-y-2">
+                 <button id="nav-inicio" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Início
+                </button>
                 <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
                     Níveis SLAP
@@ -198,16 +204,20 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     Regimento Interno
                 </button>
+                <button id="nav-links" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                    Links Úteis
+                </button>
             </nav>
         </aside>
 
         <main class="flex-1 p-4 sm:p-6 md:p-8">
-            <header class="mb-8">
+            <header id="main-header" class="mb-8">
                 <h2 id="main-title" class="text-3xl font-bold text-[#F1D24B]"></h2>
                 <p id="main-description" class="mt-2 text-stone-600"></p>
             </header>
             
-            <div id="content-area" class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div id="content-area">
                 <!-- Conteúdo será injetado aqui dinamicamente -->
             </div>
         </main>
@@ -219,110 +229,110 @@
                 name: "Starter 1",
                 lessons: ["OPEN HOUSE", "FEELINGS", "NAMES & GREETINGS", "NUMBERS PT. 1", "NUMBERS PT. 2", "SPELLING", "ORDINAL NUMBERS", "BASIC VERBS", "BASIC ADJECTIVES", "DEMONSTRATIVE PRONOUNS", "VERB TO BE", "COUNTRIES & NATIONALITIES", "NEIGHBORHOOD", "FAMILY MEMBERS", "SIMPLE PRESENT PT. 1", "SIMPLE PRESENT PT. 2", "CAN & CAN’T", "OBJECT PRONOUNS", "LIKES AND DISLIKES", "FREE TIME ACTIVITIES", "MONTHS & HOLIDAYS", "POSSESSIVE ADJECTIVES", "POSSESSIVE PRONOUNS", "FOOD & FRUITS", "HOURS", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
                 focusPoints: [
-                    "Introdução ao Inglês e Quebra-gelo",
-                    "Vocabulário Essencial para o Dia a Dia",
-                    "Formação de Frases Básicas com 'To Be'",
-                    "Saudações, Nomes e Informações Pessoais",
-                    "Habilidades Iniciais de Compreensão e Expressão Oral"
+                    "Falar sobre si mesmo",
+                    "Absorver vocabulário básico (como números e emoções)",
+                    "Absorver gramática básica (como verbo to be, simple present)",
+                    "Falar sobre horas",
+                    "Criar um contato inicial com o inglês"
                 ]
             },
             {
                 name: "Starter 2",
                 lessons: ["OPEN HOUSE", "FREQUENCY", "ROUTINE", "WHY & BECAUSE", "PLACES IN TOWN", "PREPOSITIONS OF PLACE", "IN, ON, AT + TRANSPORTATIONS", "POSSESSIVES", "PARTS OF THE HOUSE", "FURNITURE & CHORES", "PRESENT CONTINUOUS", "PRESENT CONTINUOUS FOR FUTURE SITUATIONS", "MANY & MUCH", "RESTAURANT PT. 1", "RESTAURANT PT. 2", "FUTURE SIMPLE", "WHAT WILL YOU DO?", "OCCUPATIONS", "FALSE FRIENDS", "AGREEING & DISAGREEING", "DESCRIBING PEOPLE", "MOVIE GENRES", "PREPOSITIONS OF TIME", "FAST FOOD & TASTES", "WEATHER", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
                 focusPoints: [
-                    "Descrição de Rotinas e Hábitos",
-                    "Localização e Preposições de Lugar",
-                    "Uso do Present Continuous para Presente e Futuro",
-                    "Linguagem para Interações em Restaurantes",
-                    "Construção de Frases no Futuro Simples"
+                    "Falar sobre frequência",
+                    "Usar preposições corretamente",
+                    "Usar present continuous",
+                    "Saber concordar e discordar",
+                    "Formar frases básicas"
                 ]
             },
             {
                 name: "Freshman 1",
                 lessons: ["OPEN HOUSE", "PARTS OF THE BODY", "SHOULD", "ACHES", "PHYSICAL TRAITS", "WHAT SHOULD I DO?", "TO & FOR", "SUPERMARKET PT. 1", "SUPERMARKET PT. 2", "ARE YOU A COUCH POTATO?", "FALSE FRIENDS", "WAS & WERE", "VERBS IN THE PAST", "-ED SOUNDS", "WATER UNDER THE BRIDGE", "CHILD’S PLAY", "VERBS OF SENSES", "GET PT. 1", "GET PT. 2", "THE INFLUENCERS ERA", "BEING HEALTHY IS BEING HAPPY", "INTERNET LANGUAGE", "PREPOSITIONS OF TIME", "FUTURE FORMS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
                 focusPoints: [
-                    "Vocabulário de Corpo e Saúde",
-                    "Expressando Conselhos com 'Should'",
-                    "Introdução ao Passado Simples (Verbos Regulares)",
-                    "Diálogo em Contextos de Compras",
-                    "Reconhecimento de Falsos Cognatos e Expressões Comuns"
+                    "Falar sobre partes do corpo",
+                    "Dar conselhos usando should",
+                    "Começar a utilizar verbos no passado",
+                    "Utilizar get de forma funcional",
+                    "Começar a falar sobre futuro"
                 ]
             },
             {
                 name: "Freshman 2",
                 lessons: ["OPEN HOUSE", "IS POP REALLY CULTURE?", "COULD", "USED TO", "WOULD PT. 1", "WOULD PT. 2", "HAVE TO & NEED TO", "SIMPLE PAST PT. 1", "SIMPLE PAST PT. 2", "WHAT THE HELL HAPPENED?", "BRITISH x AMERICAN", "COULD, SHOULD, WOULD", "WE ARE THE FUTURE", "SCHOOL & COLLEGE LIFE", "PAST CONTINUOUS PT. 1", "PAST CONTINUOUS PT. 2", "MILLENNIALS x GEN Z", "GO FIND A JOB", "WHEN WE WERE YOUNG", "USES OF LIKE", "TASTES & TEXTURES", "INTENSIFIERS", "CHERISH THE MOMENTS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO GERAL"],
                 focusPoints: [
-                    "Narrativa no Passado (Simple Past e Continuous)",
-                    "Uso de Modais de Hábito e Necessidade ('Used To', 'Have To')",
-                    "Diferenças entre Inglês Britânico e Americano",
-                    "Vocabulário para Vida Escolar e Profissional",
-                    "Expressão de Preferências e Intensificadores"
+                    "Narrar eventos passados com simple past e past continuous",
+                    "Expressar hábitos passados com 'used to'",
+                    "Discutir sobre diferenças culturais (inglês britânico x americano)",
+                    "Utilizar 'could', 'should' e 'would' para expressar possibilidade, conselho e desejo",
+                    "Expandir vocabulário sobre vida escolar e profissional"
                 ]
             },
             {
                 name: "Sophomore 1",
                 lessons: ["OPEN HOUSE", "ALL YOU NEED IS LOVE", "MUST", "MAY & MIGHT", "LEAVE THE PAST IN THE PAST", "MY BUCKET LIST", "AIRPORT ESSENTIALS", "HOTEL ESSENTIALS", "WEATHER", "MONEY ESSENTIALS", "-ING & VERBS OF PREFERENCE", "MONEY x HAPPINESS", "EMBEDDED QUESTIONS", "COMPARATIVES", "SUPERLATIVES", "DO YOU VOLUNTEER?", "ADVERBS OF TIME", "AMERICAN TRADITIONS", "COFFEE, PLEASE", "GIVING ADVICE", "THE STORY OF ROCK", "OUGHT TO & HAD BETTER", "USES OF ENOUGH", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO DE CONTEÚDO"],
                 focusPoints: [
-                    "Modais de Obrigação e Possibilidade ('Must', 'May', 'Might')",
-                    "Comparativos e Superlativos Detalhados",
-                    "Vocabulário Essencial para Viagens e Dinheiro",
-                    "Formulação de Perguntas Indiretas (Embedded Questions)",
-                    "Compreensão de Expressões de Convicção ('Ought To', 'Had Better')"
+                    "Dominar o uso de comparativos e superlativos",
+                    "Utilizar modais de obrigação e possibilidade (must, may, might)",
+                    "Formular perguntas indiretas (embedded questions)",
+                    "Expandir vocabulário para situações de viagem (aeroporto, hotel)",
+                    "Dar conselhos de forma mais assertiva com 'ought to' e 'had better'"
                 ]
             },
             {
                 name: "Sophomore 2",
                 lessons: ["OPEN HOUSE", "2020’S PANDEMIC", "BE ALLOWED TO", "PAST FORMS", "PAST PARTICIPLE", "PRESENT PERFECT PT. 1", "PRESENT PERFECT PT. 2", "YET, JUST, STILL & ALREADY", "QUESTION TAGS PT. 1", "QUESTION TAGS PT. 2", "MODAL VERBS REVIEW", "I HAVE TIME MACHINE", "PRESENT PERFECT CONTINUOUS", "YOU’RE JOKING, RIGHT?", "CLOTHES & ACCESSORIES", "THE REVOLUTION OF AI", "LET’S TALK INEQUALITY", "WHO DOESN’T LOVE PETS?", "RELATIVE CLAUSES", "COMMON IDIOMS", "FAME DOES HAVE PRICE", "CULTURAL DIFFERENCES", "IT’S GOTTA BE ALIENS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DISCUSSÃO ABERTA"],
                 focusPoints: [
-                    "Domínio do Present Perfect (Simples e Contínuo)",
-                    "Uso de Question Tags para Confirmação",
-                    "Construção de Orações Relativas (Relative Clauses)",
-                    "Vocabulário de Tecnologia e Temas Sociais (IA, Desigualdade)",
-                    "Reconhecimento e Aplicação de Expressões Idiomáticas Comuns"
+                    "Dominar o Present Perfect e o Present Perfect Continuous",
+                    "Utilizar advérbios como 'yet', 'just', 'still' e 'already' corretamente",
+                    "Confirmar informações com 'question tags'",
+                    "Construir frases mais complexas com 'relative clauses'",
+                    "Debater sobre temas atuais como IA e desigualdade"
                 ]
             },
             {
                 name: "Junior 1",
-                lessons: ["OPEN HOUSE", "STUDYING ABROAD", "PHRASAL VERBS PT. 1", "PHRASAL VERBS PT. 2", "BODY IDIOMS", "TELLING STORIES", "ZERO & FIRST CONDITIONALS", "ANIMAL IDIOMS", "WHO’S YOUR HERO?", "SECOND CONDITIONAL", "OVER & UNDER", "PRESENT PERFECT RECAP", "PHRASAL VERBS (SEEN)", "COLOR IDIOMS", "PRETTY HURTS", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "GEOGRAPHY IDIOMS", "ADVANCED ADJECTIVES", "MEDICAL ENGLISH", "COMPOUND ADJECTIVES", "LEGAL ENGLISH", "WHAT’S RIGHT IS RIGHT", "SECOND CHANCES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PRÁTICA DE FLUÊNCIA"],
+                lessons: ["OPEN HOUSE", "STUDYING ABROAD", "PHRASAL VERBS PT. 1", "PHRASAL VERBS PT. 2", "BODY IDIOMS", "TELLING STORIES", "ZERO & FIRST CONDITIONALS", "ANIMAL IDIOMS", "WHO’S YOUR HERO?", "SECOND CONDITIONAL", "OVER & UNDER", "PRESENT PERFECT RECAP", "PHRASAL VERBS (SEEN)", "COLOR IDIOMS", "PRETTY HURTS", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "GEOGRAPHY IDIOMS", "ADVANCED ADJECTIVES", "COMPOUND ADJECTIVES", "LEGAL ENGLISH", "WHAT’S RIGHT IS RIGHT", "SECOND CHANCES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PRÁTICA DE FLUÊNCIA"],
                 focusPoints: [
-                    "Aprofundamento em Phrasal Verbs e Idioms (Corpo, Animais, Cores)",
-                    "Narração de Histórias com Fluência e Detalhe",
-                    "Revisão e Aplicação dos Condicionais (Zero, Primeiro, Segundo)",
-                    "Inglês para Contextos Específicos (Médico, Legal)",
-                    "Utilização de Adjetivos Avançados e Compostos"
+                    "Utilizar os condicionais Zero, First e Second para criar hipóteses",
+                    "Expandir o repertório de Phrasal Verbs e Expressões Idiomáticas",
+                    "Narrar histórias com mais detalhes e fluidez",
+                    "Usar adjetivos avançados para descrições mais ricas",
+                    "Compreender vocabulário de áreas específicas (médica, legal)"
                 ]
             },
             {
                 name: "Junior 2",
                 lessons: ["OPEN HOUSE", "FAMILY MATTERS", "FAMILY IDIOMS", "PHRASAL VERBS - KEEP", "ASTROLOGY? REALLY?", "CONJUNCTIONS", "AS IT WAS", "ABROAD CULTURE", "GIVING ADVICE", "PHRASAL VERBS - PUT", "SUCCESS x FAILURE", "CRIME DOESN’T PAY", "WHALE POOP IS GREAT", "ARE GHOSTS REAL?", "YOU NEED SUGAR, LOVE", "FLIGHT FUEL", "IS YOUR PHONE CHANGING YOU?", "WORK, WORK, WORK", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "WHAT IF?", "MODERN RELATIONS", "ANXIETY RULES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DEBATE TEMÁTICO", "REVISÃO DE CONTEÚDO"],
                 focusPoints: [
-                    "Expressão de Relações Familiares e Sociais",
-                    "Uso de Conjunções e Expressões Coesivas",
-                    "Debate e Argumentação sobre Temas Complexos",
-                    "Compreensão de Gírias e Expressões Culturais",
-                    "Discussão sobre Comportamento, Crime e Sucesso"
+                    "Conectar ideias de forma mais complexa usando conjunções",
+                    "Debater sobre temas abstratos e culturais",
+                    "Dominar o uso de Phrasal Verbs com 'keep' e 'put'",
+                    "Expressar opiniões e conselhos de forma mais elaborada",
+                    "Analisar e discutir sobre relações modernas e comportamento"
                 ]
             },
             {
                 name: "Senior 1",
                 lessons: ["OPEN HOUSE", "EATING HABITS", "NEVER HAVE I EVER", "CAUSATIVE FORM", "REFLEXIVE PRONOUNS", "GOING VIRAL", "CLOTHING IDIOMS", "PAST PERFECT PT. 1", "PAST PERFECT PT. 2", "PAST MODALS", "THIRD CONDITIONAL", "PAST PERFECT CONT.", "MENTAL HEALTH", "I WISH I HAD NO EXPECTATIONS", "REPORTED SPEECH PT. 1", "REPORTED SPEECH PT. 2", "IT’S GEN Z’S WORLD", "BUT DO YOU AGREE?", "PHRASAL VERBS - GIVE", "CLEFT SENTENCES", "LOVE IDIOMS", "LIVING IN THE CITY", "IT’S ALL ABOUT THE MONEY", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PROJETO FINAL"],
                 focusPoints: [
-                    "Domínio do Passado Perfeito e Contínuo",
-                    "Uso de Discurso Indireto (Reported Speech)",
-                    "Aplicações do Third Conditional e Past Modals",
-                    "Expressões sobre Saúde Mental e Relações Modernas",
-                    "Análise e Discussão sobre Geração Z e Cultura Financeira"
+                    "Dominar tempos verbais complexos como o Past Perfect",
+                    "Relatar falas de terceiros com 'Reported Speech'",
+                    "Utilizar o Third Conditional para falar sobre passados hipotéticos",
+                    "Expressar arrependimentos com 'wish'",
+                    "Dar ênfase a partes específicas de uma frase com 'Cleft Sentences'"
                 ]
             },
             {
                 name: "Senior 2",
                 lessons: ["OPEN HOUSE", "MAKING IT ABROAD", "WISH & IF ONLY", "USES OF RATHER", "PHRASAL VERBS - BRING", "DO YOU HAVE ANY REGRETS?", "CONDITIONALS (ALL)", "MIXED COND. PT. 1", "MIXED COND. PT. 2", "RELATIONSHIP GOALS", "PHRASAL VERBS - LOOK", "NETFLIX & CHILL", "SPLIT INFINITIVE", "LET’S GO BACKPACKING", "COMMON EUPHEMISMS", "LIAR, LIAR, PANTS ON FIRE", "THE SWIFT IMPACT", "FUTURE IN THE PAST", "BE ALLOWED & BE SUPPOSED TO", "SLANGS ARE LIT", "YOLO, FOMO & FOMU", "PHRASAL VERBS - COME", "SOCIAL MEDIA DISASTER", "OVER & UNDER", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
                 focusPoints: [
-                    "Manejo Completo de Todos os Condicionais",
-                    "Usos Avançados de Phrasal Verbs e Expressões Idiomáticas",
-                    "Discussão sobre Tópicos de Viagem e Vida no Exterior",
-                    "Compreensão de Linguagem Informal e Gírias Modernas",
-                    "Análise de Temas Sociais e Culturais Complexos"
+                    "Dominar todos os tipos de condicionais, incluindo os mistos",
+                    "Usar estruturas avançadas como 'wish' e 'if only'",
+                    "Compreender e usar gírias modernas e eufemismos",
+                    "Expressar o futuro no passado para falar de planos que mudaram",
+                    "Debater sobre temas complexos como cultura digital e redes sociais"
                 ]
             },
         ];
@@ -336,20 +346,6 @@
                 }
                 return word.charAt(0).toUpperCase() + word.slice(1);
             }).join(' ');
-        };
-
-        const categories = {
-            'Grammar': ['VERB TO BE', 'SIMPLE PRESENT', 'CAN', 'OBJECT PRONOUNS', 'POSSESSIVE', 'PRESENT CONTINUOUS', 'FUTURE SIMPLE', 'MANY & MUCH', 'PREPOSITIONS', 'SHOULD', 'WAS & WERE', 'VERBS IN THE PAST', '-ED SOUNDS', 'COULD', 'USED TO', 'WOULD', 'HAVE TO', 'NEED TO', 'PAST CONTINUOUS', 'MUST', 'MAY', 'MIGHT', 'EMBEDDED QUESTIONS', 'COMPARATIVES', 'SUPERLATIVES', 'ADVERBS OF TIME', 'OUGHT TO', 'HAD BETTER', 'BE ALLOWED TO', 'PAST FORMS', 'PAST PARTICIPLE', 'PRESENT PERFECT', 'QUESTION TAGS', 'RELATIVE CLAUSES', 'CONDITIONALS', 'CAUSATIVE FORM', 'REFLEXIVE PRONOUNS', 'PAST MODALS', 'REPORTED SPEECH', 'CLEFT SENTENCES', 'WISH', 'IF ONLY', 'USES OF RATHER', 'FUTURE IN THE PAST', 'SPLIT INFINITIVE'],
-            'Speaking': ['OPEN HOUSE', 'PRESENTATION', 'GIVING ADVICE', 'AGREEING & DISAGREEING', 'TELLING STORIES', 'DEBATE TEMÁTICO', 'DISCUSSÃO ABERTA', 'PRÁTICA DE FLUÊNCIA', 'WHAT WILL YOU DO?', 'WHAT SHOULD I DO?', 'ARE YOU A COUCH POTATO?', 'IS POP REALLY CULTURE?', 'WHAT THE HELL HAPPENED?', 'WE ARE THE FUTURE', 'GO FIND A JOB', 'WHEN WE WERE YOUNG', 'BUT DO YOU AGREE?', 'IT’S GEN Z’S WORLD', 'DO YOU VOLUNTEER?', 'WHO DOESN’T LOVE PETS?', 'YOU’re JOKING, RIGHT?', 'LET’S TALK INEQUALITY', 'WHO’S YOUR HERO?', 'SECOND CHANCES', 'FAMILY MATTERS', 'ASTROLOGY? REALLY?', 'ARE GHOSTS REAL?', 'YOU NEED SUGAR, LOVE', 'IS YOUR PHONE CHANGING YOU?', 'MODERN RELATIONS', 'ANXIETY RULES', 'EATING HABITS', 'NEVER HAVE I EVER', 'GOING VIRAL', 'MENTAL HEALTH', 'I WISH I HAD NO EXPECTATIONS', 'LIVING IN THE CITY', 'MAKING IT ABROAD', 'DO YOU HAVE ANY REGRETS?', 'NETFLIX & CHILL', 'SPLIT INFINITIVE', 'LET’S GO BACKPACKING', 'LIAR, LIAR, PANTS ON FIRE', 'THE SWIFT IMPACT', 'SOCIAL MEDIA DISASTER', 'AMERICAN TRADITIONS', 'BRITISH X AMERICAN', 'MILLENNIALS X GEN Z', '2020’S PANDEMIC', 'THE REVOLUTION OF AI', 'CULTURAL DIFFERENCES', 'IT’S GOTTA BE ALIENS', 'STUDYING ABROAD', 'FAME DOES HAVE PRICE', 'ABROAD CULTURE', 'WHALE POOP IS GREAT', 'FLIGHT FUEL', 'WORK, WORK, WORK', 'ALL ABOUT THE MONEY', 'RELATIONSHIP GOALS', 'OVER & UNDER', 'SLANGS ARE LIT', 'YOLO', 'FOMO', 'FOMU', 'INTERNET LANGUAGE'],
-            'Idioms': ['IDIOMS', 'PHRASAL VERBS', 'WATER UNDER THE BRIDGE', 'CHILD’S PLAY', 'CLOTHING IDIOMS', 'COMMON IDIOMS', 'BODY IDIOMS', 'ANIMAL IDIOMS', 'COLOR IDIOMS', 'GEOGRAPHY IDIOMS', 'FAMILY IDIOMS', 'LOVE IDIOMS', 'COMMON EUPHEMISMS'],
-            'Vocabulary': ['FEELINGS', 'NAMES', 'GREETINGS', 'NUMBERS', 'SPELLING', 'ORDINAL', 'BASIC ADJECTIVES', 'DEMONSTRATIVE PRONOUNS', 'COUNTRIES', 'NATIONALITIES', 'NEIGHBORHOOD', 'FAMILY MEMBERS', 'LIKES AND DISLIKES', 'FREE TIME ACTIVITIES', 'MONTHS', 'HOLIDAYS', 'POSSESSIVE ADJECTIVES', 'POSSESSIVE PRONOUNS', 'FOOD', 'FRUITS', 'HOURS', 'FREQUENCY', 'ROUTINE', 'WHY & BECAUSE', 'PLACES IN TOWN', 'TRANSPORTATIONS', 'PARTS OF THE HOUSE', 'FURNITURE', 'CHORES', 'RESTAURANT', 'OCCUPATIONS', 'FALSE FRIENDS', 'DESCRIBING PEOPLE', 'MOVIE GENRES', 'WEATHER', 'FAST FOOD', 'TASTES', 'PARTS OF THE BODY', 'ACHES', 'PHYSICAL TRAITS', 'SUPERMARKET', 'THE INFLUENCERS ERA', 'BEING HEALTHY IS BEING HAPPY', 'USES OF LIKE', 'TEXTURES', 'INTENSIFIERS', 'CHERISH THE MOMENTS', 'AIRPORT ESSENTIALS', 'HOTEL ESSENTIALS', 'MONEY ESSENTIALS', 'MONEY X HAPPINESS', 'COFFEE, PLEASE', 'STORY OF ROCK']
-        };
-
-        const categoryColors = {
-            'Grammar': '#84C7DF', /* Azul Claro (Cor Secundária SLAP) */
-            'Speaking': '#FF5C3D', /* Laranja/Vermelho (Cor Secundária SLAP) */
-            'Idioms': '#8671D1', /* Roxo (Cor Secundária SLAP) */
-            'Vocabulary': '#F1D24B' /* Amarelo Primário (Cor Principal SLAP) */
         };
 
         const cefrLevels = [
@@ -392,6 +388,7 @@
 
         let currentChart;
         const contentArea = document.getElementById('content-area');
+        const mainHeader = document.getElementById('main-header');
 
         // Funções de renderização principais, agora anexadas ao objeto window
         function setActiveHubButton(buttonId) {
@@ -414,10 +411,66 @@
         const arrowIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
         
         const levelIcons = Array(10).fill(arrowIcon);
+        
+        function showHeader() {
+             mainHeader.classList.remove('hidden');
+             contentArea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-5', 'gap-8');
+        }
+        
+        function hideHeader() {
+            mainHeader.classList.add('hidden');
+            contentArea.classList.remove('grid', 'lg:grid-cols-5', 'gap-8');
+        }
+
+        function renderInicioSection() {
+            setActiveHubButton('nav-inicio');
+            hideHeader();
+            contentArea.innerHTML = `
+                <section class="text-center">
+                    <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8">
+                         <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-32 h-auto mx-auto rounded-lg mb-4">
+                        <h2 class="text-4xl md:text-5xl font-bold">Bem-vindos!</h2>
+                        <p class="mt-2 text-lg">Seu hub pedagógico para integrar, facilitar e potencializar o ensino no SLAP.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <button onclick="document.getElementById('nav-links').click()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8671D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                            <span class="font-semibold text-stone-700">Links Úteis</span>
+                        </button>
+                         <button onclick="document.getElementById('nav-method').click()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF5C3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
+                            <span class="font-semibold text-stone-700">Método SLAP</span>
+                        </button>
+                        <button onclick="document.getElementById('nav-pdi').click()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#84C7DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span class="font-semibold text-stone-700">PDI</span>
+                        </button>
+                        <button onclick="document.getElementById('nav-regimento').click()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span class="font-semibold text-stone-700">Regimento</span>
+                        </button>
+                    </div>
+                     <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-[#F1D24B] mb-4">Dica de Música do Dia</h3>
+                        <div class="flex flex-col sm:flex-row items-center gap-6">
+                            <img src="https://i.scdn.co/image/ab67616d0000b273461419353a444640131ab683" alt="Capa do álbum de Taylor Swift" class="w-24 h-24 rounded-lg shadow-md">
+                            <div class="text-left">
+                                <p class="text-xl font-bold">Fortnight</p>
+                                <p class="text-stone-300">Taylor Swift ft. Post Malone</p>
+                                <a href="https://open.spotify.com/track/6dGcF5qw3a6s2LpL2n0h49" target="_blank" class="mt-2 inline-block bg-green-500 text-white font-bold py-2 px-4 rounded-full hover:bg-green-600 transition-colors">
+                                    Ouvir no Spotify
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
 
         function renderSlapLevelsSection() {
             console.log("renderSlapLevelsSection called"); // Log para depuração
             setActiveHubButton('nav-slap-levels');
+            showHeader();
             document.getElementById('main-title').textContent = 'Níveis SLAP: Seu Guia Completo do Currículo';
             document.getElementById('main-description').textContent = 'Explore a estrutura completa do nosso currículo, com detalhes de cada nível e a distribuição das aulas. Use a navegação lateral para visualizar o conteúdo de cada etapa.';
             
@@ -430,7 +483,7 @@
                     </div>
                     <div class="md:w-3/4 flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8">
                         <section id="focus-section" class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-stone-200 flex flex-col justify-center">
-                            <h3 class="text-lg font-semibold text-center mb-4 text-stone-800">Foco do Nível</h3>
+                            <h3 class="text-lg font-semibold text-center mb-4 text-stone-800">Objetivos do Nível</h3>
                             <div id="focus-points-grid" class="grid grid-cols-1 gap-3">
                                 <!-- Focus points will be rendered here -->
                             </div>
@@ -506,6 +559,7 @@
         function renderCefrSection() {
             console.log("renderCefrSection called"); // Log para depuração
             setActiveHubButton('nav-cefr');
+             showHeader();
             document.getElementById('main-title').textContent = 'CEFR: Alinhamento de Proficiência SLAP';
             document.getElementById('main-description').textContent = 'Compreenda a proficiência de cada nível do SLAP no Quadro Comum Europeu de Referência para Línguas (CEFR), um guia global para o aprendizado de idiomas.';
             
@@ -606,6 +660,7 @@
         function renderGoodPracticesContent() {
             console.log("renderGoodPracticesContent called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
+            showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Boas Práticas para Redes Sociais';
             document.getElementById('main-description').textContent = 'Dicas essenciais para criar conteúdo engajador e alinhado com a marca SLAP no Instagram e TikTok.';
             contentArea.innerHTML = `
@@ -663,6 +718,7 @@
         function renderGlossaryContent() {
             console.log("renderGlossaryContent called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
+             showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Glossário de Termos';
             document.getElementById('main-description').textContent = 'Entenda os termos mais comuns no universo de conteúdo e marketing digital, explicados de forma simples e prática.';
             contentArea.innerHTML = `
@@ -692,6 +748,7 @@
         function renderContentFunnel() {
             console.log("renderContentFunnel called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
+            showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Funil de Conteúdo';
             document.getElementById('main-description').textContent = 'Compreenda como construir conteúdos estratégicos para cada etapa da jornada do seu público, do reconhecimento à conversão.';
             contentArea.innerHTML = `
@@ -736,6 +793,7 @@
         function renderProhibitedContent() {
             console.log("renderProhibitedContent called");
             setActiveHubButton('nav-creators-room');
+             showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: O Que NÃO Fazer';
             document.getElementById('main-description').textContent = 'Diretrizes claras sobre conteúdos e práticas a serem evitadas para manter a integridade, o profissionalismo e a imagem do SLAP.';
             contentArea.innerHTML = `
@@ -771,80 +829,80 @@
         function renderCreatorsRoom() {
             console.log("renderCreatorsRoom called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
+            showHeader();
             window.renderGoodPracticesContent(); // Default to Good Practices when Creators Room is opened
         }
 
         function renderMethodSection() {
             console.log("renderMethodSection called"); // Log para depuração
             setActiveHubButton('nav-method');
+            showHeader();
             document.getElementById('main-title').textContent = 'Método SLAP: Guia de Ensino Dinâmico';
             document.getElementById('main-description').textContent = 'Nosso método é um guia para planejar aulas de inglês engajadoras, progressivas e com foco na prática ativa. Ele é dividido em quatro fases: SPARK, LEARN, APPLY e PERFORM.';
             
             contentArea.innerHTML = `
                 <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div class="method-phase-card method-phase-spark flex flex-col p-6">
-                            <div class="w-full text-center mb-4">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto">
+                       <div class="faq-item method-phase-card method-phase-spark">
+                            <div class="faq-question p-4">
+                                <h3 class="text-xl font-bold">SPARK</h3>
+                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-left">SPARK</h3>
-                                <p class="text-left">
-                                    Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="method-phase-card method-phase-learn flex flex-col p-6">
-                             <div class="w-full text-center mb-4">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto">
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-left">LEARN</h3>
-                                <p class="text-left">
-                                    Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.
-                                </p>
+                            <div class="faq-answer">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                                <p class="px-4 pb-4">Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
                             </div>
                         </div>
-                        <div class="method-phase-card method-phase-apply flex flex-col p-6">
-                             <div class="w-full text-center mb-4">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto">
+                        <div class="faq-item method-phase-card method-phase-learn">
+                            <div class="faq-question p-4">
+                                <h3 class="text-xl font-bold">LEARN</h3>
+                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-left">APPLY</h3>
-                                <p class="text-left">
-                                    Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.
-                                </p>
+                            <div class="faq-answer">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                                <p class="px-4 pb-4">Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
                             </div>
                         </div>
-                        <div class="method-phase-card method-phase-perform flex flex-col p-6">
-                             <div class="w-full text-center mb-4">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto">
+                         <div class="faq-item method-phase-card method-phase-apply">
+                            <div class="faq-question p-4">
+                                <h3 class="text-xl font-bold">APPLY</h3>
+                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-left">PERFORM</h3>
-                                <p class="text-left">
-                                    É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.
-                                </p>
+                            <div class="faq-answer">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                                <p class="px-4 pb-4">Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item method-phase-card method-phase-perform">
+                            <div class="faq-question p-4">
+                                <h3 class="text-xl font-bold">PERFORM</h3>
+                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                                <p class="px-4 pb-4">É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.</p>
                             </div>
                         </div>
                     </div>
-                     <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Perguntas Frequentes sobre o Método</h3>
+                     <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Exemplos de Atividades por Fase</h3>
                     <div class="space-y-3">
-                        ${methodFaqs.map(faq => `
-                            <div class="faq-item">
-                                <div class="faq-question">
-                                    <span>${faq.question}</span>
-                                    <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                                </div>
-                                <div class="faq-answer">
-                                    <p class="py-2">${faq.answer}</p>
-                                </div>
-                            </div>
-                        `).join('')}
+                        <div class="faq-item">
+                            <div class="faq-question bg-[#F1D24B] text-stone-800"><span>Spark</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer"><ul><li>Atividades com séries e músicas</li><li>Quebra-gelos</li><li>Warm-ups</li><li>Lead-ins leves para introdução de tema</li></ul></div>
+                        </div>
+                         <div class="faq-item">
+                            <div class="faq-question bg-[#84C7DF] text-stone-800"><span>Learn</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer"><ul><li>Apresentação de frases e vocabulário</li><li>Comparação de estruturas</li><li>Atividades explicativas</li></ul></div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question bg-[#8671D1] text-white"><span>Apply</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer"><ul><li>Fill the gaps</li><li>Unscrambling</li><li>Perguntas dirigidas com base no conteúdo aprendido</li></ul></div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question bg-[#FF5C3D] text-white"><span>Perform</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer"><ul><li>Perguntas abertas</li><li>Debates</li><li>Roleplays e simulações</li></ul></div>
+                        </div>
                     </div>
-                    <p class="mt-6 text-sm text-stone-600 text-center">
-                        O método SLAP garante uma abordagem dinâmica e eficaz para o ensino de inglês, promovendo o engajamento e a fluência dos alunos.
-                    </p>
                 </section>
             `;
             if (currentChart) {
@@ -930,12 +988,142 @@
             title: "Como sei se estou dando uma aula boa?",
             description: "Uma reflexão sobre indicadores de uma aula de sucesso, indo além da participação visível.",
             audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_como_sei_se_dei_uma_aula_boa_anea8n.mp3"
+          },
+          {
+            title: "Meu aluno fala muito. O que fazer?",
+            description: "Técnicas para gerenciar a participação excessiva e garantir o equilíbrio na aula.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749364414/deep_dive_-_aluno_fala_muito_hxjxnq.mp3"
+          },
+          {
+            title: "Tenho uma turma muito cheia. Como lidar?",
+            description: "Estratégias para gerenciar grandes turmas sem excluir ninguém e mantendo a qualidade.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749362130/deep_dive_-_salas_mt_cheias_dfodog.mp3"
+          },
+          {
+            title: "Como dar feedback aos alunos adequadamente?",
+            description: "Um guia para fornecer feedback construtivo, motivador e alinhado com o método SLAP.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749362130/deep_dive_-_como_dar_feedback_hdwgn0.mp3"
+          },
+           {
+            title: "Como posso fazer uma boa revisão antes das provas?",
+            description: "Métodos eficazes para revisar o conteúdo de forma dinâmica e que realmente prepare os alunos.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749362130/deep_dive_-_como_dar_uma_revisa%CC%83o_de_provas_eficaz_p9lmsf.mp3"
+          },
+          {
+            title: "Sou professor e me sinto inseguro. O que faço?",
+            description: "Uma conversa sobre a síndrome do impostor e como lidar com a insegurança na sala de aula.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749349699/deep_dive_-_professor_inseguro_m8t8cy.mp3"
+          },
+          {
+            title: "Meu aluno entende, mas não consegue falar. O que fazer?",
+            description: "Dicas para destravar a fala e transformar o conhecimento passivo do aluno em habilidade ativa.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749355159/deep_dive_-_meu_aluno_entende_mas_nao_consegue_falar_pk99e6.mp3"
+          },
+          {
+            title: "Meu aluno traz temas polêmicos para a aula. Como lidar?",
+            description: "Como mediar discussões delicadas, manter o foco da aula e garantir um ambiente respeitoso.",
+            audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1749355160/deep_dive_-_meu_aluno_traz_temas_pole%CC%82micos_hzofht.mp3"
           }
         ];
+        
+        const usefulLinks = {
+            "Verbo To Be": [
+                { title: "Aula 1: Verbo To Be - Explicação Completa (YouTube)", url: "https://www.youtube.com/watch?v=3R-IH-V7lwQ" },
+                { title: "Aula 2: Verbo To Be - Gramática e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=vX1TCxH_NZs" },
+                { title: "Exercício 1: Pratique o Verbo To Be (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=8406" },
+                { title: "Exercício 2: Verbo To Be - Preencha os Espaços (British Council)", url: "https://learnenglish.britishcouncil.org/grammar/beginner-to-pre-intermediate/be" },
+                { title: "Exercício 3: Teste Interativo - Verbo To Be (Perfect English Grammar)", url: "https://www.perfect-english-grammar.com/verb-to-be-exercise-1.html" }
+            ],
+            "Simple Present": [
+                { title: "Aula 1: Simple Present Tense - Aula Explicativa (YouTube)", url: "https://www.youtube.com/watch?v=7dq0YJS_56c" },
+                { title: "Aula 2: Simple Present com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=ACDlqL7HpWI" },
+                { title: "Exercício 1: Simple Present - Pratique Aqui (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=11340" },
+                { title: "Exercício 2: British Council - Simple Present Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/present-simple" },
+                { title: "Exercício 3: Perfect English Grammar - Simple Present Quiz", url: "https://www.perfect-english-grammar.com/simple-present-exercise-1.html" }
+            ],
+            "Simple Past": [
+                 { title: "Aula 1: Simple Past Tense - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=5dGk4rQZEk4" },
+                 { title: "Aula 2: Simple Past com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=zjvccXmrmXA" },
+                 { title: "Exercício 1: Pratique Simple Past (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15228" },
+                 { title: "Exercício 2: British Council - Simple Past Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/past-simple" },
+                 { title: "Exercício 3: Perfect English Grammar - Past Simple Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
+            ],
+            "How Many / How Much": [
+                 { title: "Aula 1: How Many vs How Much - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=cz0_vY-rHZM" },
+                 { title: "Aula 2: Quantifiers - How Many e How Much (YouTube)", url: "https://www.youtube.com/watch?v=Ovd1SYqDBa0" },
+                 { title: "Exercício 1: Pratique How Many / How Much (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2237" },
+                 { title: "Exercício 2: British Council - Quantifiers Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/quantifiers" },
+                 { title: "Exercício 3: Perfect English Grammar - How Many / How Much Quiz", url: "https://www.perfect-english-grammar.com/how-many-how-much-exercise-1.html" }
+            ],
+            "Genitive Case": [
+                 { title: "Aula 1: Genitive Case - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=Fx4SNMg6ZmM" },
+                 { title: "Aula 2: Possessive Case - Genitive (YouTube)", url: "https://www.youtube.com/watch?v=Urs8G8iR6-A" },
+                 { title: "Exercício 1: Pratique Genitive Case (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1835" },
+                 { title: "Exercício 2: British Council - Possessives Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/possessives" },
+                 { title: "Exercício 3: Perfect English Grammar - Possessive Case Quiz", url: "https://www.perfect-english-grammar.com/possessive-case-exercise-1.html" }
+            ],
+             "Causative Form": [
+                 { title: "Aula 1: Causative Form - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=QXgYgC-qhRQ" },
+                 { title: "Aula 2: Causative Have / Get (YouTube)", url: "https://www.youtube.com/watch?v=XYRTTl_NbMQ" },
+                 { title: "Exercício 1: Pratique Causative Form (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2705" },
+                 { title: "Exercício 2: British Council - Causative Practice", url: "https://learnenglish.britishcouncil.org/grammar/upper-intermediate-and-above/causative-verbs" },
+                 { title: "Exercício 3: Perfect English Grammar - Causative Quiz", url: "https://www.perfect-english-grammar.com/causative-exercise-1.html" }
+            ],
+             "Zero Conditional": [
+                 { title: "Aula 1: Zero Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=Jp74t8v-M8I" },
+                 { title: "Aula 2: Zero Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=3N4jz6-w9H4" },
+                 { title: "Exercício 1: Pratique Zero Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1433" },
+                 { title: "Exercício 2: British Council - Zero Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/zero-conditional" },
+                 { title: "Exercício 3: Perfect English Grammar - Zero Conditional Quiz", url: "https://www.perfect-english-grammar.com/zero-conditional-exercise-1.html" }
+            ],
+            "First Conditional": [
+                 { title: "Aula 1: First Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=frY2lxk8qBo" },
+                 { title: "Aula 2: First Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=5UiG0xOKp1I" },
+                 { title: "Exercício 1: Pratique First Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1438" },
+                 { title: "Exercício 2: British Council - First Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/first-conditional" },
+                 { title: "Exercício 3: Perfect English Grammar - First Conditional Quiz", url: "https://www.perfect-english-grammar.com/first-conditional-exercise-1.html" }
+            ],
+            "Second Conditional": [
+                 { title: "Aula 1: Second Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=dAzX0iYdFXo" },
+                 { title: "Aula 2: Second Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=73fWk7riJok" },
+                 { title: "Exercício 1: Pratique Second Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1441" },
+                 { title: "Exercício 2: British Council - Second Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/second-conditional" },
+                 { title: "Exercício 3: Perfect English Grammar - Second Conditional Quiz", url: "https://www.perfect-english-grammar.com/second-conditional-exercise-1.html" }
+            ],
+            "Verbos no Passado": [
+                 { title: "Aula 1: Verbos no Passado - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=fVd20G9YFwg" },
+                 { title: "Aula 2: Verbos Regulares e Irregulares no Passado (YouTube)", url: "https://www.youtube.com/watch?v=6iMzxR1qtxo" },
+                 { title: "Exercício 1: Pratique Verbos no Passado (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15870" },
+                 { title: "Exercício 2: British Council - Past Verbs Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/past-simple" },
+                 { title: "Exercício 3: Perfect English Grammar - Past Verbs Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
+            ],
+            "Should": [
+                 { title: "Aula 1: Should - Uso e Explicação (YouTube)", url: "https://www.youtube.com/watch?v=FZtEZGxLMjs" },
+                 { title: "Aula 2: Should - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=R12t3DF8Hf0" },
+                 { title: "Exercício 1: Pratique Should (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1839" },
+                 { title: "Exercício 2: British Council - Should Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-should" },
+                 { title: "Exercício 3: Perfect English Grammar - Should Quiz", url: "https://www.perfect-english-grammar.com/should-exercise-1.html" }
+            ],
+            "Would": [
+                 { title: "Aula 1: Would - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=0hrWZ18xgLM" },
+                 { title: "Aula 2: Would - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=rxzVhHcEYvs" },
+                 { title: "Exercício 1: Pratique Would (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2331" },
+                 { title: "Exercício 2: British Council - Would Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-would" },
+                 { title: "Exercício 3: Perfect English Grammar - Would Quiz", url: "https://www.perfect-english-grammar.com/would-exercise-1.html" }
+            ],
+            "Could": [
+                 { title: "Aula 1: Could - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=dtK9CcrlKXc" },
+                 { title: "Aula 2: Could - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=ln77HkqHHR0" },
+                 { title: "Exercício 1: Pratique Could (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2432" },
+                 { title: "Exercício 2: British Council - Could Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-could" },
+                 { title: "Exercício 3: Perfect English Grammar - Could Quiz", url: "https://www.perfect-english-grammar.com/could-exercise-1.html" }
+            ]
+        };
 
         function renderPdiSection() {
             console.log("renderPdiSection called"); // Log para depuração
             setActiveHubButton('nav-pdi');
+            showHeader();
             document.getElementById('main-title').textContent = 'PDI: Plano de Desenvolvimento Individual';
             document.getElementById('main-description').textContent = 'Este espaço é dedicado ao seu plano de carreira e desenvolvimento profissional no SLAP, oferecendo caminhos claros para evolução.';
             
@@ -1008,11 +1196,24 @@
         
         function renderDeepDiveSection() {
             setActiveHubButton('nav-deep-dive');
+            showHeader();
             document.getElementById('main-title').textContent = 'Deep Dive';
             document.getElementById('main-description').textContent = 'Um mergulho profundo em desafios pedagógicos comuns, com orientações práticas para você navegar em situações complexas com mais segurança e confiança.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <section class="lg:col-span-5">
+                    <div class="info-box mt-0 mb-8 p-4 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <div class="ml-3">
+                          <h3 class="text-sm font-medium">Aviso importante</h3>
+                          <div class="mt-2 text-sm">
+                            <p>As vozes utilizadas nos áudios desta seção são geradas por inteligência artificial. No entanto, todo o conteúdo foi desenvolvido exclusivamente pelo SLAP e segue nossas diretrizes pedagógicas e valores institucionais. O conteúdo compartilhado aqui é propriedade intelectual do SLAP.</p>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     ${crisisKits.map((kit, index) => `
                         <div class="crisis-card">
                             <h3 class="text-lg font-bold">${kit.title}</h3>
@@ -1027,6 +1228,7 @@
                             </div>
                         </div>
                     `).join('')}
+                    </div>
                 </section>
             `;
             
@@ -1078,6 +1280,7 @@
         
         function renderRegimentoInternoSection() {
             setActiveHubButton('nav-regimento');
+             showHeader();
             document.getElementById('main-title').textContent = 'Regimento Interno';
             document.getElementById('main-description').textContent = 'Diretrizes, políticas e procedimentos que orientam a conduta e as práticas de todos os colaboradores do SLAP.';
             
@@ -1182,6 +1385,38 @@
                 button.addEventListener('click', toggleFaq);
             });
         }
+        
+        function renderLinksUteisSection() {
+            setActiveHubButton('nav-links');
+            showHeader();
+            document.getElementById('main-title').textContent = 'Links Úteis';
+            document.getElementById('main-description').textContent = 'Um repositório central de aulas em vídeo e exercícios interativos para os principais tópicos gramaticais.';
+
+            contentArea.innerHTML = `
+                 <section class="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 links-uteis-section">
+                    ${Object.entries(usefulLinks).map(([title, links]) => `
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>${title}</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <ul class="divide-y divide-stone-200">
+                                    ${links.map(link => `
+                                        <li class="py-3">
+                                            <a href="${link.url}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">${link.title}</a>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `).join('')}
+                </section>
+            `;
+             document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
+        }
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1189,6 +1424,7 @@
             document.getElementById('main-title').textContent = 'Hub Pedagógico SLAP';
             document.getElementById('main-description').textContent = 'Bem-vindo ao seu centro de recursos para professores do SLAP! Navegue pelas seções para acessar currículos, diretrizes, calendário e muito mais.';
 
+            document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
             document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
             document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
             document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
@@ -1196,12 +1432,12 @@
             document.getElementById('nav-method').addEventListener('click', renderMethodSection);
             document.getElementById('nav-pdi').addEventListener('click', renderPdiSection);
             document.getElementById('nav-regimento').addEventListener('click', renderRegimentoInternoSection);
+            document.getElementById('nav-links').addEventListener('click', renderLinksUteisSection);
             
-            renderSlapLevelsSection(); // Carrega a seção "Níveis SLAP" por padrão ao iniciar
+            renderInicioSection(); // Carrega a seção "Início" por padrão
         });
 
     </script>
 
 </body>
 </html>
-
