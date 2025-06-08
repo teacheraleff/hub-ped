@@ -12,9 +12,20 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: SLAP Brand Colors: #F1D24B (Primary Yellow), #FF5C3D (Secondary Orange/Red), #84C7DF (Secondary Light Blue), #8671D1 (Secondary Purple) -->
     <style>
+        html, body {
+            height: 100%;
+        }
         body {
             font-family: 'DM Sans', sans-serif;
             line-height: 1.25; /* leading-tight */
+            display: flex;
+            flex-direction: column;
+        }
+        #app-container {
+            flex: 1 0 auto;
+        }
+        footer {
+            flex-shrink: 0;
         }
         .nav-button.active, .hub-nav-button.active, .creators-tab.active {
             background-color: #FFFBEB; /* yellow-50 */
@@ -48,6 +59,7 @@
         .method-phase-card {
             border-radius: 0.75rem; /* rounded-xl */
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            overflow: hidden;
         }
         .method-phase-card:hover {
             transform: translateY(-5px);
@@ -59,10 +71,16 @@
         .method-phase-apply { background-color: #8671D1; color: #ffffff; }
         .method-phase-perform { background-color: #FF5C3D; color: #ffffff; }
 
-        .method-phase-card h3 { font-weight: 700; }
-        .method-phase-card p { line-height: 1.5; text-align: left; }
-        .method-phase-spark h3, .method-phase-learn h3, .method-phase-apply h3, .method-phase-perform h3 { color: inherit; }
-        
+        /* Ensure expanded FAQ answer in method card inherits the parent's color */
+        .method-phase-spark .faq-answer.open { background-color: #F1D24B; }
+        .method-phase-learn .faq-answer.open { background-color: #84C7DF; }
+        .method-phase-apply .faq-answer.open { background-color: #8671D1; }
+        .method-phase-perform .faq-answer.open { background-color: #FF5C3D; }
+
+        .method-phase-card h3 { font-weight: 700; color: inherit; }
+        .method-phase-card .faq-question { color: inherit; } /* Ensure question text inherits color */
+        .method-phase-card .faq-answer p { line-height: 1.5; text-align: left; }
+
         /* Creators Room Cards */
         .prohibited-rule-card { background-color: #fef2f2; border: 1px solid #f87171; color: #b91c1c; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); line-height: 1.5; position: relative; }
         .prohibited-rule-card .icon-x { position: absolute; top: 0.75rem; right: 0.75rem; color: #ef4444; }
@@ -133,97 +151,238 @@
             border-top: 15px solid #a8a29e; /* stone-400 */
         }
         
-        /* Regimento Interno & Links Úteis Styles */
-        .regimento-section h4, .links-uteis-section h4 {
+        /* New Regimento Interno Styles */
+        .regimento-section {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e7e5e4;
+        }
+        .regimento-topic {
+            margin-bottom: 2.5rem;
+        }
+        .regimento-topic:last-child {
+            margin-bottom: 0;
+        }
+        .regimento-topic h4 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #44403c; /* stone-700 */
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #F1D24B;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .regimento-topic h5 {
             font-size: 1.125rem; /* text-lg */
-            font-weight: 600; /* font-semibold */
-            margin-top: 1.5rem; /* mt-6 */
-            margin-bottom: 0.5rem; /* mb-2 */
+            font-weight: 600;
+            color: #57534e; /* stone-600 */
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-        .regimento-section p, .regimento-section ul, .links-uteis-section ul {
-            line-height: 1.75; /* leading-loose */
-            margin-bottom: 1rem; /* mb-4 */
+        .regimento-topic p, .regimento-topic ul {
+            line-height: 1.75;
+            color: #78716c; /* stone-500 */
         }
-        .regimento-section ul, .links-uteis-section ul {
+        .regimento-topic ul {
+            list-style-position: outside;
             list-style-type: disc;
-            padding-left: 1.5rem;
+            padding-left: 1.25rem;
+            margin-top: 0.75rem;
         }
-        .links-uteis-section .faq-item {
-            background-color: #fffbeb; /* yellow-50 */
+         .regimento-topic ul li {
+            padding-left: 0.25rem;
+            margin-bottom: 0.5rem;
         }
-         .links-uteis-section a {
-            color: #84C7DF;
+        
+        /* Links Úteis Styles */
+         .links-uteis-section .faq-item {
+            background-color: #f5f5f4; /* stone-100 */
+        }
+        /* Removed custom link styling to use browser default for better contrast */
+        
+        /* Test Your English Styles */
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.75rem;
+            text-align: left;
+            background-color: #f5f5f4; /* stone-100 */
+            border-radius: 0.5rem;
             font-weight: 500;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
         }
-         .links-uteis-section a:hover {
-            text-decoration: underline;
-            color: #55b7d1;
+        .quiz-option:hover:not(:disabled) {
+            background-color: #e7e5e4; /* stone-200 */
+            border-color: #F1D24B;
         }
-
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .quiz-option.correct {
+            background-color: #D1FAE5; /* green-200 */
+            border-color: #34D399; /* green-400 */
+            color: #065F46; /* green-800 */
+        }
+        .quiz-option.incorrect {
+            background-color: #FEE2E2; /* red-200 */
+            border-color: #F87171; /* red-400 */
+            color: #991B1B; /* red-800 */
+        }
+        .quiz-feedback {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        .quiz-feedback.correct {
+            background-color: #ECFDF5; /* green-50 */
+            color: #059669; /* green-600 */
+        }
+         .quiz-feedback.incorrect {
+            background-color: #FEF2F2; /* red-50 */
+            color: #DC2626; /* red-600 */
+        }
+        #quiz-explanation strong {
+            font-weight: 700;
+        }
+        .quiz-nav-button {
+             background-color: #F1D24B; color: #44403c; border: none; padding: 0.75rem 1.5rem; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;
+        }
+         .quiz-nav-button:hover {
+            background-color: #eab308;
+        }
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
 
-    <div id="app" class="min-h-screen md:flex">
-        
-        <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6">
-            <div class="mb-6 text-center">
-                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
-            </div>
-            <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico SLAP</h1>
-            <nav id="main-navigation" class="space-y-2">
-                 <button id="nav-inicio" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                    Início
-                </button>
-                <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
-                    Níveis SLAP
-                </button>
-                <button id="nav-cefr" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4"></path><path d="M8 12h8"></path></svg>
-                    CEFR
-                </button>
-                <button id="nav-deep-dive" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    Deep Dive
-                </button>
-                <button id="nav-creators-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M15 12h.01"></path><path d="M12 12h.01"></path><path d="M9 12h.01"></path><path d="M12 2a3.5 3.5 0 0 0 0 7 3.5 3.5 0 0 0 0-7z"></path><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M22 12a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0 7 0z"></path><path d="M2 12a3.5 3.5 0 0 0 7 0 3.5 3.5 0 0 0-7 0z"></path></svg>
-                    Creators Room
-                </button>
-                <button id="nav-method" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
-                    Método SLAP
-                </button>
-                <button id="nav-pdi" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    PDI
-                </button>
-                <button id="nav-regimento" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Regimento Interno
-                </button>
-                <button id="nav-links" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-                    Links Úteis
-                </button>
-            </nav>
-        </aside>
-
-        <main class="flex-1 p-4 sm:p-6 md:p-8">
-            <header id="main-header" class="mb-8">
-                <h2 id="main-title" class="text-3xl font-bold text-[#F1D24B]"></h2>
-                <p id="main-description" class="mt-2 text-stone-600"></p>
-            </header>
+    <div id="app-container">
+        <div id="app" class="min-h-screen md:flex">
             
-            <div id="content-area">
-                <!-- Conteúdo será injetado aqui dinamicamente -->
-            </div>
-        </main>
+            <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6">
+                <div class="mb-6 text-center">
+                    <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
+                </div>
+                <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico SLAP</h1>
+                <nav id="main-navigation" class="space-y-2">
+                     <button id="nav-inicio" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        Início
+                    </button>
+                    <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+                        Níveis SLAP
+                    </button>
+                     <button id="nav-test-english" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 12a9 9 0 0 1-9 9_c-1.6 0-3.1-.4-4.4-1.2_m-4.5 1.2A9 9 0 0 1 3 12c0-4.6 3.4-8.4 7.8-9_M12 3v10_l4-2"/><path d="m18.4 2.6-8.2 8.2"/></svg>
+                        Test Your English
+                    </button>
+                    <button id="nav-cefr" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4"></path><path d="M8 12h8"></path></svg>
+                        CEFR
+                    </button>
+                    <button id="nav-deep-dive" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        Deep Dive
+                    </button>
+                    <button id="nav-creators-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M15 12h.01"></path><path d="M12 12h.01"></path><path d="M9 12h.01"></path><path d="M12 2a3.5 3.5 0 0 0 0 7 3.5 3.5 0 0 0 0-7z"></path><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M22 12a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0 7 0z"></path><path d="M2 12a3.5 3.5 0 0 0 7 0 3.5 3.5 0 0 0-7 0z"></path></svg>
+                        Creators Room
+                    </button>
+                    <button id="nav-method" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
+                        Método SLAP
+                    </button>
+                    <button id="nav-pdi" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        PDI
+                    </button>
+                    <button id="nav-regimento" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Regimento Interno
+                    </button>
+                    <button id="nav-links" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                        Links Úteis
+                    </button>
+                </nav>
+            </aside>
+    
+            <main class="flex-1 p-4 sm:p-6 md:p-8">
+                <header id="main-header" class="mb-8">
+                    <h2 id="main-title" class="text-3xl font-bold text-[#F1D24B]"></h2>
+                    <p id="main-description" class="mt-2 text-stone-600"></p>
+                </header>
+                
+                <div id="content-area">
+                    <!-- Conteúdo será injetado aqui dinamicamente -->
+                </div>
+            </main>
+        </div>
     </div>
 
+    <footer class="bg-white border-t border-stone-200 mt-auto">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col items-center sm:flex-row sm:justify-between">
+                <div class="text-center sm:text-left mb-4 sm:mb-0">
+                    <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/64x64/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-16 h-auto mx-auto sm:mx-0 rounded-lg">
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://www.instagram.com/slap.idiomas/" target="_blank" rel="noopener noreferrer" class="text-stone-500 hover:text-[#F1D24B] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@SLAPIdiomas" target="_blank" rel="noopener noreferrer" class="text-stone-500 hover:text-[#F1D24B] transition-colors">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-stone-500 text-sm mt-6 pt-6 border-t border-stone-200">
+                © 2024 SLAP Idiomas. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+
     <script>
+        const motivationalQuotes = [
+            { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+            { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
+            { quote: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+            { quote: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { quote: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+            { quote: "You are never too old to set another goal or to dream a new dream.", author: "C.S. Lewis" },
+            { quote: "Act as if what you do makes a difference. It does.", author: "William James" },
+            { quote: "The journey of a thousand miles begins with a single step.", author: "Lao Tzu" },
+            { quote: "What you get by achieving your goals is not as important as what you become by achieving your goals.", author: "Zig Ziglar" },
+            { quote: "Either you run the day or the day runs you.", author: "Jim Rohn" },
+            { quote: "I can't change the direction of the wind, but I can adjust my sails to always reach my destination.", author: "Jimmy Dean" },
+            { quote: "Perfection is not attainable, but if we chase perfection we can catch excellence.", author: "Vince Lombardi" },
+            { quote: "The best way to predict the future is to create it.", author: "Peter Drucker" },
+            { quote: "Don’t watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+            { quote: "A creative man is motivated by the desire to achieve, not by the desire to beat others.", author: "Ayn Rand" },
+            { quote: "If you want to lift yourself up, lift up someone else.", author: "Booker T. Washington" },
+            { quote: "Limitations live only in our minds. But if we use our imaginations, our possibilities become limitless.", author: "Jamie Paolinetti" },
+            { quote: "The harder the conflict, the more glorious the triumph.", author: "Thomas Paine" },
+            { quote: "I am not a product of my circumstances. I am a product of my decisions.", author: "Stephen Covey" },
+            { quote: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
+            { quote: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" },
+            { quote: "The mind is everything. What you think you become.", author: "Buddha" },
+        ];
+        
+        const employeeOfTheMonth = {
+            name: "Ana Clara",
+            photo: "https://placehold.co/400x400/84C7DF/44403c?text=Ana",
+            reason: "Pelo seu incrível empenho na organização dos eventos culturais e por sempre trazer novas ideias que engajam nossos alunos e equipe. Sua proatividade é uma inspiração para todos!"
+        };
+
         const courseData = [
             {
                 name: "Starter 1",
@@ -414,7 +573,9 @@
         
         function showHeader() {
              mainHeader.classList.remove('hidden');
-             contentArea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-5', 'gap-8');
+             contentArea.classList.remove('lg:col-span-5'); // Remove class if it exists from other layouts
+             contentArea.classList.remove('grid'); // Remove class if it exists from other layouts
+
         }
         
         function hideHeader() {
@@ -425,9 +586,12 @@
         function renderInicioSection() {
             setActiveHubButton('nav-inicio');
             hideHeader();
+            
+            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+
             contentArea.innerHTML = `
-                <section class="text-center">
-                    <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8">
+                <section>
+                    <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8 text-center">
                          <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-32 h-auto mx-auto rounded-lg mb-4">
                         <h2 class="text-4xl md:text-5xl font-bold">Bem-vindos!</h2>
                         <p class="mt-2 text-lg">Seu hub pedagógico para integrar, facilitar e potencializar o ensino no SLAP.</p>
@@ -450,16 +614,25 @@
                             <span class="font-semibold text-stone-700">Regimento</span>
                         </button>
                     </div>
-                     <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-2xl font-bold text-[#F1D24B] mb-4">Dica de Música do Dia</h3>
-                        <div class="flex flex-col sm:flex-row items-center gap-6">
-                            <img src="https://i.scdn.co/image/ab67616d0000b273461419353a444640131ab683" alt="Capa do álbum de Taylor Swift" class="w-24 h-24 rounded-lg shadow-md">
-                            <div class="text-left">
-                                <p class="text-xl font-bold">Fortnight</p>
-                                <p class="text-stone-300">Taylor Swift ft. Post Malone</p>
-                                <a href="https://open.spotify.com/track/6dGcF5qw3a6s2LpL2n0h49" target="_blank" class="mt-2 inline-block bg-green-500 text-white font-bold py-2 px-4 rounded-full hover:bg-green-600 transition-colors">
-                                    Ouvir no Spotify
-                                </a>
+                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white text-stone-800 p-6 rounded-xl shadow-lg flex flex-col">
+                            <h3 class="text-2xl font-bold text-stone-800 mb-4">Destaque do Mês</h3>
+                             <div class="flex flex-col sm:flex-row items-center gap-6">
+                                <img src="${employeeOfTheMonth.photo}" onerror="this.onerror=null;this.src='https://placehold.co/150/e0e0e0/ffffff?text=Foto'" alt="Destaque do Mês: ${employeeOfTheMonth.name}" class="w-32 h-32 rounded-full object-cover flex-shrink-0">
+                                <div class="text-center sm:text-left">
+                                    <p class="text-stone-600 leading-relaxed">${employeeOfTheMonth.reason}</p>
+                                    <cite class="text-[#84C7DF] font-bold not-italic block mt-4">- ${employeeOfTheMonth.name}</cite>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Frase do Dia</h3>
+                            <div class="flex flex-col items-center gap-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c.25 0 .25.25.25.5v3.5c0 .25-.25.5-.25.5H16c-1.25 0-2 .75-2 2z"></path></svg>
+                                <blockquote class="text-xl italic text-stone-300 text-center">
+                                    "${randomQuote.quote}"
+                                </blockquote>
+                                <cite class="text-stone-400 font-semibold not-italic">- ${randomQuote.author}</cite>
                             </div>
                         </div>
                     </div>
@@ -468,14 +641,13 @@
         }
 
         function renderSlapLevelsSection() {
-            console.log("renderSlapLevelsSection called"); // Log para depuração
             setActiveHubButton('nav-slap-levels');
             showHeader();
             document.getElementById('main-title').textContent = 'Níveis SLAP: Seu Guia Completo do Currículo';
             document.getElementById('main-description').textContent = 'Explore a estrutura completa do nosso currículo, com detalhes de cada nível e a distribuição das aulas. Use a navegação lateral para visualizar o conteúdo de cada etapa.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 flex flex-col md:flex-row gap-8">
+                <section class="flex flex-col md:flex-row gap-8">
                     <div id="level-sub-navigation" class="md:w-1/4 bg-white p-4 rounded-xl shadow-sm border border-stone-200">
                         <h3 class="text-lg font-semibold text-stone-800 mb-4">Níveis de Curso</h3>
                         <nav class="space-y-2">
@@ -515,7 +687,6 @@
         }
 
         function renderLevel(index) {
-            console.log("renderLevel called for index:", index); // Log para depuração
             const level = courseData[index];
             
             document.getElementById('lessons-title').textContent = `Aulas do Nível: ${level.name}`;
@@ -557,14 +728,13 @@
         }
 
         function renderCefrSection() {
-            console.log("renderCefrSection called"); // Log para depuração
             setActiveHubButton('nav-cefr');
              showHeader();
             document.getElementById('main-title').textContent = 'CEFR: Alinhamento de Proficiência SLAP';
             document.getElementById('main-description').textContent = 'Compreenda a proficiência de cada nível do SLAP no Quadro Comum Europeu de Referência para Línguas (CEFR), um guia global para o aprendizado de idiomas.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <h3 class="text-lg font-semibold mb-4 text-stone-800">Níveis CEFR e SLAP</h3>
                     <div class="space-y-4 mb-8">
                         ${cefrLevels.map(cefr => `
@@ -607,21 +777,27 @@
         }
 
         function toggleFaq(event) {
-            console.log("toggleFaq called"); // Log para depuração
-            const faqItem = event.currentTarget.closest('.faq-item');
+            const faqItem = event.currentTarget.closest('.faq-item, .method-phase-card');
             const answer = faqItem.querySelector('.faq-answer');
             const arrow = faqItem.querySelector('.faq-arrow');
-            if (answer.classList.contains('open')) {
-                answer.classList.remove('open');
-                arrow.classList.remove('rotate');
-            } else {
-                // Fechar todas as outras respostas antes de abrir a atual
-                document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+            
+            const isOpening = !answer.classList.contains('open');
+
+            // Close all other open FAQs before opening the new one
+            document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+                if (openAnswer !== answer) {
                     openAnswer.classList.remove('open');
-                    openAnswer.previousElementSibling.querySelector('.faq-arrow').classList.remove('rotate');
-                });
+                    const otherArrow = openAnswer.parentElement.querySelector('.faq-arrow');
+                    if (otherArrow) otherArrow.classList.remove('rotate');
+                }
+            });
+
+            if (isOpening) {
                 answer.classList.add('open');
-                arrow.classList.add('rotate');
+                if (arrow) arrow.classList.add('rotate');
+            } else {
+                answer.classList.remove('open');
+                if (arrow) arrow.classList.remove('rotate');
             }
         }
 
@@ -658,13 +834,12 @@
         ];
 
         function renderGoodPracticesContent() {
-            console.log("renderGoodPracticesContent called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
             showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Boas Práticas para Redes Sociais';
             document.getElementById('main-description').textContent = 'Dicas essenciais para criar conteúdo engajador e alinhado com a marca SLAP no Instagram e TikTok.';
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="creators-tab-container">
                         <button class="creators-tab active" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
                         <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
@@ -716,13 +891,12 @@
         ];
 
         function renderGlossaryContent() {
-            console.log("renderGlossaryContent called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
              showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Glossário de Termos';
             document.getElementById('main-description').textContent = 'Entenda os termos mais comuns no universo de conteúdo e marketing digital, explicados de forma simples e prática.';
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="creators-tab-container">
                         <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
                         <button class="creators-tab active" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
@@ -746,13 +920,12 @@
         }
 
         function renderContentFunnel() {
-            console.log("renderContentFunnel called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
             showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: Funil de Conteúdo';
             document.getElementById('main-description').textContent = 'Compreenda como construir conteúdos estratégicos para cada etapa da jornada do seu público, do reconhecimento à conversão.';
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="creators-tab-container">
                         <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
                         <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
@@ -791,13 +964,12 @@
         }
         
         function renderProhibitedContent() {
-            console.log("renderProhibitedContent called");
             setActiveHubButton('nav-creators-room');
              showHeader();
             document.getElementById('main-title').textContent = 'Creators Room: O Que NÃO Fazer';
             document.getElementById('main-description').textContent = 'Diretrizes claras sobre conteúdos e práticas a serem evitadas para manter a integridade, o profissionalismo e a imagem do SLAP.';
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="creators-tab-container">
                         <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
                         <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
@@ -827,33 +999,31 @@
 
 
         function renderCreatorsRoom() {
-            console.log("renderCreatorsRoom called"); // Log para depuração
             setActiveHubButton('nav-creators-room');
             showHeader();
             window.renderGoodPracticesContent(); // Default to Good Practices when Creators Room is opened
         }
 
         function renderMethodSection() {
-            console.log("renderMethodSection called"); // Log para depuração
             setActiveHubButton('nav-method');
             showHeader();
             document.getElementById('main-title').textContent = 'Método SLAP: Guia de Ensino Dinâmico';
             document.getElementById('main-description').textContent = 'Nosso método é um guia para planejar aulas de inglês engajadoras, progressivas e com foco na prática ativa. Ele é dividido em quatro fases: SPARK, LEARN, APPLY e PERFORM.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                       <div class="faq-item method-phase-card method-phase-spark">
+                       <div class="method-phase-card method-phase-spark">
                             <div class="faq-question p-4">
                                 <h3 class="text-xl font-bold">SPARK</h3>
-                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <svg class="faq-arrow w-6 h-6 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
                             <div class="faq-answer">
                                 <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
                                 <p class="px-4 pb-4">Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
                             </div>
                         </div>
-                        <div class="faq-item method-phase-card method-phase-learn">
+                        <div class="method-phase-card method-phase-learn">
                             <div class="faq-question p-4">
                                 <h3 class="text-xl font-bold">LEARN</h3>
                                 <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -863,7 +1033,7 @@
                                 <p class="px-4 pb-4">Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
                             </div>
                         </div>
-                         <div class="faq-item method-phase-card method-phase-apply">
+                         <div class="method-phase-card method-phase-apply">
                             <div class="faq-question p-4">
                                 <h3 class="text-xl font-bold">APPLY</h3>
                                 <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -873,7 +1043,7 @@
                                 <p class="px-4 pb-4">Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
                             </div>
                         </div>
-                        <div class="faq-item method-phase-card method-phase-perform">
+                        <div class="method-phase-card method-phase-perform">
                             <div class="faq-question p-4">
                                 <h3 class="text-xl font-bold">PERFORM</h3>
                                 <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -886,21 +1056,21 @@
                     </div>
                      <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Exemplos de Atividades por Fase</h3>
                     <div class="space-y-3">
-                        <div class="faq-item">
-                            <div class="faq-question bg-[#F1D24B] text-stone-800"><span>Spark</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                            <div class="faq-answer"><ul><li>Atividades com séries e músicas</li><li>Quebra-gelos</li><li>Warm-ups</li><li>Lead-ins leves para introdução de tema</li></ul></div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#F1D24B] mr-3"></span>Spark</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Atividades com séries e músicas</li><li>Quebra-gelos</li><li>Warm-ups</li><li>Lead-ins leves para introdução de tema</li></ul></div>
                         </div>
-                         <div class="faq-item">
-                            <div class="faq-question bg-[#84C7DF] text-stone-800"><span>Learn</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                            <div class="faq-answer"><ul><li>Apresentação de frases e vocabulário</li><li>Comparação de estruturas</li><li>Atividades explicativas</li></ul></div>
+                         <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#84C7DF] mr-3"></span>Learn</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Apresentação de frases e vocabulário</li><li>Comparação de estruturas</li><li>Atividades explicativas</li></ul></div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question bg-[#8671D1] text-white"><span>Apply</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                            <div class="faq-answer"><ul><li>Fill the gaps</li><li>Unscrambling</li><li>Perguntas dirigidas com base no conteúdo aprendido</li></ul></div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#8671D1] mr-3"></span>Apply</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Fill the gaps</li><li>Unscrambling</li><li>Perguntas dirigidas com base no conteúdo aprendido</li></ul></div>
                         </div>
-                        <div class="faq-item">
-                            <div class="faq-question bg-[#FF5C3D] text-white"><span>Perform</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                            <div class="faq-answer"><ul><li>Perguntas abertas</li><li>Debates</li><li>Roleplays e simulações</li></ul></div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#FF5C3D] mr-3"></span>Perform</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Perguntas abertas</li><li>Debates</li><li>Roleplays e simulações</li></ul></div>
                         </div>
                     </div>
                 </section>
@@ -912,33 +1082,6 @@
                 button.addEventListener('click', toggleFaq);
             });
         };
-
-        const methodFaqs = [
-            {
-                question: "Quem criou o método?",
-                answer: "O método foi criado por Aleff Rodrigues, CEO do SLAP. Ele desenvolveu o método com base em sua ampla experiência em sala de aula, observando os desafios reais enfrentados pelos alunos. O foco do método é respeitar as fases naturais de aprendizado e garantir evolução prática e estruturada, combinando comunicação real com o desenvolvimento da confiança do aluno."
-            },
-            {
-                question: "Quais são as influências do método?",
-                answer: "O método SLAP tem grande influência de Jeremy Harmer, referência mundial no ensino de inglês, e também se inspira em elementos da cultura americana, com base no PBL (Problem-Based Learning) — uma abordagem que usa situações reais para desenvolver habilidades linguísticas e pensamento crítico."
-            },
-            {
-                question: "É um método público?",
-                answer: "Não. O método SLAP é exclusivo do SLAP e não está disponível publicamente. Ele foi desenvolvido internamente para uso próprio e segue um plano de ensino e uma lógica pedagógica registrada."
-            },
-            {
-                question: "Quantas fases tem o método?",
-                answer: "O método é dividido em quatro fases principais: Spark (descoberta e motivação), Learn (estrutura e base linguística), Apply (uso prático do inglês no dia a dia), Perform (fluência, autoconfiança e domínio)."
-            },
-            {
-                question: "O método é adequado para qualquer idade?",
-                answer: "O método é voltado principalmente para adolescentes e adultos, pois a abordagem exige autonomia, análise e aplicação prática do conteúdo. No entanto, pode ser adaptado em alguns casos com acompanhamento adequado."
-            },
-            {
-                question: "O método usa material didático tradicional?",
-                answer: "Não. O SLAP trabalha com material próprio, planejado aula por aula com base nas fases do método. Isso permite que cada aula tenha um propósito pedagógico claro, promovendo mais engajamento e foco na comunicação real."
-            }
-        ];
         
         const certifications = [
             { name: "TKT", description: "Teaching Knowledge Test", bonus: "R$30/mês" },
@@ -1031,104 +1174,103 @@
                 { title: "Aula 1: Verbo To Be - Explicação Completa (YouTube)", url: "https://www.youtube.com/watch?v=3R-IH-V7lwQ" },
                 { title: "Aula 2: Verbo To Be - Gramática e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=vX1TCxH_NZs" },
                 { title: "Exercício 1: Pratique o Verbo To Be (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=8406" },
-                { title: "Exercício 2: Verbo To Be - Preencha os Espaços (British Council)", url: "https://learnenglish.britishcouncil.org/grammar/beginner-to-pre-intermediate/be" },
+                { title: "Exercício 2: Verbo To Be - Preencha os Espaços (British Council)", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/verb-be" },
                 { title: "Exercício 3: Teste Interativo - Verbo To Be (Perfect English Grammar)", url: "https://www.perfect-english-grammar.com/verb-to-be-exercise-1.html" }
             ],
             "Simple Present": [
                 { title: "Aula 1: Simple Present Tense - Aula Explicativa (YouTube)", url: "https://www.youtube.com/watch?v=7dq0YJS_56c" },
                 { title: "Aula 2: Simple Present com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=ACDlqL7HpWI" },
                 { title: "Exercício 1: Simple Present - Pratique Aqui (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=11340" },
-                { title: "Exercício 2: British Council - Simple Present Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/present-simple" },
+                { title: "Exercício 2: British Council - Simple Present Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/present-simple" },
                 { title: "Exercício 3: Perfect English Grammar - Simple Present Quiz", url: "https://www.perfect-english-grammar.com/simple-present-exercise-1.html" }
             ],
             "Simple Past": [
                  { title: "Aula 1: Simple Past Tense - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=5dGk4rQZEk4" },
                  { title: "Aula 2: Simple Past com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=zjvccXmrmXA" },
-                 { title: "Exercício 1: Pratique Simple Past (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15228" },
-                 { title: "Exercício 2: British Council - Simple Past Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/past-simple" },
+                 { title: "Exercício 1: Pratique Simple Past (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15870" },
+                 { title: "Exercício 2: British Council - Simple Past Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/past-simple-regular-verbs" },
                  { title: "Exercício 3: Perfect English Grammar - Past Simple Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
             ],
             "How Many / How Much": [
-                 { title: "Aula 1: How Many vs How Much - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=cz0_vY-rHZM" },
+                 { title: "Aula 1: How Many vs How Much (YouTube - English with Lucy)", url: "https://www.youtube.com/watch?v=ppD_S_32a2I" },
                  { title: "Aula 2: Quantifiers - How Many e How Much (YouTube)", url: "https://www.youtube.com/watch?v=Ovd1SYqDBa0" },
                  { title: "Exercício 1: Pratique How Many / How Much (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2237" },
-                 { title: "Exercício 2: British Council - Quantifiers Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/quantifiers" },
+                 { title: "Exercício 2: British Council - Quantifiers Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/much-many-lot-little-few" },
                  { title: "Exercício 3: Perfect English Grammar - How Many / How Much Quiz", url: "https://www.perfect-english-grammar.com/how-many-how-much-exercise-1.html" }
             ],
             "Genitive Case": [
-                 { title: "Aula 1: Genitive Case - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=Fx4SNMg6ZmM" },
+                 { title: "Aula 1: Genitive Case - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=TAYcNEb3dUM" },
                  { title: "Aula 2: Possessive Case - Genitive (YouTube)", url: "https://www.youtube.com/watch?v=Urs8G8iR6-A" },
                  { title: "Exercício 1: Pratique Genitive Case (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1835" },
-                 { title: "Exercício 2: British Council - Possessives Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/possessives" },
+                 { title: "Exercício 2: British Council - Possessives Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/possessives" },
                  { title: "Exercício 3: Perfect English Grammar - Possessive Case Quiz", url: "https://www.perfect-english-grammar.com/possessive-case-exercise-1.html" }
             ],
              "Causative Form": [
                  { title: "Aula 1: Causative Form - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=QXgYgC-qhRQ" },
                  { title: "Aula 2: Causative Have / Get (YouTube)", url: "https://www.youtube.com/watch?v=XYRTTl_NbMQ" },
                  { title: "Exercício 1: Pratique Causative Form (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2705" },
-                 { title: "Exercício 2: British Council - Causative Practice", url: "https://learnenglish.britishcouncil.org/grammar/upper-intermediate-and-above/causative-verbs" },
+                 { title: "Exercício 2: British Council - Causative Practice", url: "https://learnenglish.britishcouncil.org/grammar/b2-c1-grammar/causative-verbs-have-something-done" },
                  { title: "Exercício 3: Perfect English Grammar - Causative Quiz", url: "https://www.perfect-english-grammar.com/causative-exercise-1.html" }
             ],
              "Zero Conditional": [
-                 { title: "Aula 1: Zero Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=Jp74t8v-M8I" },
-                 { title: "Aula 2: Zero Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=3N4jz6-w9H4" },
+                 { title: "Aula 1: Zero Conditional (BBC Learning English)", url: "https://www.youtube.com/watch?v=1t2s4WbWf5c" },
+                 { title: "Aula 2: Zero Conditional - Explained (YouTube)", url: "https://www.youtube.com/watch?v=Afk-TqOtu4s" },
                  { title: "Exercício 1: Pratique Zero Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1433" },
-                 { title: "Exercício 2: British Council - Zero Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/zero-conditional" },
+                 { title: "Exercício 2: British Council - Zero Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-zero-conditional" },
                  { title: "Exercício 3: Perfect English Grammar - Zero Conditional Quiz", url: "https://www.perfect-english-grammar.com/zero-conditional-exercise-1.html" }
             ],
             "First Conditional": [
                  { title: "Aula 1: First Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=frY2lxk8qBo" },
                  { title: "Aula 2: First Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=5UiG0xOKp1I" },
                  { title: "Exercício 1: Pratique First Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1438" },
-                 { title: "Exercício 2: British Council - First Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/first-conditional" },
+                 { title: "Exercício 2: British Council - First Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-first-conditional" },
                  { title: "Exercício 3: Perfect English Grammar - First Conditional Quiz", url: "https://www.perfect-english-grammar.com/first-conditional-exercise-1.html" }
             ],
             "Second Conditional": [
                  { title: "Aula 1: Second Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=dAzX0iYdFXo" },
                  { title: "Aula 2: Second Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=73fWk7riJok" },
                  { title: "Exercício 1: Pratique Second Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1441" },
-                 { title: "Exercício 2: British Council - Second Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/second-conditional" },
+                 { title: "Exercício 2: British Council - Second Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-second-conditional" },
                  { title: "Exercício 3: Perfect English Grammar - Second Conditional Quiz", url: "https://www.perfect-english-grammar.com/second-conditional-exercise-1.html" }
             ],
             "Verbos no Passado": [
                  { title: "Aula 1: Verbos no Passado - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=fVd20G9YFwg" },
                  { title: "Aula 2: Verbos Regulares e Irregulares no Passado (YouTube)", url: "https://www.youtube.com/watch?v=6iMzxR1qtxo" },
                  { title: "Exercício 1: Pratique Verbos no Passado (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15870" },
-                 { title: "Exercício 2: British Council - Past Verbs Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/past-simple" },
+                 { title: "Exercício 2: British Council - Past Verbs Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/past-simple-regular-verbs" },
                  { title: "Exercício 3: Perfect English Grammar - Past Verbs Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
             ],
             "Should": [
                  { title: "Aula 1: Should - Uso e Explicação (YouTube)", url: "https://www.youtube.com/watch?v=FZtEZGxLMjs" },
                  { title: "Aula 2: Should - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=R12t3DF8Hf0" },
                  { title: "Exercício 1: Pratique Should (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1839" },
-                 { title: "Exercício 2: British Council - Should Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-should" },
-                 { title: "Exercício 3: Perfect English Grammar - Should Quiz", url: "https://www.perfect-english-grammar.com/should-exercise-1.html" }
+                 { title: "Exercício 2: British Council - Should Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/should-and-shouldnt-for-advice" },
+                 { title: "Exercício 3: Perfect English Grammar - Should Quiz", url: "https://www.perfect-english-grammar.com/modal-verbs-of-obligation-exercise-1.html" }
             ],
             "Would": [
                  { title: "Aula 1: Would - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=0hrWZ18xgLM" },
                  { title: "Aula 2: Would - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=rxzVhHcEYvs" },
                  { title: "Exercício 1: Pratique Would (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2331" },
-                 { title: "Exercício 2: British Council - Would Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-would" },
-                 { title: "Exercício 3: Perfect English Grammar - Would Quiz", url: "https://www.perfect-english-grammar.com/would-exercise-1.html" }
+                 { title: "Exercício 2: British Council - Would Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/would" },
+                 { title: "Exercício 3: Perfect English Grammar - Would Quiz", url: "https://www.perfect-english-grammar.com/conditionals-exercise-1.html" }
             ],
             "Could": [
                  { title: "Aula 1: Could - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=dtK9CcrlKXc" },
                  { title: "Aula 2: Could - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=ln77HkqHHR0" },
                  { title: "Exercício 1: Pratique Could (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2432" },
-                 { title: "Exercício 2: British Council - Could Practice", url: "https://learnenglish.britishcouncil.org/grammar/intermediate-to-upper-intermediate/modals-could" },
-                 { title: "Exercício 3: Perfect English Grammar - Could Quiz", url: "https://www.perfect-english-grammar.com/could-exercise-1.html" }
+                 { title: "Exercício 2: British Council - Could Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/can-and-could-for-ability" },
+                 { title: "Exercício 3: Perfect English Grammar - Could Quiz", url: "https://www.perfect-english-grammar.com/can-could-be-able-to-exercise-1.html" }
             ]
         };
 
         function renderPdiSection() {
-            console.log("renderPdiSection called"); // Log para depuração
             setActiveHubButton('nav-pdi');
             showHeader();
             document.getElementById('main-title').textContent = 'PDI: Plano de Desenvolvimento Individual';
             document.getElementById('main-description').textContent = 'Este espaço é dedicado ao seu plano de carreira e desenvolvimento profissional no SLAP, oferecendo caminhos claros para evolução.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <h3 class="text-lg font-semibold mb-4 text-stone-800">O que é um PDI?</h3>
                     <p class="text-stone-700 mb-6">
                         Um Plano de Desenvolvimento Individual é uma ferramenta personalizada para impulsionar a carreira e o crescimento profissional dos professores, com caminhos claros para evolução dentro do SLAP.
@@ -1201,7 +1343,7 @@
             document.getElementById('main-description').textContent = 'Um mergulho profundo em desafios pedagógicos comuns, com orientações práticas para você navegar em situações complexas com mais segurança e confiança.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5">
+                <section>
                     <div class="info-box mt-0 mb-8 p-4 rounded-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -1280,110 +1422,73 @@
         
         function renderRegimentoInternoSection() {
             setActiveHubButton('nav-regimento');
-             showHeader();
+            showHeader();
             document.getElementById('main-title').textContent = 'Regimento Interno';
             document.getElementById('main-description').textContent = 'Diretrizes, políticas e procedimentos que orientam a conduta e as práticas de todos os colaboradores do SLAP.';
             
             contentArea.innerHTML = `
-                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200 regimento-section">
-                    <div class="space-y-4">
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Normas de Aula</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <h4>Pontualidade</h4>
-                                <p>Os professores devem estar presentes na sala com no mínimo 5 minutos de antecedência. Atrasos não devem reduzir a duração da aula.</p>
-                                <h4>Preparação</h4>
-                                <p>Verificar material didático, revisar conteúdo e testar recursos audiovisuais antes do início da aula.</p>
-                                <h4>PEF (Planilha de Presença e Falta)</h4>
-                                <p>Preencher no mesmo dia da aula, registrando conteúdo, data, presenças, faltas e observações relevantes.</p>
-                                <h4>Situações Insólitas</h4>
-                                <p>Comunicar imediatamente à coordenação qualquer situação atípica que possa afetar os alunos ou a instituição. Não tente resolver problemas graves de forma autônoma.</p>
-                            </div>
-                        </div>
+                <section class="regimento-section">
+                    
+                    <div class="regimento-topic">
+                        <h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+                            Normas de Aula
+                        </h4>
+                        <h5>Pontualidade</h5>
+                        <p>Os professores devem estar presentes na sala com no mínimo 5 minutos de antecedência. Atrasos não devem reduzir a duração da aula.</p>
+                        <h5>Preparação</h5>
+                        <p>Verificar material didático, revisar conteúdo e testar recursos audiovisuais antes do início da aula.</p>
+                        <h5>PEF (Planilha de Presença e Falta)</h5>
+                        <p>Preencher no mesmo dia da aula, registrando conteúdo, data, presenças, faltas e observações relevantes.</p>
+                        <h5>Situações Insólitas</h5>
+                        <p>Comunicar imediatamente à coordenação qualquer situação atípica que possa afetar os alunos ou a instituição. Não tente resolver problemas graves de forma autônoma.</p>
+                    </div>
 
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Substituições e Ausências</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <h4>Comunicação Prévia</h4>
-                                <p>Ausências previstas devem ser comunicadas à coordenação com pelo menos 48 horas de antecedência.</p>
-                                <h4>Processo de Substituição</h4>
-                                <p>A substituição deve ser validada pela coordenação. O professor pode indicar um substituto, mas a decisão final é da gestão.</p>
-                                 <h4>Passagem de Informações</h4>
-                                <p>O professor titular deve fornecer todas as instruções e materiais necessários para o substituto.</p>
-                                <h4>Ausências por Saúde ou Força Maior</h4>
-                                <p>Comunicar à coordenação o mais rápido possível. Atestados médicos são necessários para questões de saúde.</p>
-                                <h4>Faltas Persistentes</h4>
-                                <p>Faltas recorrentes, mesmo justificadas, podem prejudicar o andamento do curso e estarão sujeitas a medidas administrativas.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Reuniões e Formação</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <h4>Participação Obrigatória</h4>
-                                <p>A participação em todas as reuniões e formações é obrigatória. Ausências devem ser comunicadas e justificadas previamente.</p>
-                                <h4>Reuniões Pedagógicas</h4>
-                                <p>Encontros semanais obrigatórios, todas as sextas-feiras, para alinhamento e compartilhamento de práticas.</p>
-                                <h4>Reuniões Individuais e de Planejamento</h4>
-                                <p>Encontros mensais para acompanhamento individual e sessões extraordinárias para planejamentos específicos.</p>
-                                <h4>Formações Continuadas</h4>
-                                <p>Integradas às reuniões semanais e através do TTC (Teacher Training Course) anual, que é obrigatório.</p>
-                            </div>
-                        </div>
+                    <div class="regimento-topic">
+                        <h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg>
+                            Substituições e Ausências
+                        </h4>
+                        <ul>
+                            <li><strong>Comunicação Prévia:</strong> Ausências previstas devem ser comunicadas à coordenação com pelo menos 48 horas de antecedência.</li>
+                            <li><strong>Processo de Substituição:</strong> A substituição deve ser validada pela coordenação. O professor pode indicar um substituto, mas a decisão final é da gestão.</li>
+                            <li><strong>Passagem de Informações:</strong> O professor titular deve fornecer todas as instruções e materiais necessários para o substituto.</li>
+                            <li><strong>Ausências por Saúde ou Força Maior:</strong> Comunicar à coordenação o mais rápido possível. Atestados médicos são necessários.</li>
+                            <li><strong>Faltas Persistentes:</strong> Faltas recorrentes, mesmo justificadas, podem prejudicar o andamento do curso e estarão sujeitas a medidas administrativas.</li>
+                        </ul>
+                    </div>
 
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Relacionamento e Conduta Profissional</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <h4>Com Alunos, Colaboradores, Pais e Líderes</h4>
-                                <p>Manter sempre uma postura acolhedora, profissional e respeitosa. A comunicação deve ser clara e usar os canais oficiais.</p>
-                                <h4>Confidencialidade</h4>
-                                <p>É mandatório salvaguardar todas as informações sensíveis sobre alunos, famílias e assuntos internos da instituição.</p>
-                            </div>
-                        </div>
+                    <div class="regimento-topic">
+                        <h4>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            Relacionamento e Conduta Profissional
+                        </h4>
+                        <h5>Comunicação Geral</h5>
+                        <p>Manter sempre uma postura acolhedora, profissional e respeitosa com alunos, colaboradores, pais e líderes, utilizando os canais oficiais.</p>
+                        <h5>Confidencialidade</h5>
+                        <p>É mandatório salvaguardar todas as informações sensíveis sobre alunos, famílias e assuntos internos da instituição.</p>
+                    </div>
 
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Diretrizes para Creators</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <p>É estritamente proibido: divulgar aulas particulares, manifestar posicionamento político, plagiar conteúdo, fazer parcerias comerciais sem aprovação, vender produtos concorrentes, publicar conteúdo confidencial ou sexual e manter vínculo com instituições concorrentes.</p>
-                            </div>
-                        </div>
-
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>Materiais para Aulas e Criação de Conteúdo</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <h4>Para Aulas Online</h4>
-                                <p>Computador/notebook, câmera HD (720p+), headset com microfone, conexão de internet estável (10 Mbps+) e ambiente bem iluminado e sem distrações.</p>
-                                <h4>Para Creators</h4>
-                                <p>Celular com gravação em alta definição, iluminação profissional e microfone de qualidade.</p>
-                            </div>
-                        </div>
+                    <div class="regimento-topic">
+                        <h4>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                            Diretrizes para Creators
+                        </h4>
+                        <p>É estritamente proibido:</p>
+                        <ul>
+                            <li>Divulgar aulas particulares ou serviços concorrentes.</li>
+                            <li>Manifestar posicionamento político-partidário ou religioso.</li>
+                            <li>Plagiar conteúdo de outros criadores.</li>
+                            <li>Fazer parcerias comerciais sem aprovação prévia da direção.</li>
+                            <li>Publicar conteúdo confidencial, difamatório ou de natureza sexual.</li>
+                            <li>Manter vínculo empregatício ou de parceria com instituições concorrentes.</li>
+                        </ul>
                     </div>
                 </section>
             `;
             if (currentChart) {
                 currentChart.destroy();
             }
-             document.querySelectorAll('.faq-question').forEach(button => {
-                button.addEventListener('click', toggleFaq);
-            });
         }
         
         function renderLinksUteisSection() {
@@ -1393,7 +1498,7 @@
             document.getElementById('main-description').textContent = 'Um repositório central de aulas em vídeo e exercícios interativos para os principais tópicos gramaticais.';
 
             contentArea.innerHTML = `
-                 <section class="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 links-uteis-section">
+                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 links-uteis-section">
                     ${Object.entries(usefulLinks).map(([title, links]) => `
                         <div class="faq-item">
                             <div class="faq-question">
@@ -1404,7 +1509,7 @@
                                 <ul class="divide-y divide-stone-200">
                                     ${links.map(link => `
                                         <li class="py-3">
-                                            <a href="${link.url}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline transition-colors">${link.title}</a>
+                                            <a href="${link.url}" target="_blank" class="hover:underline transition-colors">${link.title}</a>
                                         </li>
                                     `).join('')}
                                 </ul>
@@ -1417,6 +1522,135 @@
                 button.addEventListener('click', toggleFaq);
             });
         }
+        
+        // --- QUIZ DATA AND FUNCTIONS ---
+        const quizData = [
+             { question: "She ___ a doctor. She's a teacher.", options: ["isn't", "aren't", "don't", "doesn't"], correctAnswer: 0, explanation: "Usamos 'isn't' (is not) para a terceira pessoa do singular (she/he/it) no verbo 'to be'." },
+             { question: "___ they live in London?", options: ["Do", "Does", "Is", "Are"], correctAnswer: 0, explanation: "'Do' é o auxiliar correto para fazer perguntas com 'they' no Simple Present." },
+             { question: "I went to the party, but I didn't see ___.", options: ["nobody", "anybody", "somebody", "everybody"], correctAnswer: 1, explanation: "'Anybody' é usado em frases negativas e interrogativas para significar 'ninguém' ou 'alguém'." },
+             { question: "This is the ___ movie I've ever seen.", options: ["best", "good", "better", "more good"], correctAnswer: 0, explanation: "'Best' é o superlativo de 'good', usado para comparar um item com todos os outros." },
+             { question: "If I ___ you, I would study more for the test.", options: ["was", "am", "were", "be"], correctAnswer: 2, explanation: "No Second Conditional, usamos 'were' para todas as pessoas (incluindo I, he, she, it) para expressar uma situação hipotética." },
+             { question: "He has been working here ___ 2010.", options: ["for", "since", "at", "on"], correctAnswer: 1, explanation: "'Since' é usado com um ponto específico no tempo (since 2010), enquanto 'for' é usado com uma duração (for 10 years)." },
+             { question: "My phone is much more expensive ___ yours.", options: ["that", "than", "then", "as"], correctAnswer: 1, explanation: "'Than' é a conjunção usada para fazer comparações." },
+             { question: "Could you please pass me ___ water?", options: ["a", "an", "the", "some"], correctAnswer: 3, explanation: "'Some' é usado para substantivos incontáveis como 'water' em pedidos ou ofertas." },
+             { question: "They ___ to the cinema yesterday.", options: ["go", "goes", "went", "gone"], correctAnswer: 2, explanation: "'Went' é o Simple Past do verbo irregular 'go'." },
+             { question: "I'm looking forward ___ you again.", options: ["to seeing", "to see", "see", "seeing"], correctAnswer: 0, explanation: "A expressão 'look forward to' é seguida por um verbo no gerúndio (-ing)." },
+             { question: "What does the idiom 'break a leg' mean?", options: ["To have an accident", "Good luck", "To work hard", "To tell a secret"], correctAnswer: 1, explanation: "'Break a leg' é uma expressão idiomática usada para desejar boa sorte a alguém, especialmente antes de uma apresentação." },
+             { question: "Choose the synonym for 'ubiquitous'.", options: ["Rare", "Everywhere", "Hidden", "Expensive"], correctAnswer: 1, explanation: "'Ubiquitous' significa algo que está ou parece estar presente em todos os lugares ao mesmo tempo." },
+             { question: "The opposite of 'generous' is ___.", options: ["Kind", "Happy", "Stingy", "Brave"], correctAnswer: 2, explanation: "'Stingy' (avarento, pão-duro) é o antônimo de 'generous' (generoso)." },
+             { question: "I need to ___ the trash. It smells bad.", options: ["take out", "take off", "take in", "take on"], correctAnswer: 0, explanation: "O phrasal verb 'take out' significa remover algo de um lugar, como em 'levar o lixo para fora'." },
+             { question: "She's very ___ and always has a smile on her face.", options: ["cheerful", "moody", "shy", "serious"], correctAnswer: 0, explanation: "'Cheerful' significa alegre e otimista, o que combina com a descrição de alguém que sempre sorri." },
+             { question: "There isn't ___ milk in the fridge.", options: ["many", "much", "a lot", "some"], correctAnswer: 1, explanation: "'Much' é usado com substantivos incontáveis (como 'milk') em frases negativas." },
+             { question: "He is very good ___ playing the guitar.", options: ["in", "on", "at", "for"], correctAnswer: 2, explanation: "A preposição correta a ser usada com 'good' para indicar habilidade em algo é 'at'." },
+             { question: "It's raining cats and ___.", options: ["mice", "dogs", "birds", "fishes"], correctAnswer: 1, explanation: "'Raining cats and dogs' é uma expressão idiomática que significa que está chovendo muito forte." },
+             { question: "Have you ever ___ to Japan?", options: ["be", "was", "been", "went"], correctAnswer: 2, explanation: "O Present Perfect (Have you ever...) usa o Past Participle do verbo. O Past Participle de 'be' é 'been'." },
+             { question: "The book was ___ by a famous author.", options: ["write", "wrote", "written", "writing"], correctAnswer: 2, explanation: "Na voz passiva ('The book was...'), usamos o Past Participle do verbo. 'Written' é o Past Participle de 'write'." }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function renderTestYourEnglishSection() {
+            setActiveHubButton('nav-test-english');
+            showHeader();
+            document.getElementById('main-title').textContent = 'Test Your English';
+            document.getElementById('main-description').textContent = 'Hora de testar seus conhecimentos! Responda às perguntas e veja como você se sai.';
+            
+            contentArea.innerHTML = `
+                <section id="quiz-container" class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 max-w-3xl mx-auto w-full">
+                    <!-- Quiz content will be injected here -->
+                </section>
+            `;
+            startQuiz();
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            // Embaralha as perguntas para que a ordem seja diferente a cada vez
+            quizData.sort(() => Math.random() - 0.5);
+            displayQuestion();
+        }
+        
+        function displayQuestion() {
+            const quizContainer = document.getElementById('quiz-container');
+            if (currentQuestionIndex < quizData.length) {
+                const questionData = quizData[currentQuestionIndex];
+                let optionsHtml = '';
+                questionData.options.forEach((option, index) => {
+                    optionsHtml += `<button class="quiz-option" onclick="selectAnswer(${index})">${option}</button>`;
+                });
+
+                quizContainer.innerHTML = `
+                    <div id="quiz-content">
+                         <div class="flex justify-between items-center mb-4">
+                            <p class="text-sm font-semibold text-stone-500">Questão ${currentQuestionIndex + 1} de ${quizData.length}</p>
+                            <p class="text-sm font-semibold text-[#F1D24B]">Pontuação: ${score}</p>
+                         </div>
+                        <h3 class="text-xl font-bold mb-6 text-stone-800">${questionData.question}</h3>
+                        <div id="quiz-options">${optionsHtml}</div>
+                        <div id="feedback-area" class="mt-4"></div>
+                        <div id="quiz-nav" class="mt-6 text-right"></div>
+                    </div>
+                `;
+            } else {
+                showResult();
+            }
+        }
+
+        function selectAnswer(selectedIndex) {
+            const questionData = quizData[currentQuestionIndex];
+            const options = document.querySelectorAll('#quiz-options .quiz-option');
+            const feedbackArea = document.getElementById('feedback-area');
+            const navArea = document.getElementById('quiz-nav');
+
+            options.forEach(button => button.disabled = true);
+
+            if (selectedIndex === questionData.correctAnswer) {
+                score++;
+                options[selectedIndex].classList.add('correct');
+                feedbackArea.innerHTML = `
+                    <div class="quiz-feedback correct">
+                        <p id="quiz-explanation"><strong>Correto!</strong> ${questionData.explanation}</p>
+                    </div>`;
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[questionData.correctAnswer].classList.add('correct');
+                feedbackArea.innerHTML = `
+                     <div class="quiz-feedback incorrect">
+                        <p id="quiz-explanation"><strong>Incorreto.</strong> A resposta certa é <strong>'${questionData.options[questionData.correctAnswer]}'</strong>. ${questionData.explanation}</p>
+                    </div>`;
+            }
+
+            navArea.innerHTML = `<button class="quiz-nav-button" onclick="nextQuestion()">Próxima Questão &rarr;</button>`;
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+        
+        function showResult() {
+            const quizContainer = document.getElementById('quiz-container');
+            const percentage = Math.round((score / quizData.length) * 100);
+            let resultMessage = '';
+            if (percentage >= 80) {
+                resultMessage = 'Excelente trabalho! Você tem um ótimo conhecimento de inglês.';
+            } else if (percentage >= 50) {
+                resultMessage = 'Bom trabalho! Continue praticando para melhorar ainda mais.';
+            } else {
+                resultMessage = 'Não desanime! Continue estudando e tente novamente.';
+            }
+
+            quizContainer.innerHTML = `
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-2 text-stone-800">Quiz Finalizado!</h3>
+                    <p class="text-lg text-stone-600 mb-4">Você acertou ${score} de ${quizData.length} questões (${percentage}%).</p>
+                    <p class="text-lg font-semibold text-[#84C7DF] mb-6">${resultMessage}</p>
+                    <button class="quiz-nav-button" onclick="startQuiz()">Tentar Novamente</button>
+                </div>
+            `;
+        }
 
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1426,6 +1660,7 @@
 
             document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
             document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
+            document.getElementById('nav-test-english').addEventListener('click', renderTestYourEnglishSection);
             document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
             document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
             document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
