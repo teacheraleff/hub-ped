@@ -143,29 +143,21 @@
         }
         
         /* Regimento Interno Styles */
-        .regimento-section h3 {
-            font-size: 1.5rem; /* text-2xl */
-            font-weight: 700; /* font-bold */
-            margin-top: 2rem; /* mt-8 */
-            margin-bottom: 1rem; /* mb-4 */
-            padding-bottom: 0.5rem; /* pb-2 */
-            border-bottom: 2px solid #F1D24B;
-        }
         .regimento-section h4 {
             font-size: 1.125rem; /* text-lg */
             font-weight: 600; /* font-semibold */
             margin-top: 1.5rem; /* mt-6 */
             margin-bottom: 0.5rem; /* mb-2 */
         }
-        .regimento-section p {
+        .regimento-section p, .regimento-section ul {
             line-height: 1.75; /* leading-loose */
             margin-bottom: 1rem; /* mb-4 */
         }
         .regimento-section ul {
             list-style-type: disc;
             padding-left: 1.5rem;
-            margin-bottom: 1rem;
         }
+
     </style>
 </head>
 <body class="bg-stone-50 text-stone-800">
@@ -536,7 +528,7 @@
                     <div class="space-y-3">
                         ${cefrFaqs.map((faq, index) => `
                             <div class="faq-item">
-                                <div class="faq-question" onclick="toggleFaq(event)">
+                                <div class="faq-question">
                                     <span>${faq.question}</span>
                                     <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                 </div>
@@ -555,6 +547,9 @@
             if (currentChart) {
                 currentChart.destroy();
             }
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
         }
 
         function toggleFaq(event) {
@@ -787,47 +782,47 @@
             
             contentArea.innerHTML = `
                 <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                    <div class="space-y-8">
-                        <div class="method-phase-card method-phase-spark md:flex md:items-center p-6 gap-6">
-                            <div class="md:w-1/3 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="method-phase-card method-phase-spark flex flex-col p-6">
+                            <div class="w-full text-center mb-4">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto">
                             </div>
-                            <div class="md:flex-1">
+                            <div class="flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-left">SPARK</h3>
                                 <p class="text-left">
                                     Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.
                                 </p>
                             </div>
                         </div>
-                        <div class="method-phase-card method-phase-learn md:flex md:flex-row-reverse md:items-center p-6 gap-6">
-                            <div class="md:w-1/3 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
+                        <div class="method-phase-card method-phase-learn flex flex-col p-6">
+                             <div class="w-full text-center mb-4">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto">
                             </div>
-                            <div class="md:flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-right">LEARN</h3>
-                                <p class="text-right">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold mb-2 text-left">LEARN</h3>
+                                <p class="text-left">
                                     Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.
                                 </p>
                             </div>
                         </div>
-                        <div class="method-phase-card method-phase-apply md:flex md:items-center p-6 gap-6">
-                            <div class="md:w-1/3 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
+                        <div class="method-phase-card method-phase-apply flex flex-col p-6">
+                             <div class="w-full text-center mb-4">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto">
                             </div>
-                            <div class="md:flex-1">
+                            <div class="flex-1">
                                 <h3 class="text-xl font-bold mb-2 text-left">APPLY</h3>
                                 <p class="text-left">
                                     Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.
                                 </p>
                             </div>
                         </div>
-                        <div class="method-phase-card method-phase-perform md:flex md:flex-row-reverse md:items-center p-6 gap-6">
-                            <div class="md:w-1/3 flex-shrink-0 text-center">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-32 h-32 md:w-40 md:h-40 object-cover mb-4 md:mb-0 mx-auto rounded-lg">
+                        <div class="method-phase-card method-phase-perform flex flex-col p-6">
+                             <div class="w-full text-center mb-4">
+                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto">
                             </div>
-                            <div class="md:flex-1">
-                                <h3 class="text-xl font-bold mb-2 text-right">PERFORM</h3>
-                                <p class="text-right">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold mb-2 text-left">PERFORM</h3>
+                                <p class="text-left">
                                     É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.
                                 </p>
                             </div>
@@ -837,7 +832,7 @@
                     <div class="space-y-3">
                         ${methodFaqs.map(faq => `
                             <div class="faq-item">
-                                <div class="faq-question" onclick="toggleFaq(event)">
+                                <div class="faq-question">
                                     <span>${faq.question}</span>
                                     <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                 </div>
@@ -855,6 +850,9 @@
             if (currentChart) {
                 currentChart.destroy();
             }
+             document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
         };
 
         const methodFaqs = [
@@ -1085,91 +1083,104 @@
             
             contentArea.innerHTML = `
                 <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200 regimento-section">
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Normas Pré-Aula</h3>
-                    <h4>Pontualidade</h4>
-                    <p>Os professores devem estar presentes na sala com no mínimo 5 minutos de antecedência ao início das aulas. Eventuais atrasos do professor não poderão reduzir a duração prevista da aula para a turma/aluno.</p>
-                    <h4>Preparação</h4>
-                    <p>O professor deve verificar previamente o material didático e revisar o conteúdo da aula, garantindo uma apresentação eficiente e bem estruturada. Todos os recursos audiovisuais necessários devem ser testados e configurados antes do início da aula.</p>
+                    <div class="space-y-4">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Normas de Aula</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <h4>Pontualidade</h4>
+                                <p>Os professores devem estar presentes na sala com no mínimo 5 minutos de antecedência. Atrasos não devem reduzir a duração da aula.</p>
+                                <h4>Preparação</h4>
+                                <p>Verificar material didático, revisar conteúdo e testar recursos audiovisuais antes do início da aula.</p>
+                                <h4>PEF (Planilha de Presença e Falta)</h4>
+                                <p>Preencher no mesmo dia da aula, registrando conteúdo, data, presenças, faltas e observações relevantes.</p>
+                                <h4>Situações Insólitas</h4>
+                                <p>Comunicar imediatamente à coordenação qualquer situação atípica que possa afetar os alunos ou a instituição. Não tente resolver problemas graves de forma autônoma.</p>
+                            </div>
+                        </div>
 
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Normas Pós-Aula</h3>
-                    <h4>Situações Insólitas</h4>
-                    <p>O professor deve comunicar imediatamente à coordenação pedagógica qualquer situação atípica ocorrida durante a aula que possa resultar em complicações para a instituição ou afetar o bem-estar dos alunos. Situações que o professor tenta resolver autonomamente e que posteriormente se agravam podem gerar problemas significativos para a coordenação e a instituição. É fundamental que o professor busque o suporte da coordenação quando necessário.</p>
-                    <h4>PEF (Planilha de Presença e Falta)</h4>
-                    <p>Após a aula, o professor deverá preencher a PEF, registrando o conteúdo ministrado, a data da aula e documentando com exatidão os alunos presentes e ausentes. O preenchimento da PEF deve ser realizado no mesmo dia da aula, garantindo a atualização tempestiva do sistema. Observações relevantes sobre o desempenho e participação da turma também devem ser incluídas no campo específico.</p>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Substituições e Ausências</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <h4>Comunicação Prévia</h4>
+                                <p>Ausências previstas devem ser comunicadas à coordenação com pelo menos 48 horas de antecedência.</p>
+                                <h4>Processo de Substituição</h4>
+                                <p>A substituição deve ser validada pela coordenação. O professor pode indicar um substituto, mas a decisão final é da gestão.</p>
+                                 <h4>Passagem de Informações</h4>
+                                <p>O professor titular deve fornecer todas as instruções e materiais necessários para o substituto.</p>
+                                <h4>Ausências por Saúde ou Força Maior</h4>
+                                <p>Comunicar à coordenação o mais rápido possível. Atestados médicos são necessários para questões de saúde.</p>
+                                <h4>Faltas Persistentes</h4>
+                                <p>Faltas recorrentes, mesmo justificadas, podem prejudicar o andamento do curso e estarão sujeitas a medidas administrativas.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Reuniões e Formação</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <h4>Participação Obrigatória</h4>
+                                <p>A participação em todas as reuniões e formações é obrigatória. Ausências devem ser comunicadas e justificadas previamente.</p>
+                                <h4>Reuniões Pedagógicas</h4>
+                                <p>Encontros semanais obrigatórios, todas as sextas-feiras, para alinhamento e compartilhamento de práticas.</p>
+                                <h4>Reuniões Individuais e de Planejamento</h4>
+                                <p>Encontros mensais para acompanhamento individual e sessões extraordinárias para planejamentos específicos.</p>
+                                <h4>Formações Continuadas</h4>
+                                <p>Integradas às reuniões semanais e através do TTC (Teacher Training Course) anual, que é obrigatório.</p>
+                            </div>
+                        </div>
 
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Regras de Substituições</h3>
-                    <h4>Comunicação Prévia</h4>
-                    <p>Ausências previstas devem ser comunicadas à coordenação com pelo menos 48 horas de antecedência para permitir a organização adequada da substituição.</p>
-                    <h4>Processo de Substituição</h4>
-                    <p>O substituto deve ser escolhido ou validado pela coordenação pedagógica. É vedado ao professor realizar o processo de substituição por conta própria, podendo apenas indicar um possível substituto para avaliação da coordenação.</p>
-                    <h4>Passagem de Informações</h4>
-                    <p>O professor titular deverá fornecer todas as instruções necessárias sobre o conteúdo que será ministrado, bem como informações relevantes sobre o aluno ou turma para o professor substituto.</p>
-                    <h4>Ausência por Motivos de Saúde</h4>
-                    <p>É responsabilidade do professor titular comunicar à coordenação pedagógica e apresentar o atestado médico para comprovar a questão de saúde. Em casos excepcionais onde não seja possível obter um atestado, a coordenação poderá avaliar a situação individualmente.</p>
-                    <h4>Ausências por Força Maior</h4>
-                    <p>Em casos de emergências pessoais, o professor deve comunicar à coordenação o mais rapidamente possível para solicitar a substituição. A coordenação avaliará se o motivo da ausência caracteriza-se como força maior.</p>
-                    <h4>Faltas Persistentes</h4>
-                    <p>No SLAP, prezamos pela compreensão e flexibilidade, porém faltas recorrentes por motivos pessoais prejudicam o andamento do curso. Nesses casos, o professor poderá estar sujeito a medidas administrativas conforme previsto no regimento interno da instituição.</p>
-                    
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Reuniões Institucionais</h3>
-                    <p>A participação em todas as reuniões institucionais é obrigatória. Ausências não justificadas serão registradas e poderão resultar em medidas administrativas.</p>
-                    <h4>Reuniões Pedagógicas</h4>
-                    <p>Encontros semanais obrigatórios realizados todas as sextas-feiras destinados ao alinhamento curricular, análise de desempenho dos alunos e compartilhamento de práticas pedagógicas eficazes.</p>
-                    <h4>Reuniões Individuais</h4>
-                    <p>Encontros mensais obrigatórios para avaliação detalhada do progresso individual dos alunos. A coordenação agendará com cada professor, ou o professor poderá solicitar quando julgar necessário.</p>
-                    <h4>Reuniões de Planejamento</h4>
-                    <p>Podem ocorrer durante as reuniões pedagógicas regulares ou serem convocadas como sessões extraordinárias quando houver necessidade.</p>
-                    <h4>Formações Continuadas</h4>
-                    <p>As atividades de formação continuada são integradas às reuniões pedagógicas semanais. Adicionalmente, o SLAP oferece anualmente o TTC (Teacher Training Course), programa intensivo obrigatório com duração de uma a duas semanas.</p>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Relacionamento e Conduta Profissional</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <h4>Com Alunos, Colaboradores, Pais e Líderes</h4>
+                                <p>Manter sempre uma postura acolhedora, profissional e respeitosa. A comunicação deve ser clara e usar os canais oficiais.</p>
+                                <h4>Confidencialidade</h4>
+                                <p>É mandatório salvaguardar todas as informações sensíveis sobre alunos, famílias e assuntos internos da instituição.</p>
+                            </div>
+                        </div>
 
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Relacionamento e Conduta</h3>
-                    <h4>Relação com Alunos</h4>
-                    <p>Cultive uma postura acolhedora e respeitosa, estabelecendo limites claros e profissionais.</p>
-                    <h4>Relação com Colaboradores</h4>
-                    <p>Fomente um ambiente colaborativo, respeitoso e sinérgico. Aborde conflitos diretamente e de maneira construtiva.</p>
-                    <h4>Relação com Pais</h4>
-                    <p>Estabeleça comunicação clara e objetiva com os responsáveis. Direcione questões administrativas ou pedagógicas complexas à coordenação.</p>
-                     <h4>Relação com Líderes</h4>
-                    <p>Mantenha comunicação transparente e respeitosa com a equipe gestora, cumprindo prazos e diretrizes.</p>
-                    <h4>Princípios da Conduta</h4>
-                    <ul>
-                        <li><strong>Profissionalismo:</strong> Demonstre conduta exemplar, representando os valores do SLAP.</li>
-                        <li><strong>Comunicação Clara:</strong> Utilize linguagem adequada e canais oficiais para toda comunicação institucional.</li>
-                        <li><strong>Confidencialidade:</strong> Salvaguarde informações sensíveis sobre alunos, famílias e assuntos internos.</li>
-                    </ul>
-                    
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Regras para Creators</h3>
-                    <h4>Aulas Particulares</h4>
-                    <p>É estritamente vedada a divulgação de aulas particulares pelos canais digitais do creator que estejam vinculados à instituição.</p>
-                    <h4>Posicionamento Político</h4>
-                    <p>É vedado ao creator manifestar posicionamento político exposto e ativo em suas redes sociais.</p>
-                    <h4>Plágio</h4>
-                    <p>Política de tolerância zero quanto ao plágio. Exige-se originalidade e integridade acadêmica.</p>
-                    <h4>Parcerias Comerciais</h4>
-                    <p>Exige-se aprovação prévia da coordenação para qualquer parceria comercial ou colaboração com outras marcas.</p>
-                    <h4>Venda de Produtos</h4>
-                    <p>É proibida a comercialização de produtos relacionados ao ensino de inglês (e-books, cursos, etc.) pelo creator ou utilizando sua imagem associada à instituição.</p>
-                    <h4>Confidencialidade</h4>
-                    <p>É proibida a publicação de quaisquer informações ou conteúdos internos da instituição.</p>
-                     <h4>Conteúdo Sexual</h4>
-                    <p>É vedada a produção ou compartilhamento de conteúdo sexual explícito ou qualquer associação com material pornográfico.</p>
-                    <h4>Conflito de Interesses</h4>
-                    <p>É vedado o vínculo profissional com qualquer instituição concorrente, curso de idiomas ou atividade que represente conflito de interesse.</p>
-                    
-                    <h3 class="text-2xl font-bold mb-4 text-stone-800">Materiais para Aulas e Creators</h3>
-                    <h4>Equipamentos Essenciais (Aulas)</h4>
-                    <p>Computador/notebook, câmera de alta definição (mínimo 720p) e headset com microfone.</p>
-                    <h4>Conexão de Internet (Aulas)</h4>
-                    <p>Conexão estável com velocidade mínima de 10 Mbps (download) e 5 Mbps (upload), preferencialmente via cabo.</p>
-                    <h4>Iluminação e Ambiente (Aulas)</h4>
-                    <p>Ambiente bem iluminado e fundo neutro, organizado e livre de distrações.</p>
-                     <h4>Materiais para Creators</h4>
-                    <p>Celular com gravação em alta definição, sistema de iluminação profissional e microfone de qualidade.</p>
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Diretrizes para Creators</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <p>É estritamente proibido: divulgar aulas particulares, manifestar posicionamento político, plagiar conteúdo, fazer parcerias comerciais sem aprovação, vender produtos concorrentes, publicar conteúdo confidencial ou sexual e manter vínculo com instituições concorrentes.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span>Materiais para Aulas e Criação de Conteúdo</span>
+                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
+                            <div class="faq-answer">
+                                <h4>Para Aulas Online</h4>
+                                <p>Computador/notebook, câmera HD (720p+), headset com microfone, conexão de internet estável (10 Mbps+) e ambiente bem iluminado e sem distrações.</p>
+                                <h4>Para Creators</h4>
+                                <p>Celular com gravação em alta definição, iluminação profissional e microfone de qualidade.</p>
+                            </div>
+                        </div>
+                    </div>
                 </section>
             `;
             if (currentChart) {
                 currentChart.destroy();
             }
+             document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
         }
 
 
@@ -1193,3 +1204,4 @@
 
 </body>
 </html>
+
