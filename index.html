@@ -71,15 +71,8 @@
         .method-phase-apply { background-color: #8671D1; color: #ffffff; }
         .method-phase-perform { background-color: #FF5C3D; color: #ffffff; }
 
-        /* Ensure expanded FAQ answer in method card inherits the parent's color */
-        .method-phase-spark .faq-answer.open { background-color: #F1D24B; }
-        .method-phase-learn .faq-answer.open { background-color: #84C7DF; }
-        .method-phase-apply .faq-answer.open { background-color: #8671D1; }
-        .method-phase-perform .faq-answer.open { background-color: #FF5C3D; }
-
         .method-phase-card h3 { font-weight: 700; color: inherit; }
-        .method-phase-card .faq-question { color: inherit; } /* Ensure question text inherits color */
-        .method-phase-card .faq-answer p { line-height: 1.5; text-align: left; }
+        .method-phase-card p { line-height: 1.5; text-align: left; }
 
         /* Creators Room Cards */
         .prohibited-rule-card { background-color: #fef2f2; border: 1px solid #f87171; color: #b91c1c; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); line-height: 1.5; position: relative; }
@@ -199,12 +192,27 @@
         }
         
         /* Links Úteis Styles */
-         .links-uteis-section .faq-item {
-            background-color: #f5f5f4; /* stone-100 */
+        .links-uteis-section .faq-item {
+             background-color: white;
+             border: 1px solid #e7e5e4;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
-        /* Removed custom link styling to use browser default for better contrast */
-        
-        /* English Quiz Styles */
+        .links-uteis-section .faq-answer ul {
+            padding: 0.5rem 0;
+        }
+        .links-uteis-section .faq-answer a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+        .links-uteis-section .faq-answer a:hover {
+            background-color: #FFFBEB; /* yellow-50 */
+        }
+
+        /* Test Your English Styles */
         .quiz-option {
             display: block;
             width: 100%;
@@ -278,7 +286,7 @@
                     </button>
                     <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
-                        Níveis SLAP
+                        Níveis e CPs
                     </button>
                     <button id="nav-cefr" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4"></path><path d="M8 12h8"></path></svg>
@@ -312,29 +320,28 @@
         </div>
     </div>
 
-    <footer class="bg-stone-800 text-stone-300 mt-auto py-6">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col items-center sm:flex-row sm:justify-between">
-                <div class="text-center text-sm mb-4 sm:mb-0">
-                     © 2024 SLAP Inglês. Todos os direitos reservados. 
+    <footer class="bg-stone-800 text-stone-400 mt-auto">
+        <div class="container mx-auto px-6 py-6">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                 <div class="text-sm">
+                    © 2024 SLAP Inglês. Todos os direitos reservados.
                 </div>
-                <div class="flex gap-6">
-                    <a href="https://www.instagram.com/slapingles/" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-[#F1D24B] transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                    </a>
-                    <a href="https://www.youtube.com/@slapingles/" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-[#F1D24B] transition-colors">
+                <div class="flex gap-6 mt-4 sm:mt-0">
+                    <a href="https://www.youtube.com/@slapingles" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-white transition-colors">
                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
                     </a>
-                    <a href="https://www.tiktok.com/@slapingles" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-[#F1D24B] transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <a href="https://www.instagram.com/slapingles" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@slapingles" target="_blank" rel="noopener noreferrer" class="text-stone-400 hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
     
-    <!-- Audio elements for sound effects -->
-    <audio id="click-sound" src="https://res.cloudinary.com/dqfi22uz0/video/upload/v1749377574/mouse_click_ndlvbi.mp3" preload="auto"></audio>
+    <audio id="click-sound" src="https://res.cloudinary.com/dqfi22uz0/video/upload/v1749379887/click_lremdg.mp3" preload="auto"></audio>
     <audio id="correct-sound" src="https://res.cloudinary.com/dqfi22uz0/video/upload/v1749377574/correct_pew0xz.mp3" preload="auto"></audio>
     <audio id="wrong-sound" src="https://res.cloudinary.com/dqfi22uz0/video/upload/v1749377575/wrong_hdpg0g.mp3" preload="auto"></audio>
 
@@ -501,7 +508,7 @@
             },
             {
                 name: "Senior 2",
-                lessons: ["OPEN HOUSE", "MAKING IT ABROAD", "WISH & IF ONLY", "USES OF RATHER", "PHRASAL VERBS - BRING", "DO YOU HAVE ANY REGRETS?", "CONDITIONALS (ALL)", "MIXED COND. PT. 1", "MIXED COND. PT. 2", "RELATIONSHIP GOALS", "PHRASAL VERBS - LOOK", "NETFLIX & CHILL", "SPLIT INFINITIVE", "LET’S GO BACKPACKING", "COMMON EUPHEMISMS", "LIAR, LIAR, PANTS ON FIRE", "THE SWIFT IMPACT", "FUTURE IN THE PAST", "BE ALLOWED & BE SUPPOSED TO", "SLANGS ARE LIT", "YOLO, FOMO & FOMU", "PHRASAL VERBS - COME", "SOCIAL MEDIA DISASTER", "OVER & UNDER", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
+                lessons: ["OPEN HOUSE", "MAKING IT ABROAD", "WISH & IF ONLY", "USES OF RATHER", "PHRASAL VERBS - BRING", "DO YOU HAVE ANY REGRETS?", "CONDITIONALS (ALL)", "MIXED COND. PT. 1", "MIXED COND. PT. 2", "RELATIONSHIP GOALS", "PHRASAL VERBS - LOOK", "NETFLIX & CHILL", "SPLIT INFINITIVE", "LET’S GO BACKPACKING", "COMMON EUPHEMISMS", "LIAR, LIAR, PANTS ON FIRE", "THE SWIFT IMPACT", "FUTURE IN THE PAST", "BE ALLOWED & BE SUPPOSED TO", "SLANGS ARE LIT", "YOLO, FOMO & FOMU", "PHRASAL VERBS - COME", "SOCIAL MEDIA DISASTER", "OVER & UNDER", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
                 focusPoints: [
                     "Dominar todos os tipos de condicionais, incluindo os mistos",
                     "Usar estruturas avançadas como 'wish' e 'if only'",
@@ -607,17 +614,20 @@
             hideHeader();
             
             const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+             const greetings = ["Bem-vindo!", "Welcome!", "Bienvenue!", "Willkommen!", "¡Bienvenido!", "ようこそ!"];
 
             contentArea.innerHTML = `
                 <section>
                     <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8 text-center">
                          <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-32 h-auto mx-auto rounded-lg mb-4">
-                        <h2 class="text-4xl md:text-5xl font-bold">Bem-vindos!</h2>
+                        <h2 class="text-4xl md:text-5xl font-bold h-16 flex items-center justify-center">
+                           <span id="welcome-animation" style="transition: opacity 0.5s ease-in-out;"></span>
+                        </h2>
                         <p class="mt-2 text-lg">Seu hub pedagógico para integrar, facilitar e potencializar o ensino no SLAP.</p>
                     </div>
                      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 text-center">
-                        <button onclick="window.renderEnglishQuizSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8671D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M6 3v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3"></path><path d="M6 13.5h12"></path></svg>
+                        <button onclick="window.renderTestYourEnglishSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8671D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2z"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
                             <span class="font-semibold text-stone-700">English Quiz</span>
                         </button>
                         <button onclick="window.renderPdiSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
@@ -630,15 +640,19 @@
                         </button>
                         <button onclick="window.renderRegimentoInternoSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
                              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span class="font-semibold text-stone-700">Regimento</span>
+                            <span class="font-semibold text-stone-700">Regimento Interno</span>
                         </button>
                     </div>
                      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white text-stone-800 p-6 rounded-xl shadow-lg flex flex-col text-center">
-                            <h3 class="text-2xl font-bold text-stone-800 mb-4">Destaque do Mês</h3>
-                            <img src="${employeeOfTheMonth.photo}" onerror="this.onerror=null;this.src='https://placehold.co/150/e0e0e0/ffffff?text=Foto'" alt="Destaque do Mês: ${employeeOfTheMonth.name}" class="w-32 h-32 rounded-full object-cover flex-shrink-0 mx-auto mb-4">
-                            <h4 class="text-xl font-bold text-[#FF5C3D] mb-2">${employeeOfTheMonth.name}</h4>
-                            <p class="text-stone-600 leading-relaxed">${employeeOfTheMonth.reason}</p>
+                        <div class="bg-white text-stone-800 p-6 rounded-xl shadow-lg flex flex-col">
+                            <h3 class="text-2xl font-bold text-center sm:text-left text-stone-800 mb-2">Destaque do Mês</h3>
+                            <p class="text-xl font-bold text-center sm:text-left text-[#FF5C3D] mb-4">${employeeOfTheMonth.name}</p>
+                             <div class="flex flex-col sm:flex-row items-center gap-6">
+                                <img src="${employeeOfTheMonth.photo}" onerror="this.onerror=null;this.src='https://placehold.co/150/e0e0e0/ffffff?text=Foto'" alt="Destaque do Mês: ${employeeOfTheMonth.name}" class="w-32 h-32 rounded-full object-cover flex-shrink-0">
+                                <div class="text-center sm:text-left">
+                                    <p class="text-stone-600 leading-relaxed">${employeeOfTheMonth.reason}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg flex flex-col justify-center">
                             <h3 class="text-2xl font-bold text-white mb-4 text-center">Frase do Dia</h3>
@@ -653,18 +667,38 @@
                     </div>
                 </section>
             `;
+             // Welcome animation logic
+            let greetingIndex = 0;
+            const welcomeElement = document.getElementById('welcome-animation');
+            if (welcomeElement) {
+                if (window.welcomeInterval) clearInterval(window.welcomeInterval);
+                
+                const updateGreeting = () => {
+                    welcomeElement.style.opacity = 0;
+                    setTimeout(() => {
+                        greetingIndex = (greetingIndex + 1) % greetings.length;
+                        welcomeElement.textContent = greetings[greetingIndex];
+                        welcomeElement.style.opacity = 1;
+                    }, 500);
+                };
+                
+                welcomeElement.textContent = greetings[0];
+                welcomeElement.style.opacity = 1;
+
+                window.welcomeInterval = setInterval(updateGreeting, 2500);
+            }
         }
 
         function renderSlapLevelsSection() {
             setActiveHubButton('nav-slap-levels');
             showHeader();
-            document.getElementById('main-title').textContent = 'Níveis SLAP: Seu Guia Completo do Currículo';
+            document.getElementById('main-title').textContent = 'Níveis e CPs';
             document.getElementById('main-description').textContent = 'Explore a estrutura completa do nosso currículo, com detalhes de cada nível e a distribuição das aulas. Use a navegação lateral para visualizar o conteúdo de cada etapa.';
             
             contentArea.innerHTML = `
                 <section class="flex flex-col md:flex-row gap-8">
                     <div id="level-sub-navigation" class="md:w-1/4 bg-white p-4 rounded-xl shadow-sm border border-stone-200">
-                        <h3 class="text-lg font-semibold text-stone-800 mb-4">Níveis de Curso</h3>
+                        <h3 class="text-lg font-semibold text-stone-800 mb-4">Níveis SLAP</h3>
                         <nav class="space-y-2">
                         </nav>
                     </div>
@@ -676,7 +710,7 @@
                             </div>
                         </section>
                         <section id="lessons-section" class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-                            <h3 id="lessons-title" class="text-lg font-semibold mb-4 text-stone-800">Aulas do Nível:</h3>
+                            <h3 id="lessons-title" class="text-lg font-semibold mb-4 text-stone-800">CP do Nível:</h3>
                             <div id="lessons-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 overflow-y-auto max-h-[85vh] pr-2">
                             </div>
                         </section>
@@ -704,7 +738,7 @@
         function renderLevel(index) {
             const level = courseData[index];
             
-            document.getElementById('lessons-title').textContent = `Aulas do Nível: ${level.name}`;
+            document.getElementById('lessons-title').textContent = `CP do Nível: ${level.name}`;
             
             const lessonsGrid = document.getElementById('lessons-grid');
             lessonsGrid.innerHTML = level.lessons.map((lesson, i) => {
@@ -714,7 +748,7 @@
                 const numberColorClass = isTest ? 'text-stone-800' : 'text-[#F1D24B]';
 
                 return `
-                    <div class="${bgColorClass} p-3 rounded-lg flex flex-col items-start shadow-sm">
+                    <div class="${bgColorClass} p-3 rounded-lg flex flex-col items-start shadow-sm hover:transform hover:-translate-y-1 transition-transform duration-200">
                         <span class="text-sm font-bold ${numberColorClass} mb-1">${String(i + 1).padStart(2, '0')}</span>
                         <span class="text-sm ${textColorClass} w-full">${toTitleCase(lesson)}</span>
                     </div>
@@ -792,7 +826,9 @@
         }
 
         function toggleFaq(event) {
-            const faqItem = event.currentTarget.closest('.faq-item, .method-phase-card');
+            const faqItem = event.currentTarget.closest('.faq-item');
+            if (!faqItem) return;
+
             const answer = faqItem.querySelector('.faq-answer');
             const arrow = faqItem.querySelector('.faq-arrow');
             
@@ -1028,45 +1064,25 @@
             contentArea.innerHTML = `
                 <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                       <div class="method-phase-card method-phase-spark">
-                            <div class="faq-question p-4">
-                                <h3 class="text-xl font-bold">SPARK</h3>
-                                <svg class="faq-arrow w-6 h-6 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
-                                <p class="px-4 pb-4">Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
-                            </div>
+                       <div class="method-phase-card method-phase-spark p-6">
+                            <h3 class="text-xl font-bold mb-4">SPARK</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
                         </div>
-                        <div class="method-phase-card method-phase-learn">
-                            <div class="faq-question p-4">
-                                <h3 class="text-xl font-bold">LEARN</h3>
-                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
-                                <p class="px-4 pb-4">Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
-                            </div>
+                        <div class="method-phase-card method-phase-learn p-6">
+                            <h3 class="text-xl font-bold mb-4">LEARN</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
                         </div>
-                         <div class="method-phase-card method-phase-apply">
-                            <div class="faq-question p-4">
-                                <h3 class="text-xl font-bold">APPLY</h3>
-                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
-                                <p class="px-4 pb-4">Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
-                            </div>
+                         <div class="method-phase-card method-phase-apply p-6">
+                            <h3 class="text-xl font-bold mb-4">APPLY</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
                         </div>
-                        <div class="method-phase-card method-phase-perform">
-                            <div class="faq-question p-4">
-                                <h3 class="text-xl font-bold">PERFORM</h3>
-                                <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
-                                <p class="px-4 pb-4">É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.</p>
-                            </div>
+                        <div class="method-phase-card method-phase-perform p-6">
+                            <h3 class="text-xl font-bold mb-4">PERFORM</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.</p>
                         </div>
                     </div>
                      <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Exemplos de Atividades por Fase</h3>
@@ -1389,26 +1405,27 @@
                 </section>
             `;
             
-            document.querySelectorAll('.audio-player-button').forEach(button => {
+             document.querySelectorAll('.audio-player-button').forEach(button => {
                 button.addEventListener('click', () => {
                     const audioId = button.dataset.audioId;
                     const audio = document.getElementById(audioId);
-                    const playIcon = button.querySelector('.play-icon');
-                    const pauseIcon = button.querySelector('.pause-icon');
 
-                    // Pausa todos os outros áudios
-                    document.querySelectorAll('audio').forEach(otherAudio => {
+                    // Stop all other audios and reset their icons
+                    document.querySelectorAll('.crisis-card audio').forEach(otherAudio => {
                         if (otherAudio.id !== audioId && !otherAudio.paused) {
                             otherAudio.pause();
-                        }
-                    });
-                     document.querySelectorAll('.audio-player-button').forEach(otherButton => {
-                        if (otherButton.dataset.audioId !== audioId) {
-                            otherButton.querySelector('.play-icon').classList.remove('hidden');
-                            otherButton.querySelector('.pause-icon').classList.add('hidden');
+                            otherAudio.currentTime = 0;
+                            const otherButton = document.querySelector(`[data-audio-id="${otherAudio.id}"]`);
+                            if (otherButton) {
+                                otherButton.querySelector('.play-icon').classList.remove('hidden');
+                                otherButton.querySelector('.pause-icon').classList.add('hidden');
+                            }
                         }
                     });
 
+                    // Toggle the clicked audio
+                    const playIcon = button.querySelector('.play-icon');
+                    const pauseIcon = button.querySelector('.pause-icon');
                     if (audio.paused) {
                         audio.play();
                         playIcon.classList.add('hidden');
@@ -1421,11 +1438,14 @@
                 });
             });
 
-             document.querySelectorAll('audio').forEach(audio => {
+            // Add 'ended' listener only to the audios in this section
+            document.querySelectorAll('.crisis-card audio').forEach(audio => {
                 audio.addEventListener('ended', () => {
                     const button = document.querySelector(`[data-audio-id="${audio.id}"]`);
-                    button.querySelector('.play-icon').classList.remove('hidden');
-                    button.querySelector('.pause-icon').classList.add('hidden');
+                    if (button) {
+                        button.querySelector('.play-icon').classList.remove('hidden');
+                        button.querySelector('.pause-icon').classList.add('hidden');
+                    }
                 });
             });
         }
@@ -1635,12 +1655,16 @@
         let currentQuizQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
+        
+        const clickSound = document.getElementById('click-sound');
+        const correctSound = document.getElementById('correct-sound');
+        const wrongSound = document.getElementById('wrong-sound');
 
-        function renderEnglishQuizSection() {
+        function renderTestYourEnglishSection() {
             setActiveHubButton(null); // No active button in nav
             showHeader();
             document.getElementById('main-title').textContent = 'English Quiz';
-            document.getElementById('main-description').textContent = 'Hora de testar seus conhecimentos! Responda às perguntas e veja como você se sai.';
+            document.getElementById('main-description').textContent = 'Hora de testar seus conhecimentos! Responda a 10 perguntas e veja como você se sai.';
             
             contentArea.innerHTML = `
                 <section id="quiz-container" class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 max-w-3xl mx-auto w-full">
@@ -1691,27 +1715,25 @@
             const options = document.querySelectorAll('#quiz-options .quiz-option');
             const feedbackArea = document.getElementById('feedback-area');
             const navArea = document.getElementById('quiz-nav');
-            const correctSound = document.getElementById('correct-sound');
-            const wrongSound = document.getElementById('wrong-sound');
 
             options.forEach(button => button.disabled = true);
 
             if (selectedIndex === questionData.correctAnswer) {
                 score++;
-                correctSound.play();
                 options[selectedIndex].classList.add('correct');
                 feedbackArea.innerHTML = `
                     <div class="quiz-feedback correct">
                         <p id="quiz-explanation"><strong>Correto!</strong> ${questionData.explanation}</p>
                     </div>`;
+                correctSound.play();
             } else {
-                wrongSound.play();
                 options[selectedIndex].classList.add('incorrect');
                 options[questionData.correctAnswer].classList.add('correct');
                 feedbackArea.innerHTML = `
                      <div class="quiz-feedback incorrect">
                         <p id="quiz-explanation"><strong>Incorreto.</strong> A resposta certa é <strong>'${questionData.options[questionData.correctAnswer]}'</strong>. ${questionData.explanation}</p>
                     </div>`;
+                wrongSound.play();
             }
 
             if (currentQuestionIndex < currentQuizQuestions.length - 1) {
@@ -1751,7 +1773,7 @@
         // Add render functions to window scope to be called from onclick attributes
         window.renderInicioSection = renderInicioSection;
         window.renderSlapLevelsSection = renderSlapLevelsSection;
-        window.renderEnglishQuizSection = renderEnglishQuizSection;
+        window.renderTestYourEnglishSection = renderTestYourEnglishSection;
         window.renderCefrSection = renderCefrSection;
         window.renderDeepDiveSection = renderDeepDiveSection;
         window.renderCreatorsRoom = renderCreatorsRoom;
@@ -1759,13 +1781,6 @@
         window.renderPdiSection = renderPdiSection;
         window.renderRegimentoInternoSection = renderRegimentoInternoSection;
         window.renderLinksUteisSection = renderLinksUteisSection;
-        
-        // --- Sound Effects ---
-        function playClickSound() {
-            const clickSound = document.getElementById('click-sound');
-            clickSound.currentTime = 0;
-            clickSound.play();
-        }
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
@@ -1775,13 +1790,14 @@
             document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
             document.getElementById('nav-method').addEventListener('click', renderMethodSection);
             
-            // Add click sound to all buttons and links
-            document.body.addEventListener('click', function(event) {
+            // General click sound listener
+            document.addEventListener('click', function(event) {
                 if (event.target.closest('button, a')) {
-                    playClickSound();
+                    clickSound.currentTime = 0;
+                    clickSound.play();
                 }
             });
-
+            
             renderInicioSection(); // Carrega a seção "Início" por padrão
         });
 
@@ -1789,3 +1805,4 @@
 
 </body>
 </html>
+
