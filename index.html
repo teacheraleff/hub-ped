@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hub Pedagógico SLAP</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: SLAP Brand Colors: #F1D24B (Primary Yellow), #FF5C3D (Secondary Orange/Red), #84C7DF (Secondary Light Blue), #8671D1 (Secondary Purple) -->
+
+    <style>
+
+        body {
+
+            font-family: 'DM Sans', sans-serif;
+
+            line-height: 1.25; /* leading-tight */
+
+        }
+
+        .chart-container {
+
+            position: relative;
+
+            width: 100%;
+
+            max-width: 400px;
+
+            height: auto;
+
+            margin-left: auto;
+
+            margin-right: auto;
+
+        }
+
+        .nav-button.active, .hub-nav-button.active, .creators-tab.active {
+
+            background-color: #FFFBEB; /* yellow-50 */
+
+            color: #F1D24B;
+
+            font-weight: 600;
+
+        }
+
+        .cefr-level-bar {
+
+            background-color: #e0e0e0;
+
+            border-radius: 9999px; /* Tailwind's rounded-full */
+
+            height: 1.5rem; /* Equivalent to h-6 */
+
+            margin-bottom: 0.5rem; /* Equivalent to mb-2 */
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+        .slap-level-indicator {
+
+            background-color: #F1D24B;
+
+            height: 100%;
+
+            border-radius: 9999px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 0.875rem; /* text-sm */
+
+            font-weight: 500; /* font-medium */
+
+            color: #44403c; /* stone-800 */
+
+        }
+
+        .cefr-label {
+
+            font-size: 0.875rem; /* text-sm */
+
+            font-weight: 600; /* font-semibold */
+
+            color: #44403c; /* stone-800 */
+
+        }
+
+        .method-phase-card {
+
+            padding: 1.5rem; /* p-6 */
+
+            border-radius: 0.75rem; /* rounded-xl */
+
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06); /* shadow-sm */
+
+            border: 1px solid #e7e5e4; /* border-stone-200 */
+
+            transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+        }
+
+        .method-phase-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+        }
+
+        /* Specific background and text colors for method phases */
+
+        .method-phase-spark { background-color: #F1D24B; color: #44403c; }
+
+        .method-phase-learn { background-color: #84C7DF; color: #44403c; }
+
+        .method-phase-apply { background-color: #8671D1; color: #ffffff; }
+
+        .method-phase-perform { background-color: #FF5C3D; color: #ffffff; }
+
+        
+
+        .method-phase-spark:hover { background-color: #fce588; }
+
+        .method-phase-learn:hover { background-color: #a6e3f4; }
+
+        .method-phase-apply:hover { background-color: #9d8de2; }
+
+        .method-phase-perform:hover { background-color: #ff7a63; }
+
+
+
+        .method-phase-card h3 { font-weight: 700; }
+
+        .method-phase-card p { line-height: 1.5; text-align: left; }
+
+        .method-phase-spark h3, .method-phase-learn h3, .method-phase-apply h3, .method-phase-perform h3 { color: inherit; }
+
+        
+
+        /* Creators Room Cards */
+
+        .prohibited-rule-card { background-color: #fef2f2; border: 1px solid #f87171; color: #b91c1c; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); line-height: 1.5; position: relative; }
+
+        .prohibited-rule-card .icon-x { position: absolute; top: 0.75rem; right: 0.75rem; color: #ef4444; }
+
+        .prohibited-rule-card h4 { padding-right: 2.5rem; }
+
+        .prohibited-rule-card strong { color: #b91c1c; }
+
+        .good-practice-card { background-color: #D1FAE5; border: 1px solid #34D399; color: #065F46; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); line-height: 1.5; position: relative; }
+
+        .good-practice-card .icon-check { position: absolute; top: 0.75rem; left: 0.75rem; color: #10B981; }
+
+        .good-practice-card h4 { padding-left: 2.5rem; }
+
+        .good-practice-card strong { color: #065F46; }
+
+
+
+        /* FAQ specific styles */
+
+        .faq-item { background-color: #f5f5f4; border-radius: 0.5rem; margin-bottom: 0.75rem; overflow: hidden; }
+
+        .faq-question { display: flex; justify-content: space-between; align-items: center; padding: 1rem; cursor: pointer; font-weight: 600; color: #44403c; }
+
+        .faq-answer { padding: 0 1rem; color: #57534e; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out; }
+
+        .faq-answer.open { max-height: 9999px; padding: 1rem; transition: max-height 0.3s ease-in, padding 0.3s ease-in; }
+
+        .faq-arrow { transition: transform 0.3s ease; }
+
+        .faq-arrow.rotate { transform: rotate(90deg); }
+
+        
+
+        /* PDI Section */
+
+        .info-box { background-color: #EBF5FA; border-left: 4px solid #84C7DF; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; border-radius: 0.25rem; color: #164e63; }
+
+        .info-box svg { flex-shrink: 0; width: 1.25rem; height: 1.25rem; margin-top: 0.125rem; color: #84C7DF; }
+
+        .pdi-card { transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+
+        .pdi-card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        .pdi-card-yellow { border-left: 4px solid #F1D24B; }
+
+        .pdi-card-orange { border-left: 4px solid #FF5C3D; }
+
+        .pdi-card-purple { border-left: 4px solid #8671D1; }
+
+
+
+        /* Níveis SLAP > Foco do Nível Card */
+
+        .focus-point-card {
+
+            padding: 1rem;
+
+            border-radius: 0.5rem;
+
+            font-weight: 500;
+
+            background-color: #84C7DF;
+
+            color: #44403c;
+
+            text-align: center;
+
+        }
+
+
+
+        /* Deep Dive */
+
+        .crisis-card { background-color: #FFFBEB; border: 1px solid #F1D24B; color: #44403c; padding: 1.5rem; border-radius: 0.75rem; }
+
+        .audio-player-button { background-color: #F1D24B; color: #44403c; border: none; padding: 0.75rem 1.25rem; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+
+        .audio-player-button:hover { background-color: #eab308; }
+
+        .audio-player-button svg { width: 1.25rem; height: 1.25rem; }
+
+        
+
+        /* Creators Room Tab Menu */
+
+        .creators-tab-container { display: flex; margin-bottom: 1.5rem; border-bottom: 1px solid #e7e5e4; gap: 1rem; }
+
+        .creators-tab { padding: 0.75rem 0.25rem; text-align: center; font-weight: 600; color: #78716c; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease-in-out; }
+
+        .creators-tab:hover { color: #F1D24B; }
+
+        .creators-tab.active { color: #F1D24B; border-color: #F1D24B; }
+
+        
+
+        /* Funnel Styles */
+
+        .funnel-stage { padding: 1.5rem; border-radius: 0.75rem; margin-bottom: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; position: relative; }
+
+        .funnel-stage-icon { margin-bottom: 0.75rem; display: inline-block; background-color: white; padding: 0.5rem; border-radius: 9999px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        .funnel-top { background-color: #D1FAE5; color: #065F46; }
+
+        .funnel-middle { background-color: #FFFBEB; color: #44403c; }
+
+        .funnel-bottom { background-color: #FEE2E2; color: #991B1B; }
+
+        .funnel-stage:not(:last-child)::after {
+
+            content: '';
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: -0.75rem;
+
+            transform: translateX(-50%);
+
+            width: 0; 
+
+            height: 0; 
+
+            border-left: 10px solid transparent;
+
+            border-right: 10px solid transparent;
+
+            border-top: 15px solid #a8a29e; /* stone-400 */
+
+        }
+
+
+
+    </style>
+
+</head>
+
+<body class="bg-stone-50 text-stone-800">
+
+
+
+    <div id="app" class="min-h-screen md:flex">
+
+        
+
+        <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6">
+
+            <div class="mb-6 text-center">
+
+                <img src="https://firebasestorage.googleapis.com/v0/b/generative-ai-document-storage.appspot.com/o/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53%203.JPEG-8a74d1fb-aa5a-499e-9df9-b47a2502784.jpeg?alt=media" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
+
+            </div>
+
+            <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico SLAP</h1>
+
+            <nav id="main-navigation" class="space-y-2">
+
+                <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+
+                    Níveis SLAP
+
+                </button>
+
+                <button id="nav-cefr" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4"></path><path d="M8 12h8"></path></svg>
+
+                    CEFR
+
+                </button>
+
+                <button id="nav-deep-dive" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
+                    Deep Dive
+
+                </button>
+
+                <button id="nav-creators-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M15 12h.01"></path><path d="M12 12h.01"></path><path d="M9 12h.01"></path><path d="M12 2a3.5 3.5 0 0 0 0 7 3.5 3.5 0 0 0 0-7z"></path><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M22 12a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0 7 0z"></path><path d="M2 12a3.5 3.5 0 0 0 7 0 3.5 3.5 0 0 0-7 0z"></path></svg>
+
+                    Creators Room
+
+                </button>
+
+                <button id="nav-method" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
+
+                    Método SLAP
+
+                </button>
+
+                <button id="nav-pdi" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+
+                    PDI
+
+                </button>
+
+            </nav>
+
+        </aside>
+
+
+
+        <main class="flex-1 p-4 sm:p-6 md:p-8">
+
+            <header class="mb-8">
+
+                <h2 id="main-title" class="text-3xl font-bold text-[#F1D24B]"></h2>
+
+                <p id="main-description" class="mt-2 text-stone-600"></p>
+
+            </header>
+
+            
+
+            <div id="content-area" class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+                <!-- Conteúdo será injetado aqui dinamicamente -->
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <script>
+
+        const courseData = [
+
+            {
+
+                name: "Starter 1",
+
+                lessons: ["OPEN HOUSE", "FEELINGS", "NAMES & GREETINGS", "NUMBERS PT. 1", "NUMBERS PT. 2", "SPELLING", "ORDINAL NUMBERS", "BASIC VERBS", "BASIC ADJECTIVES", "DEMONSTRATIVE PRONOUNS", "VERB TO BE", "COUNTRIES & NATIONALITIES", "NEIGHBORHOOD", "FAMILY MEMBERS", "SIMPLE PRESENT PT. 1", "SIMPLE PRESENT PT. 2", "CAN & CAN’T", "OBJECT PRONOUNS", "LIKES AND DISLIKES", "FREE TIME ACTIVITIES", "MONTHS & HOLIDAYS", "POSSESSIVE ADJECTIVES", "POSSESSIVE PRONOUNS", "FOOD & FRUITS", "HOURS", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
+
+                focusPoints: [
+
+                    "Introdução ao Inglês e Quebra-gelo",
+
+                    "Vocabulário Essencial para o Dia a Dia",
+
+                    "Formação de Frases Básicas com 'To Be'",
+
+                    "Saudações, Nomes e Informações Pessoais",
+
+                    "Habilidades Iniciais de Compreensão e Expressão Oral"
+
+                ]
+
+            },
+
+            {
+
+                name: "Starter 2",
+
+                lessons: ["OPEN HOUSE", "FREQUENCY", "ROUTINE", "WHY & BECAUSE", "PLACES IN TOWN", "PREPOSITIONS OF PLACE", "IN, ON, AT + TRANSPORTATIONS", "POSSESSIVES", "PARTS OF THE HOUSE", "FURNITURE & CHORES", "PRESENT CONTINUOUS", "PRESENT CONTINUOUS FOR FUTURE SITUATIONS", "MANY & MUCH", "RESTAURANT PT. 1", "RESTAURANT PT. 2", "FUTURE SIMPLE", "WHAT WILL YOU DO?", "OCCUPATIONS", "FALSE FRIENDS", "AGREEING & DISAGREEING", "DESCRIBING PEOPLE", "MOVIE GENRES", "PREPOSITIONS OF TIME", "FAST FOOD & TASTES", "WEATHER", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
+
+                focusPoints: [
+
+                    "Descrição de Rotinas e Hábitos",
+
+                    "Localização e Preposições de Lugar",
+
+                    "Uso do Present Continuous para Presente e Futuro",
+
+                    "Linguagem para Interações em Restaurantes",
+
+                    "Construção de Frases no Futuro Simples"
+
+                ]
+
+            },
+
+            {
+
+                name: "Freshman 1",
+
+                lessons: ["OPEN HOUSE", "PARTS OF THE BODY", "SHOULD", "ACHES", "PHYSICAL TRAITS", "WHAT SHOULD I DO?", "TO & FOR", "SUPERMARKET PT. 1", "SUPERMARKET PT. 2", "ARE YOU A COUCH POTATO?", "FALSE FRIENDS", "WAS & WERE", "VERBS IN THE PAST", "-ED SOUNDS", "WATER UNDER THE BRIDGE", "CHILD’S PLAY", "VERBS OF SENSES", "GET PT. 1", "GET PT. 2", "THE INFLUENCERS ERA", "BEING HEALTHY IS BEING HAPPY", "INTERNET LANGUAGE", "PREPOSITIONS OF TIME", "FUTURE FORMS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
+
+                focusPoints: [
+
+                    "Vocabulário de Corpo e Saúde",
+
+                    "Expressando Conselhos com 'Should'",
+
+                    "Introdução ao Passado Simples (Verbos Regulares)",
+
+                    "Diálogo em Contextos de Compras",
+
+                    "Reconhecimento de Falsos Cognatos e Expressões Comuns"
+
+                ]
+
+            },
+
+            {
+
+                name: "Freshman 2",
+
+                lessons: ["OPEN HOUSE", "IS POP REALLY CULTURE?", "COULD", "USED TO", "WOULD PT. 1", "WOULD PT. 2", "HAVE TO & NEED TO", "SIMPLE PAST PT. 1", "SIMPLE PAST PT. 2", "WHAT THE HELL HAPPENED?", "BRITISH x AMERICAN", "COULD, SHOULD, WOULD", "WE ARE THE FUTURE", "SCHOOL & COLLEGE LIFE", "PAST CONTINUOUS PT. 1", "PAST CONTINUOUS PT. 2", "MILLENNIALS x GEN Z", "GO FIND A JOB", "WHEN WE WERE YOUNG", "USES OF LIKE", "TASTES & TEXTURES", "INTENSIFIERS", "CHERISH THE MOMENTS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO GERAL"],
+
+                focusPoints: [
+
+                    "Narrativa no Passado (Simple Past e Continuous)",
+
+                    "Uso de Modais de Hábito e Necessidade ('Used To', 'Have To')",
+
+                    "Diferenças entre Inglês Britânico e Americano",
+
+                    "Vocabulário para Vida Escolar e Profissional",
+
+                    "Expressão de Preferências e Intensificadores"
+
+                ]
+
+            },
+
+            {
+
+                name: "Sophomore 1",
+
+                lessons: ["OPEN HOUSE", "ALL YOU NEED IS LOVE", "MUST", "MAY & MIGHT", "LEAVE THE PAST IN THE PAST", "MY BUCKET LIST", "AIRPORT ESSENTIALS", "HOTEL ESSENTIALS", "WEATHER", "MONEY ESSENTIALS", "-ING & VERBS OF PREFERENCE", "MONEY x HAPPINESS", "EMBEDDED QUESTIONS", "COMPARATIVES", "SUPERLATIVES", "DO YOU VOLUNTEER?", "ADVERBS OF TIME", "AMERICAN TRADITIONS", "COFFEE, PLEASE", "GIVING ADVICE", "THE STORY OF ROCK", "OUGHT TO & HAD BETTER", "USES OF ENOUGH", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO DE CONTEÚDO"],
+
+                focusPoints: [
+
+                    "Modais de Obrigação e Possibilidade ('Must', 'May', 'Might')",
+
+                    "Comparativos e Superlativos Detalhados",
+
+                    "Vocabulário Essencial para Viagens e Dinheiro",
+
+                    "Formulação de Perguntas Indiretas (Embedded Questions)",
+
+                    "Compreensão de Expressões de Convicção ('Ought To', 'Had Better')"
+
+                ]
+
+            },
+
+            {
+
+                name: "Sophomore 2",
+
+                lessons: ["OPEN HOUSE", "2020’S PANDEMIC", "BE ALLOWED TO", "PAST FORMS", "PAST PARTICIPLE", "PRESENT PERFECT PT. 1", "PRESENT PERFECT PT. 2", "YET, JUST, STILL & ALREADY", "QUESTION TAGS PT. 1", "QUESTION TAGS PT. 2", "MODAL VERBS REVIEW", "I HAVE TIME MACHINE", "PRESENT PERFECT CONTINUOUS", "YOU’RE JOKING, RIGHT?", "CLOTHES & ACCESSORIES", "THE REVOLUTION OF AI", "LET’S TALK INEQUALITY", "WHO DOESN’T LOVE PETS?", "RELATIVE CLAUSES", "COMMON IDIOMS", "FAME DOES HAVE PRICE", "CULTURAL DIFFERENCES", "IT’S GOTTA BE ALIENS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DISCUSSÃO ABERTA"],
+
+                focusPoints: [
+
+                    "Domínio do Present Perfect (Simples e Contínuo)",
+
+                    "Uso de Question Tags para Confirmação",
+
+                    "Construção de Orações Relativas (Relative Clauses)",
+
+                    "Vocabulário de Tecnologia e Temas Sociais (IA, Desigualdade)",
+
+                    "Reconhecimento e Aplicação de Expressões Idiomáticas Comuns"
+
+                ]
+
+            },
+
+            {
+
+                name: "Junior 1",
+
+                lessons: ["OPEN HOUSE", "STUDYING ABROAD", "PHRASAL VERBS PT. 1", "PHRASAL VERBS PT. 2", "BODY IDIOMS", "TELLING STORIES", "ZERO & FIRST CONDITIONALS", "ANIMAL IDIOMS", "WHO’S YOUR HERO?", "SECOND CONDITIONAL", "OVER & UNDER", "PRESENT PERFECT RECAP", "PHRASAL VERBS (SEEN)", "COLOR IDIOMS", "PRETTY HURTS", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "GEOGRAPHY IDIOMS", "ADVANCED ADJECTIVES", "MEDICAL ENGLISH", "COMPOUND ADJECTIVES", "LEGAL ENGLISH", "WHAT’S RIGHT IS RIGHT", "SECOND CHANCES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PRÁTICA DE FLUÊNCIA"],
+
+                focusPoints: [
+
+                    "Aprofundamento em Phrasal Verbs e Idioms (Corpo, Animais, Cores)",
+
+                    "Narração de Histórias com Fluência e Detalhe",
+
+                    "Revisão e Aplicação dos Condicionais (Zero, Primeiro, Segundo)",
+
+                    "Inglês para Contextos Específicos (Médico, Legal)",
+
+                    "Utilização de Adjetivos Avançados e Compostos"
+
+                ]
+
+            },
+
+            {
+
+                name: "Junior 2",
+
+                lessons: ["OPEN HOUSE", "FAMILY MATTERS", "FAMILY IDIOMS", "PHRASAL VERBS - KEEP", "ASTROLOGY? REALLY?", "CONJUNCTIONS", "AS IT WAS", "ABROAD CULTURE", "GIVING ADVICE", "PHRASAL VERBS - PUT", "SUCCESS x FAILURE", "CRIME DOESN’T PAY", "WHALE POOP IS GREAT", "ARE GHOSTS REAL?", "YOU NEED SUGAR, LOVE", "FLIGHT FUEL", "IS YOUR PHONE CHANGING YOU?", "WORK, WORK, WORK", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "WHAT IF?", "MODERN RELATIONS", "ANXIETY RULES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DEBATE TEMÁTICO", "REVISÃO DE CONTEÚDO"],
+
+                focusPoints: [
+
+                    "Expressão de Relações Familiares e Sociais",
+
+                    "Uso de Conjunções e Expressões Coesivas",
+
+                    "Debate e Argumentação sobre Temas Complexos",
+
+                    "Compreensão de Gírias e Expressões Culturais",
+
+                    "Discussão sobre Comportamento, Crime e Sucesso"
+
+                ]
+
+            },
+
+            {
+
+                name: "Senior 1",
+
+                lessons: ["OPEN HOUSE", "EATING HABITS", "NEVER HAVE I EVER", "CAUSATIVE FORM", "REFLEXIVE PRONOUNS", "GOING VIRAL", "CLOTHING IDIOMS", "PAST PERFECT PT. 1", "PAST PERFECT PT. 2", "PAST MODALS", "THIRD CONDITIONAL", "PAST PERFECT CONT.", "MENTAL HEALTH", "I WISH I HAD NO EXPECTATIONS", "REPORTED SPEECH PT. 1", "REPORTED SPEECH PT. 2", "IT’S GEN Z’S WORLD", "BUT DO YOU AGREE?", "PHRASAL VERBS - GIVE", "CLEFT SENTENCES", "LOVE IDIOMS", "LIVING IN THE CITY", "IT’S ALL ABOUT THE MONEY", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PROJETO FINAL"],
+
+                focusPoints: [
+
+                    "Domínio do Passado Perfeito e Contínuo",
+
+                    "Uso de Discurso Indireto (Reported Speech)",
+
+                    "Aplicações do Third Conditional e Past Modals",
+
+                    "Expressões sobre Saúde Mental e Relações Modernas",
+
+                    "Análise e Discussão sobre Geração Z e Cultura Financeira"
+
+                ]
+
+            },
+
+            {
+
+                name: "Senior 2",
+
+                lessons: ["OPEN HOUSE", "MAKING IT ABROAD", "WISH & IF ONLY", "USES OF RATHER", "PHRASAL VERBS - BRING", "DO YOU HAVE ANY REGRETS?", "CONDITIONALS (ALL)", "MIXED COND. PT. 1", "MIXED COND. PT. 2", "RELATIONSHIP GOALS", "PHRASAL VERBS - LOOK", "NETFLIX & CHILL", "SPLIT INFINITIVE", "LET’S GO BACKPACKING", "COMMON EUPHEMISMS", "LIAR, LIAR, PANTS ON FIRE", "THE SWIFT IMPACT", "FUTURE IN THE PAST", "BE ALLOWED & BE SUPPOSED TO", "SLANGS ARE LIT", "YOLO, FOMO & FOMU", "PHRASAL VERBS - COME", "SOCIAL MEDIA DISASTER", "OVER & UNDER", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
+
+                focusPoints: [
+
+                    "Manejo Completo de Todos os Condicionais",
+
+                    "Usos Avançados de Phrasal Verbs e Expressões Idiomáticas",
+
+                    "Discussão sobre Tópicos de Viagem e Vida no Exterior",
+
+                    "Compreensão de Linguagem Informal e Gírias Modernas",
+
+                    "Análise de Temas Sociais e Culturais Complexos"
+
+                ]
+
+            },
+
+        ];
+
+
+
+        // Function to convert string to title case, preserving specific uppercase terms
+
+        const toTitleCase = (str) => {
+
+            const exceptions = ['PT.', 'MT', 'GT', 'LT', 'OT', 'AI', 'GEN Z', 'YOLO', 'FOMO', 'FOMU'];
+
+            return str.toLowerCase().split(' ').map(word => {
+
+                if (exceptions.includes(word.toUpperCase().replace('.', ''))) {
+
+                    return word.toUpperCase();
+
+                }
+
+                return word.charAt(0).toUpperCase() + word.slice(1);
+
+            }).join(' ');
+
+        };
+
+
+
+        const categories = {
+
+            'Grammar': ['VERB TO BE', 'SIMPLE PRESENT', 'CAN', 'OBJECT PRONOUNS', 'POSSESSIVE', 'PRESENT CONTINUOUS', 'FUTURE SIMPLE', 'MANY & MUCH', 'PREPOSITIONS', 'SHOULD', 'WAS & WERE', 'VERBS IN THE PAST', '-ED SOUNDS', 'COULD', 'USED TO', 'WOULD', 'HAVE TO', 'NEED TO', 'PAST CONTINUOUS', 'MUST', 'MAY', 'MIGHT', 'EMBEDDED QUESTIONS', 'COMPARATIVES', 'SUPERLATIVES', 'ADVERBS OF TIME', 'OUGHT TO', 'HAD BETTER', 'BE ALLOWED TO', 'PAST FORMS', 'PAST PARTICIPLE', 'PRESENT PERFECT', 'QUESTION TAGS', 'RELATIVE CLAUSES', 'CONDITIONALS', 'CAUSATIVE FORM', 'REFLEXIVE PRONOUNS', 'PAST MODALS', 'REPORTED SPEECH', 'CLEFT SENTENCES', 'WISH', 'IF ONLY', 'USES OF RATHER', 'FUTURE IN THE PAST', 'SPLIT INFINITIVE'],
+
+            'Speaking': ['OPEN HOUSE', 'PRESENTATION', 'GIVING ADVICE', 'AGREEING & DISAGREEING', 'TELLING STORIES', 'DEBATE TEMÁTICO', 'DISCUSSÃO ABERTA', 'PRÁTICA DE FLUÊNCIA', 'WHAT WILL YOU DO?', 'WHAT SHOULD I DO?', 'ARE YOU A COUCH POTATO?', 'IS POP REALLY CULTURE?', 'WHAT THE HELL HAPPENED?', 'WE ARE THE FUTURE', 'GO FIND A JOB', 'WHEN WE WERE YOUNG', 'BUT DO YOU AGREE?', 'IT’S GEN Z’S WORLD', 'DO YOU VOLUNTEER?', 'WHO DOESN’T LOVE PETS?', 'YOU’re JOKING, RIGHT?', 'LET’S TALK INEQUALITY', 'WHO’S YOUR HERO?', 'SECOND CHANCES', 'FAMILY MATTERS', 'ASTROLOGY? REALLY?', 'ARE GHOSTS REAL?', 'YOU NEED SUGAR, LOVE', 'IS YOUR PHONE CHANGING YOU?', 'MODERN RELATIONS', 'ANXIETY RULES', 'EATING HABITS', 'NEVER HAVE I EVER', 'GOING VIRAL', 'MENTAL HEALTH', 'I WISH I HAD NO EXPECTATIONS', 'LIVING IN THE CITY', 'MAKING IT ABROAD', 'DO YOU HAVE ANY REGRETS?', 'NETFLIX & CHILL', 'SPLIT INFINITIVE', 'LET’S GO BACKPACKING', 'LIAR, LIAR, PANTS ON FIRE', 'THE SWIFT IMPACT', 'SOCIAL MEDIA DISASTER', 'AMERICAN TRADITIONS', 'BRITISH X AMERICAN', 'MILLENNIALS X GEN Z', '2020’S PANDEMIC', 'THE REVOLUTION OF AI', 'CULTURAL DIFFERENCES', 'IT’S GOTTA BE ALIENS', 'STUDYING ABROAD', 'FAME DOES HAVE PRICE', 'ABROAD CULTURE', 'WHALE POOP IS GREAT', 'FLIGHT FUEL', 'WORK, WORK, WORK', 'ALL ABOUT THE MONEY', 'RELATIONSHIP GOALS', 'OVER & UNDER', 'SLANGS ARE LIT', 'YOLO', 'FOMO', 'FOMU', 'INTERNET LANGUAGE'],
+
+            'Idioms': ['IDIOMS', 'PHRASAL VERBS', 'WATER UNDER THE BRIDGE', 'CHILD’S PLAY', 'CLOTHING IDIOMS', 'COMMON IDIOMS', 'BODY IDIOMS', 'ANIMAL IDIOMS', 'COLOR IDIOMS', 'GEOGRAPHY IDIOMS', 'FAMILY IDIOMS', 'LOVE IDIOMS', 'COMMON EUPHEMISMS'],
+
+            'Vocabulary': ['FEELINGS', 'NAMES', 'GREETINGS', 'NUMBERS', 'SPELLING', 'ORDINAL', 'BASIC ADJECTIVES', 'DEMONSTRATIVE PRONOUNS', 'COUNTRIES', 'NATIONALITIES', 'NEIGHBORHOOD', 'FAMILY MEMBERS', 'LIKES AND DISLIKES', 'FREE TIME ACTIVITIES', 'MONTHS', 'HOLIDAYS', 'POSSESSIVE ADJECTIVES', 'POSSESSIVE PRONOUNS', 'FOOD', 'FRUITS', 'HOURS', 'FREQUENCY', 'ROUTINE', 'WHY & BECAUSE', 'PLACES IN TOWN', 'TRANSPORTATIONS', 'PARTS OF THE HOUSE', 'FURNITURE', 'CHORES', 'RESTAURANT', 'OCCUPATIONS', 'FALSE FRIENDS', 'DESCRIBING PEOPLE', 'MOVIE GENRES', 'WEATHER', 'FAST FOOD', 'TASTES', 'PARTS OF THE BODY', 'ACHES', 'PHYSICAL TRAITS', 'SUPERMARKET', 'THE INFLUENCERS ERA', 'BEING HEALTHY IS BEING HAPPY', 'USES OF LIKE', 'TEXTURES', 'INTENSIFIERS', 'CHERISH THE MOMENTS', 'AIRPORT ESSENTIALS', 'HOTEL ESSENTIALS', 'MONEY ESSENTIALS', 'MONEY X HAPPINESS', 'COFFEE, PLEASE', 'STORY OF ROCK']
+
+        };
+
+
+
+        const categoryColors = {
+
+            'Grammar': '#84C7DF', /* Azul Claro (Cor Secundária SLAP) */
+
+            'Speaking': '#FF5C3D', /* Laranja/Vermelho (Cor Secundária SLAP) */
+
+            'Idioms': '#8671D1', /* Roxo (Cor Secundária SLAP) */
+
+            'Vocabulary': '#F1D24B' /* Amarelo Primário (Cor Principal SLAP) */
+
+        };
+
+
+
+        const cefrLevels = [
+
+            { level: "Pre-A1", slapLevels: ["Starter 1"], progressPercentage: 10 },
+
+            { level: "A1", slapLevels: ["Starter 2"], progressPercentage: 25 },
+
+            { level: "A1+", slapLevels: ["Freshman 1"], progressPercentage: 40 },
+
+            { level: "A2", slapLevels: ["Freshman 2"], progressPercentage: 55 },
+
+            { level: "A2+", slapLevels: ["Sophomore 1"], progressPercentage: 65 },
+
+            { level: "B1+", slapLevels: ["Junior 1"] , progressPercentage: 75 },
+
+            { level: "B2-", slapLevels: ["Junior 2"], progressPercentage: 85 },
+
+            { level: "B2", slapLevels: ["Senior 1"], progressPercentage: 95 },
+
+            { level: "B2+/C1", slapLevels: ["Senior 2"], progressPercentage: 100 }
+
+        ];
+
+
+
+        const cefrFaqs = [
+
+            {
+
+                question: "O que é o CEFR?",
+
+                answer: "O CEFR (Common European Framework of Reference for Languages) é um guia internacionalmente reconhecido para descrever a proficiência em um idioma. Ele define o que um estudante é capaz de fazer em diferentes níveis de proficiência."
+
+            },
+
+            {
+
+                question: "Quais certificações seguem esse padrão?",
+
+                answer: "Diversas certificações renomadas seguem o padrão CEFR, como Cambridge English (KET, PET, FCE, CAE, CPE), IELTS, TOEFL (com equivalências) e o DELF/DALF para o francês, entre outros. O alinhamento com o CEFR garante que o nível de proficiência seja compreendido globalmente."
+
+            },
+
+            {
+
+                question: "Como o CEFR beneficia o ensino de inglês?",
+
+                answer: "O CEFR proporciona uma estrutura clara para o currículo, auxilia no planejamento das aulas com objetivos bem definidos, facilita a avaliação do progresso dos alunos e permite a comparação de níveis entre diferentes sistemas de ensino e países. Ele serve como um guia para a progressão contínua."
+
+            },
+
+            {
+
+                question: "Os níveis do SLAP correspondem exatamente aos níveis CEFR?",
+
+                answer: "Os níveis do SLAP são cuidadosamente alinhados com o CEFR para garantir uma progressão lógica e eficaz no aprendizado. No entanto, é importante notar que as faixas '+' ou '-' em alguns níveis SLAP indicam uma transição ou um aprofundamento específico dentro daquele patamar do CEFR, oferecendo uma experiência mais gradual e completa para o aluno."
+
+            }
+
+        ];
+
+
+
+
+
+        const isTestOrReview = (lesson) => {
+
+            const lessonUpper = lesson.toUpperCase();
+
+            const specificTests = ['MIDTERM TEST', 'GRAMMAR TEST', 'ORAL TEST – DAY 1', 'ORAL TEST – DAY 2', 'LISTENING TEST'];
+
+            return specificTests.includes(lessonUpper);
+
+        };
+
+
+
+        let currentChart;
+
+        const contentArea = document.getElementById('content-area');
+
+
+
+        // Funções de renderização principais, agora anexadas ao objeto window
+
+        function setActiveHubButton(buttonId) {
+
+            document.querySelectorAll('.hub-nav-button').forEach(btn => {
+
+                btn.classList.remove('active');
+
+            });
+
+            document.getElementById(buttonId).classList.add('active');
+
+        }
+
+
+
+        function getCategory(lesson) {
+
+            const lessonUpper = lesson.toUpperCase();
+
+            for (const category in categories) {
+
+                if (categories[category].some(keyword => lessonUpper.includes(keyword))) {
+
+                    return category;
+
+                }
+
+            }
+
+            return 'Vocabulary'; /* Fallback */
+
+        }
+
+        
+
+        const arrowIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+
+        
+
+        const levelIcons = Array(10).fill(arrowIcon);
+
+
+
+        function renderSlapLevelsSection() {
+
+            console.log("renderSlapLevelsSection called"); // Log para depuração
+
+            setActiveHubButton('nav-slap-levels');
+
+            document.getElementById('main-title').textContent = 'Níveis SLAP: Seu Guia Completo do Currículo';
+
+            document.getElementById('main-description').textContent = 'Explore a estrutura completa do nosso currículo, com detalhes de cada nível e a distribuição das aulas. Use a navegação lateral para visualizar o conteúdo de cada etapa.';
+
+            
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 flex flex-col md:flex-row gap-8">
+
+                    <div id="level-sub-navigation" class="md:w-1/4 bg-white p-4 rounded-xl shadow-sm border border-stone-200">
+
+                        <h3 class="text-lg font-semibold text-stone-800 mb-4">Níveis de Curso</h3>
+
+                        <nav class="space-y-2">
+
+                        </nav>
+
+                    </div>
+
+                    <div class="md:w-3/4 flex-1 grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+                        <section id="focus-section" class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-stone-200 flex flex-col justify-center">
+
+                            <h3 class="text-lg font-semibold text-center mb-4 text-stone-800">Foco do Nível</h3>
+
+                            <div id="focus-points-grid" class="grid grid-cols-1 gap-3">
+
+                                <!-- Focus points will be rendered here -->
+
+                            </div>
+
+                        </section>
+
+                        <section id="lessons-section" class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                            <h3 id="lessons-title" class="text-lg font-semibold mb-4 text-stone-800">Aulas do Nível:</h3>
+
+                            <div id="lessons-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 overflow-y-auto max-h-[85vh] pr-2">
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </section>
+
+            `;
+
+            
+
+            const levelNavContainer = document.querySelector('#level-sub-navigation nav');
+
+            levelNavContainer.innerHTML = courseData.map((level, index) => `
+
+                <button data-index="${index}" class="nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+
+                    ${levelIcons[index]}
+
+                    ${level.name}
+
+                </button>
+
+            `).join('');
+
+
+
+            document.querySelectorAll('#level-sub-navigation .nav-button').forEach(button => {
+
+                button.addEventListener('click', (e) => {
+
+                    const index = e.currentTarget.dataset.index;
+
+                    renderLevel(index);
+
+                });
+
+            });
+
+            renderLevel(0); /* Carrega Starter 1 por padrão quando Níveis SLAP é selecionado */
+
+        }
+
+
+
+        function renderLevel(index) {
+
+            console.log("renderLevel called for index:", index); // Log para depuração
+
+            const level = courseData[index];
+
+            
+
+            document.getElementById('lessons-title').textContent = `Aulas do Nível: ${level.name}`;
+
+            
+
+            const lessonsGrid = document.getElementById('lessons-grid');
+
+            lessonsGrid.innerHTML = level.lessons.map((lesson, i) => {
+
+                const isTest = isTestOrReview(lesson);
+
+                const bgColorClass = isTest ? 'bg-[#F1D24B]' : 'bg-stone-100';
+
+                const textColorClass = isTest ? 'text-stone-800' : 'text-stone-700';
+
+                const numberColorClass = isTest ? 'text-stone-800' : 'text-[#F1D24B]';
+
+
+
+                return `
+
+                    <div class="${bgColorClass} p-3 rounded-lg flex flex-col items-start shadow-sm">
+
+                        <span class="text-sm font-bold ${numberColorClass} mb-1">${String(i + 1).padStart(2, '0')}</span>
+
+                        <span class="text-sm ${textColorClass} w-full">${toTitleCase(lesson)}</span>
+
+                    </div>
+
+                `;
+
+            }).join('');
+
+
+
+            document.querySelectorAll('#level-sub-navigation .nav-button').forEach(btn => {
+
+                btn.classList.remove('active');
+
+                if (btn.dataset.index === index) {
+
+                    btn.classList.add('active');
+
+                }
+
+            });
+
+
+
+            renderFocusPoints(level);
+
+        }
+
+
+
+        function renderFocusPoints(level) {
+
+            const focusPointsGrid = document.getElementById('focus-points-grid');
+
+            focusPointsGrid.innerHTML = level.focusPoints.map((point) => {
+
+                return `
+
+                    <div class="focus-point-card">
+
+                        ${point}
+
+                    </div>
+
+                `;
+
+            }).join('');
+
+        }
+
+
+
+        function renderCefrSection() {
+
+            console.log("renderCefrSection called"); // Log para depuração
+
+            setActiveHubButton('nav-cefr');
+
+            document.getElementById('main-title').textContent = 'CEFR: Alinhamento de Proficiência SLAP';
+
+            document.getElementById('main-description').textContent = 'Compreenda a proficiência de cada nível do SLAP no Quadro Comum Europeu de Referência para Línguas (CEFR), um guia global para o aprendizado de idiomas.';
+
+            
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Níveis CEFR e SLAP</h3>
+
+                    <div class="space-y-4 mb-8">
+
+                        ${cefrLevels.map(cefr => `
+
+                            <div class="flex flex-col sm:flex-row items-start sm:items-center">
+
+                                <p class="cefr-label sm:w-24 text-stone-800 mb-1 sm:mb-0">${cefr.level}</p>
+
+                                <div class="flex-1 w-full sm:ml-4 bg-gray-200 rounded-full h-6 relative overflow-hidden">
+
+                                    <div class="slap-level-indicator bg-[#F1D24B] h-full absolute top-0 left-0 flex items-center justify-center rounded-full" style="width: ${cefr.progressPercentage}%;">
+
+                                        <span class="z-10 text-stone-800 font-medium whitespace-nowrap px-2">${cefr.slapLevels.join(', ')}</span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Perguntas Frequentes sobre CEFR</h3>
+
+                    <div class="space-y-3">
+
+                        ${cefrFaqs.map((faq, index) => `
+
+                            <div class="faq-item">
+
+                                <div class="faq-question" onclick="toggleFaq(event)">
+
+                                    <span>${faq.question}</span>
+
+                                    <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+
+                                </div>
+
+                                <div class="faq-answer">
+
+                                    <p class="py-2">${faq.answer}</p>
+
+                                </div>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                    <p class="mt-6 text-sm text-stone-600">
+
+                        Esta representação visual demonstra a progressão do aprendizado de acordo com o CEFR, mostrando como cada nível do SLAP contribui para o desenvolvimento da proficiência.
+
+                    </p>
+
+                </section>
+
+            `;
+
+            
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+
+
+        function toggleFaq(event) {
+
+            console.log("toggleFaq called"); // Log para depuração
+
+            const faqItem = event.currentTarget.closest('.faq-item');
+
+            const answer = faqItem.querySelector('.faq-answer');
+
+            const arrow = faqItem.querySelector('.faq-arrow');
+
+            if (answer.classList.contains('open')) {
+
+                answer.classList.remove('open');
+
+                arrow.classList.remove('rotate');
+
+            } else {
+
+                // Fechar todas as outras respostas antes de abrir a atual
+
+                document.querySelectorAll('.faq-answer.open').forEach(openAnswer => {
+
+                    openAnswer.classList.remove('open');
+
+                    openAnswer.previousElementSibling.querySelector('.faq-arrow').classList.remove('rotate');
+
+                });
+
+                answer.classList.add('open');
+
+                arrow.classList.add('rotate');
+
+            }
+
+        }
+
+
+
+        // --- GLOBAL CONTENT DEFINITIONS ---
+
+        const goodPracticesRules = [
+
+            { title: "Postar constantemente", description: "Mantenha uma frequência de postagens para construir e engajar sua audiência, criando um senso de expectativa." },
+
+            { title: "Compartilhar dicas e conteúdos úteis", description: "Ofereça valor real aos seus seguidores com dicas práticas de inglês, curiosidades culturais e insights sobre o aprendizado." },
+
+            { title: "Interagir com seguidores nos comentários", description: "Responda a perguntas, crie conversas e mostre que valoriza a participação da sua comunidade." },
+
+            { title: "Utilizar hashtags estratégicas", description: "Pesquise e use hashtags relevantes e populares para aumentar a visibilidade do seu conteúdo e alcançar novos públicos." },
+
+            { title: "Adaptar o conteúdo para cada rede", description: "Entenda as particularidades de cada plataforma (Instagram, TikTok, etc.) e crie formatos que se encaixem melhor no comportamento dos usuários de cada uma." },
+
+            { title: "Fazer collabs com criadores do mesmo nicho", description: "Colabore com outros creators de inglês para expandir seu alcance e apresentar novos pontos de vista ao público." },
+
+            { title: "Compartilhar bastidores e rotina real", description: "Mostre o lado humano e autêntico da sua rotina como professor e creator, gerando conexão e identificação." },
+
+            { title: "Criar enquetes e abrir caixinhas de pergunta", description: "Utilize os recursos interativos das redes sociais para coletar opiniões, tirar dúvidas e aumentar o engajamento direto." },
+
+            { title: "Mostrar transformação dos alunos", description: "Compartilhe cases de sucesso e o progresso dos alunos (com consentimento) para inspirar e demonstrar a eficácia do método do SLAP." },
+
+            { title: "Usar CTAs claros", description: "Direcione seus seguidores com chamadas para ação (CTAs) claras e objetivas, como 'Visite nosso site', 'Agende sua aula experimental' ou 'Deixe seu comentário'." },
+
+            { title: "Divulgar as turmas abertas com antecedência", description: "Mantenha seu público informado sobre novas turmas e cursos, criando expectativa e permitindo que se organizem para a matrícula." },
+
+            { title: "Reaproveitar conteúdos bons em novos formatos", description: "Transforme vídeos longos em pequenos cortes, artigos em threads, ou lives em posts de carrossel. Maximize o alcance do seu material." },
+
+            { title: "Participar de trends de forma autêntica", description: "Engaje-se nas trends do momento, mas adapte-as à sua persona e aos valores do SLAP para que pareçam naturais e criativas." },
+
+            { title: "Usar legendas acessíveis", description: "Sempre adicione legendas aos seus vídeos. Isso aumenta o alcance, a compreensão (especialmente para não-nativos) e a acessibilidade do conteúdo." },
+
+            { title: "Medir resultados", description: "Acompanhe as métricas de engajamento, visualizações e crescimento para entender o que funciona melhor e otimizar sua estratégia de conteúdo." }
+
+        ];
+
+
+
+        const prohibitedContentRules = [
+
+            { title: "Falar sobre política, religião ou temas polêmicos", description: "Mantenha o foco no ensino de inglês e em temas neutros para evitar alienar ou ofender parte do público." },
+
+            { title: "Criticar outras escolas ou professores", description: "Concentre-se em destacar os pontos fortes do SLAP, sem depreciar a concorrência. A ética profissional é fundamental." },
+
+            { title: "Utilizar uma linguagem que não represente a escola", description: "Evite gírias excessivas, palavrões ou um tom de voz que não esteja alinhado com a imagem profissional e amigável do SLAP." },
+
+            { title: "Postar conteúdo com erros de inglês", description: "Revise todo o conteúdo cuidadosamente antes de postar. Erros podem minar a credibilidade do SLAP como autoridade no ensino do idioma." },
+
+            { title: "Expor negativamente alunos ou colegas", description: "Nunca compartilhe informações, imagens ou situações que possam constranger ou expor alunos e membros da equipe. A privacidade é prioridade." },
+
+            { title: "Ignorar plágio", description: "Sempre dê crédito a fontes externas e nunca utilize material de outros criadores sem a devida permissão. Crie conteúdo original." },
+
+            { title: "Prometer resultados milagrosos ou irreais", description: "Seja honesto sobre o processo de aprendizado. Evite promessas como 'fique fluente em 3 meses' que geram expectativas falsas." },
+
+            { title: "Fazer SPAM nos comentários ou DMs", description: "Não envie mensagens em massa não solicitadas para promover a escola. A interação deve ser orgânica e baseada em interesse genuíno." },
+
+            { title: "Discutir informações internas ou confidenciais", description: "Assuntos relacionados a salários, problemas internos ou dados de alunos não devem ser mencionados publicamente." },
+
+            { title: "Usar imagens sem direito de uso", description: "Utilize bancos de imagens gratuitos ou pagos e sempre verifique as licenças para evitar problemas legais de direitos autorais." }
+
+        ];
+
+
+
+        function renderGoodPracticesContent() {
+
+            console.log("renderGoodPracticesContent called"); // Log para depuração
+
+            setActiveHubButton('nav-creators-room');
+
+            document.getElementById('main-title').textContent = 'Creators Room: Boas Práticas para Redes Sociais';
+
+            document.getElementById('main-description').textContent = 'Dicas essenciais para criar conteúdo engajador e alinhado com a marca SLAP no Instagram e TikTok.';
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <div class="creators-tab-container">
+
+                        <button class="creators-tab active" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
+
+                        <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
+
+                        <button class="creators-tab" onclick="window.renderContentFunnel()">Funil de Conteúdo</button>
+
+                        <button class="creators-tab" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Diretrizes de Boas Práticas</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        ${goodPracticesRules.map((rule, index) => `
+
+                            <div class="good-practice-card">
+
+                                <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+
+                                <h4 class="text-base font-semibold mb-1 pl-8">
+
+                                    ${index + 1}. ${rule.title}
+
+                                </h4>
+
+                                <p class="text-sm">
+
+                                    ${rule.description}
+
+                                </p>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+
+
+        const glossaryTerms = [
+
+            { term: "CTA (Call to Action)", explanation: "Uma frase ou botão que indica ao usuário a próxima ação desejada, como 'Saiba Mais', 'Inscreva-se', 'Compre Agora'." },
+
+            { term: "Gancho", explanation: "O elemento inicial de um conteúdo que captura a atenção do público nos primeiros segundos, incentivando-o a continuar assistindo ou lendo." },
+
+            { term: "Storytelling", explanation: "A arte de contar histórias para transmitir uma mensagem, criar conexão emocional e tornar o conteúdo mais memorável e envolvente." },
+
+            { term: "Alcance", explanation: "O número total de pessoas únicas que visualizaram seu conteúdo ou que foram expostas à sua publicação em uma plataforma." },
+
+            { term: "Engajamento", explanation: "A métrica que mede a interação do público com o seu conteúdo, incluindo curtidas, comentários, compartilhamentos, salvamentos e cliques." },
+
+            { term: "Reaproveitamento de Conteúdo", explanation: "A prática de transformar um conteúdo existente em diferentes formatos ou plataformas para maximizar seu alcance e valor (ex: transformar uma live em vários posts curtos)." },
+
+            { term: "Roteiro", explanation: "O planejamento detalhado de um vídeo ou áudio, incluindo falas, ações, transições e elementos visuais, para guiar a produção do conteúdo." },
+
+            { term: "Copy", explanation: "Texto persuasivo usado em marketing e publicidade para convencer o público a realizar uma ação específica, como clicar em um link ou comprar um produto." },
+
+            { term: "Trend", explanation: "Tendências populares em plataformas como TikTok e Instagram, geralmente envolvendo músicas, desafios ou formatos de vídeo específicos que viralizam." },
+
+            { term: "Conteúdo Perpétuo", explanation: "Conteúdo que permanece relevante e útil ao longo do tempo, sem se tornar obsoleto rapidamente (ex: '5 Dicas de Pronúncia')." },
+
+            { term: "Prova Social", explanation: "Evidências de que outras pessoas aprovaram ou se beneficiaram do seu produto/serviço, como depoimentos de alunos, número de seguidores ou avaliações positivas." },
+
+            { term: "Tom de Voz", explanation: "A personalidade e o estilo de comunicação de uma marca ou criador, que se reflete na escolha de palavras, entonação e forma de se expressar." },
+
+            { term: "Autoridade", explanation: "A percepção de que você é um especialista ou uma fonte confiável em determinado assunto, construída através da entrega consistente de conteúdo de valor e conhecimento." },
+
+            { term: "Humanização", explanation: "A estratégia de mostrar o lado humano da marca ou do criador, compartilhando bastidores, experiências pessoais e vulnerabilidades para gerar conexão com o público." },
+
+            { term: "Objeção", explanation: "Dúvidas, medos ou preocupações que o público pode ter antes de tomar uma decisão (ex: 'Inglês é muito difícil', 'Não tenho tempo'). O conteúdo pode ser usado para quebrá-las." },
+
+            { term: "Jornada do Aluno", explanation: "As diferentes etapas pelas quais um aluno passa, desde o primeiro contato com a escola até a matrícula e a conclusão do curso, influenciada por diversos pontos de contato e conteúdos." },
+
+            { term: "Posicionamento", explanation: "Como a marca ou criador deseja ser percebido pelo público, destacando seus diferenciais e valores no mercado." },
+
+            { term: "Conteúdo de Engajamento", explanation: "Conteúdo cujo principal objetivo é gerar interação com a audiência, como perguntas, enquetes, desafios ou 'complete a frase'." },
+
+            { term: "Conteúdo de Valor", explanation: "Conteúdo que oferece informações úteis, soluções para problemas, entretenimento ou inspiração para o público, sem necessariamente ser uma venda direta." },
+
+            { term: "Conteúdo Institucional", explanation: "Conteúdo focado em apresentar a escola, seus valores, estrutura, equipe, diferenciais e o que ela oferece aos alunos." }
+
+        ];
+
+
+
+        function renderGlossaryContent() {
+
+            console.log("renderGlossaryContent called"); // Log para depuração
+
+            setActiveHubButton('nav-creators-room');
+
+            document.getElementById('main-title').textContent = 'Creators Room: Glossário de Termos';
+
+            document.getElementById('main-description').textContent = 'Entenda os termos mais comuns no universo de conteúdo e marketing digital, explicados de forma simples e prática.';
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <div class="creators-tab-container">
+
+                        <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
+
+                        <button class="creators-tab active" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
+
+                        <button class="creators-tab" onclick="window.renderContentFunnel()">Funil de Conteúdo</button>
+
+                        <button class="creators-tab" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Termos Essenciais</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        ${glossaryTerms.map(term => `
+
+                            <div class="bg-stone-100 p-4 rounded-lg shadow-sm">
+
+                                <h4 class="font-semibold text-stone-800">${term.term}</h4>
+
+                                <p class="text-sm text-stone-600 mt-1">${term.explanation}</p>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+
+
+        function renderContentFunnel() {
+
+            console.log("renderContentFunnel called"); // Log para depuração
+
+            setActiveHubButton('nav-creators-room');
+
+            document.getElementById('main-title').textContent = 'Creators Room: Funil de Conteúdo';
+
+            document.getElementById('main-description').textContent = 'Compreenda como construir conteúdos estratégicos para cada etapa da jornada do seu público, do reconhecimento à conversão.';
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <div class="creators-tab-container">
+
+                        <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
+
+                        <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
+
+                        <button class="creators-tab active" onclick="window.renderContentFunnel()">Funil de Conteúdo</button>
+
+                        <button class="creators-tab" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800 text-center">A Estratégia da Pirâmide</h3>
+
+                    <div class="flex flex-col items-center space-y-4">
+
+                        <div class="funnel-stage funnel-top w-full md:w-3/4 lg:w-2/3 xl:w-1/2 relative">
+
+                             <div class="funnel-stage-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg></div>
+
+                            <h4 class="text-xl font-bold mb-2">Topo de Funil</h4>
+
+                            <p class="text-sm mb-1">Objetivo: Atrair atenção e alcançar novas pessoas.</p>
+
+                            <p class="text-sm"><strong>Conteúdos:</strong> Dicas rápidas, curiosidades, memes, enquetes, vídeos de humor.</p>
+
+                        </div>
+
+                        <div class="funnel-stage funnel-middle w-full md:w-3/4 lg:w-2/3 xl:w-1/2 relative">
+
+                            <div class="funnel-stage-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
+
+                            <h4 class="text-xl font-bold mb-2">Meio de Funil</h4>
+
+                            <p class="text-sm mb-1">Objetivo: Criar conexão e gerar desejo.</p>
+
+                            <p class="text-sm"><strong>Conteúdos:</strong> Bastidores, depoimentos, caixas de perguntas, explicações do método.</p>
+
+                        </div>
+
+                        <div class="funnel-stage funnel-bottom w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
+
+                           <div class="funnel-stage-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+
+                            <h4 class="text-xl font-bold mb-2">Fundo de Funil</h4>
+
+                            <p class="text-sm mb-1">Objetivo: Converter em matrículas.</p>
+
+                            <p class="text-sm"><strong>Conteúdos:</strong> Ofertas, abertura de turmas, CTAs diretos, prints de conversas.</p>
+
+                        </div>
+
+                    </div>
+
+                    <p class="mt-6 text-sm text-stone-600 text-center">
+
+                        Entender o funil de conteúdo ajuda a criar materiais que guiam o público desde o primeiro contato até a matrícula, de forma estratégica.
+
+                    </p>
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+        
+
+        function renderProhibitedContent() {
+
+            console.log("renderProhibitedContent called");
+
+            setActiveHubButton('nav-creators-room');
+
+            document.getElementById('main-title').textContent = 'Creators Room: O Que NÃO Fazer';
+
+            document.getElementById('main-description').textContent = 'Diretrizes claras sobre conteúdos e práticas a serem evitadas para manter a integridade, o profissionalismo e a imagem do SLAP.';
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <div class="creators-tab-container">
+
+                        <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
+
+                        <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
+
+                        <button class="creators-tab" onclick="window.renderContentFunnel()">Funil de Conteúdo</button>
+
+                        <button class="creators-tab active" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
+
+                    </div>
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Conteúdos e Práticas a Serem Evitadas</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        ${prohibitedContentRules.map((rule, index) => `
+
+                            <div class="prohibited-rule-card">
+
+                                <svg class="icon-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+
+                                <h4 class="text-base font-semibold mb-1 pr-8">
+
+                                    ${index + 1}. ${rule.title}
+
+                                </h4>
+
+                                <p class="text-sm">
+
+                                    ${rule.description}
+
+                                </p>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+
+
+
+
+        function renderCreatorsRoom() {
+
+            console.log("renderCreatorsRoom called"); // Log para depuração
+
+            setActiveHubButton('nav-creators-room');
+
+            window.renderGoodPracticesContent(); // Default to Good Practices when Creators Room is opened
+
+        }
+
+
+
+        function renderMethodSection() {
+
+            console.log("renderMethodSection called"); // Log para depuração
+
+            setActiveHubButton('nav-method');
+
+            document.getElementById('main-title').textContent = 'Método SLAP: Guia de Ensino Dinâmico';
+
+            document.getElementById('main-description').textContent = 'Nosso método é um guia para planejar aulas de inglês engajadoras, progressivas e com foco na prática ativa. Ele é dividido em quatro fases: SPARK, LEARN, APPLY e PERFORM.';
+
+            
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <div class="space-y-8">
+
+                        <div class="method-phase-card method-phase-spark md:flex md:items-center p-6 gap-6">
+
+                            <div class="md:w-1/4 flex-shrink-0 text-center">
+
+                                <img src="https://drive.google.com/uc?export=download&id=10pZVB3dNbL7xyZq1oPi6m7cU55dh6gh9" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+
+                            </div>
+
+                            <div class="md:flex-1">
+
+                                <h3 class="text-xl font-bold mb-2 text-left">SPARK</h3>
+
+                                <p class="text-left">
+
+                                    Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="method-phase-card method-phase-learn md:flex md:flex-row-reverse md:items-center p-6 gap-6">
+
+                            <div class="md:w-1/4 flex-shrink-0 text-center">
+
+                                <img src="https://firebasestorage.googleapis.com/v0/b/generative-ai-document-storage.appspot.com/o/LEARN.jpg-8da22a4d-7163-4129-8637-849d8facfa86?alt=media" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+
+                            </div>
+
+                            <div class="md:flex-1">
+
+                                <h3 class="text-xl font-bold mb-2 text-right">LEARN</h3>
+
+                                <p class="text-right">
+
+                                    Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="method-phase-card method-phase-apply md:flex md:items-center p-6 gap-6">
+
+                            <div class="md:w-1/4 flex-shrink-0 text-center">
+
+                                <img src="https://firebasestorage.googleapis.com/v0/b/generative-ai-document-storage.appspot.com/o/APPLY.jpg-def8104f-9ef7-4e65-a64c-d8b0eabe0359?alt=media" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+
+                            </div>
+
+                            <div class="md:flex-1">
+
+                                <h3 class="text-xl font-bold mb-2 text-left">APPLY</h3>
+
+                                <p class="text-left">
+
+                                    Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="method-phase-card method-phase-perform md:flex md:flex-row-reverse md:items-center p-6 gap-6">
+
+                            <div class="md:w-1/4 flex-shrink-0 text-center">
+
+                                <img src="https://firebasestorage.googleapis.com/v0/b/generative-ai-document-storage.appspot.com/o/PERFORM.jpg-9ec7db4e-4864-468d-bf48-55ce63a86164?alt=media" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-24 h-24 mb-4 md:mb-0 mx-auto rounded-lg">
+
+                            </div>
+
+                            <div class="md:flex-1">
+
+                                <h3 class="text-xl font-bold mb-2 text-right">PERFORM</h3>
+
+                                <p class="text-right">
+
+                                    É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                     <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Perguntas Frequentes sobre o Método</h3>
+
+                    <div class="space-y-3">
+
+                        ${methodFaqs.map(faq => `
+
+                            <div class="faq-item">
+
+                                <div class="faq-question" onclick="toggleFaq(event)">
+
+                                    <span>${faq.question}</span>
+
+                                    <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+
+                                </div>
+
+                                <div class="faq-answer">
+
+                                    <p class="py-2">${faq.answer}</p>
+
+                                </div>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                    <p class="mt-6 text-sm text-stone-600 text-center">
+
+                        O método SLAP garante uma abordagem dinâmica e eficaz para o ensino de inglês, promovendo o engajamento e a fluência dos alunos.
+
+                    </p>
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        };
+
+
+
+        const methodFaqs = [
+
+            {
+
+                question: "Quem criou o método?",
+
+                answer: "O método foi criado por Aleff Rodrigues, CEO do SLAP. Ele desenvolveu o método com base em sua ampla experiência em sala de aula, observando os desafios reais enfrentados pelos alunos. O foco do método é respeitar as fases naturais de aprendizado e garantir evolução prática e estruturada, combinando comunicação real com o desenvolvimento da confiança do aluno."
+
+            },
+
+            {
+
+                question: "Quais são as influências do método?",
+
+                answer: "O método SLAP tem grande influência de Jeremy Harmer, referência mundial no ensino de inglês, e também se inspira em elementos da cultura americana, com base no PBL (Problem-Based Learning) — uma abordagem que usa situações reais para desenvolver habilidades linguísticas e pensamento crítico."
+
+            },
+
+            {
+
+                question: "É um método público?",
+
+                answer: "Não. O método SLAP é exclusivo do SLAP e não está disponível publicamente. Ele foi desenvolvido internamente para uso próprio e segue um plano de ensino e uma lógica pedagógica registrada."
+
+            },
+
+            {
+
+                question: "Quantas fases tem o método?",
+
+                answer: "O método é dividido em quatro fases principais: Spark (descoberta e motivação), Learn (estrutura e base linguística), Apply (uso prático do inglês no dia a dia), Perform (fluência, autoconfiança e domínio)."
+
+            },
+
+            {
+
+                question: "O método é adequado para qualquer idade?",
+
+                answer: "O método é voltado principalmente para adolescentes e adultos, pois a abordagem exige autonomia, análise e aplicação prática do conteúdo. No entanto, pode ser adaptado em alguns casos com acompanhamento adequado."
+
+            },
+
+            {
+
+                question: "O método usa material didático tradicional?",
+
+                answer: "Não. O SLAP trabalha com material próprio, planejado aula por aula com base nas fases do método. Isso permite que cada aula tenha um propósito pedagógico claro, promovendo mais engajamento e foco na comunicação real."
+
+            }
+
+        ];
+
+        
+
+        const certifications = [
+
+            { name: "TKT", description: "Teaching Knowledge Test", bonus: "R$30/mês" },
+
+            { name: "Graduação em Letras Inglês", description: "Bacharelado ou Licenciatura", bonus: "R$60/mês" },
+
+            { name: "Graduação em Tradução", description: "Bacharelado ou Tecnólogo", bonus: "R$60/mês" },
+
+            { name: "FCE", description: "B2 First", bonus: "R$60/mês" },
+
+            { name: "TOEFL", description: "Test of English as a Foreign Language", bonus: "R$70/mês (validade de 2 anos)" },
+
+            { name: "TESOL", description: "Teaching English to Speakers of Other Languages", bonus: "R$80/mês" },
+
+            { name: "TEFL", description: "Teaching English as a Foreign Language", bonus: "R$80/mês" },
+
+            { name: "CAE", description: "C1 Advanced", bonus: "R$90/mês" },
+
+            { name: "CELTA", description: "Certificate in Teaching English to Speakers of Other Languages", bonus: "R$100/mês" },
+
+            { name: "CPE", description: "C2 Proficiency", bonus: "R$120/mês" },
+
+            { name: "DELTA", description: "Diploma in Teaching English to Speakers of Other Languages", bonus: "R$150/mês por módulo" },
+
+            { name: "Mestrado", description: "Em áreas correlatas", bonus: "R$150/mês" },
+
+            { name: "Doutorado", description: "Em áreas correlatas", bonus: "R$200/mês" }
+
+        ];
+
+
+
+        const commemorativeBonuses = [
+
+            { name: "Dia da Mulher", description: "Apenas colaboradoras mulheres recebem a bonificação." },
+
+            { name: "Páscoa", description: "Todos os colaboradores recebem uma bonificação." },
+
+            { name: "Dia do Trabalhador", description: "Todos os colaboradores recebem uma bonificação." },
+
+            { name: "Dia das Mães", description: "Apenas colaboradoras mães recebem a bonificação." },
+
+            { name: "Dia dos Pais", description: "Apenas colaboradores pais recebem a bonificação." },
+
+            { name: "Dia do Professor", description: "Todos os professores recebem uma bonificação." },
+
+            { name: "Day Off no Aniversário", description: "Verificar disponibilidade com a coordenação pedagógica." },
+
+            { name: "Bônus de Aniversário", description: "Todos os colaboradores recebem um bônus." },
+
+            { name: "Bônus de Natal", description: "Todos os colaboradores recebem uma bonificação." },
+
+        ];
+
+        
+
+        const crisisKits = [
+
+          {
+
+            title: "Meu aluno fala muito pouco na aula. E agora?",
+
+            audioSrc: "https://drive.google.com/uc?export=download&id=1X-p7-kCOwirfnXBz_59I0OI7jgl_zQA0"
+
+          },
+
+          {
+
+            title: "Meu aluno falta muito. Como lidar com isso?",
+
+            audioSrc: "URL_DO_SEU_AUDIO_2.mp3" // Substitua pela URL real do áudio
+
+          },
+
+          {
+
+            title: "Meu aluno está desnivelado da turma. O que faço?",
+
+            audioSrc: "URL_DO_SEU_AUDIO_3.mp3" // Substitua pela URL real do áudio
+
+          },
+
+          {
+
+            title: "Como sei se estou dando uma aula boa?",
+
+            audioSrc: "URL_DO_SEU_AUDIO_4.mp3" // Substitua pela URL real do áudio
+
+          }
+
+        ];
+
+
+
+        function renderPdiSection() {
+
+            console.log("renderPdiSection called"); // Log para depuração
+
+            setActiveHubButton('nav-pdi');
+
+            document.getElementById('main-title').textContent = 'PDI: Plano de Desenvolvimento Individual';
+
+            document.getElementById('main-description').textContent = 'Este espaço é dedicado ao seu plano de carreira e desenvolvimento profissional no SLAP, oferecendo caminhos claros para evolução.';
+
+            
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">O que é um PDI?</h3>
+
+                    <p class="text-stone-700 mb-6">
+
+                        Um Plano de Desenvolvimento Individual é uma ferramenta personalizada para impulsionar a carreira e o crescimento profissional dos professores, com caminhos claros para evolução dentro do SLAP.
+
+                    </p>
+
+
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Bonificações por Certificações e Formação</h3>
+
+                    <p class="text-sm text-stone-600 mb-4">Válido somente após o colaborador completar 1 ano de empresa.</p>
+
+
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+
+                        ${certifications.map(cert => `
+
+                            <div class="bg-stone-100 p-4 rounded-lg shadow-sm flex flex-col h-full pdi-card pdi-card-yellow">
+
+                                <div class="flex-grow">
+
+                                    <h4 class="font-semibold text-stone-800">${cert.name}</h4>
+
+                                    <p class="text-xs text-stone-500 mt-1">${cert.description}</p>
+
+                                </div>
+
+                                <p class="text-sm text-stone-600 mt-2 font-medium">${cert.bonus}</p>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+                    
+
+                    <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Benefício Lealdade</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+                        <div class="bg-stone-100 p-4 rounded-lg shadow-sm pdi-card pdi-card-purple">
+
+                            <h4 class="font-semibold text-stone-800">Nível A</h4>
+
+                            <p class="text-sm text-stone-600">Colaboradores com mais de 2 anos de casa: <strong>R$100/mês</strong></p>
+
+                        </div>
+
+                        <div class="bg-stone-100 p-4 rounded-lg shadow-sm pdi-card pdi-card-purple">
+
+                            <h4 class="font-semibold text-stone-800">Nível B</h4>
+
+                            <p class="text-sm text-stone-600">Colaboradores com mais de 4 anos de casa: <strong>R$200/mês</strong></p>
+
+                        </div>
+
+                        <div class="bg-stone-100 p-4 rounded-lg shadow-sm pdi-card pdi-card-purple">
+
+                            <h4 class="font-semibold text-stone-800">Nível C</h4>
+
+                            <p class="text-sm text-stone-600">Colaboradores com mais de 6 anos de casa: <strong>R$400/mês</strong></p>
+
+                        </div>
+
+                        <div class="bg-stone-100 p-4 rounded-lg shadow-sm pdi-card pdi-card-purple">
+
+                            <h4 class="font-semibold text-stone-800">Nível D</h4>
+
+                            <p class="text-sm text-stone-600">Colaboradores com mais de 8 anos de casa: <strong>A negociar</strong></p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <h3 class="text-lg font-semibold mb-4 text-stone-800">Bonificações Comemorativas</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+
+                        ${commemorativeBonuses.map(bonus => `
+
+                             <div class="bg-stone-100 p-4 rounded-lg shadow-sm flex flex-col h-full pdi-card pdi-card-orange">
+
+                                <h4 class="font-semibold text-stone-800 flex-grow">${bonus.name}</h4>
+
+                                <p class="text-xs text-stone-500 mt-1">${bonus.description}</p>
+
+                            </div>
+
+                        `).join('')}
+
+                    </div>
+
+
+
+                    <div class="info-box mt-8">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+
+                        <div>
+
+                            <h4 class="font-bold">Observação Importante</h4>
+
+                            <p class="text-sm">Essas bonificações serão creditadas no Caju, nosso cartão benefício, e não possuem nenhum vínculo com salário ou pagamentos relacionados à CLT.</p>
+
+                        </div>
+
+                    </div>
+
+
+
+                </section>
+
+            `;
+
+            if (currentChart) {
+
+                currentChart.destroy();
+
+            }
+
+        }
+
+        
+
+        function renderDeepDiveSection() {
+
+            setActiveHubButton('nav-deep-dive');
+
+            document.getElementById('main-title').textContent = 'Deep Dive';
+
+            document.getElementById('main-description').textContent = 'Um mergulho profundo em desafios pedagógicos comuns, com orientações práticas para você navegar em situações complexas com mais segurança e confiança.';
+
+            
+
+            contentArea.innerHTML = `
+
+                <section class="lg:col-span-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    ${crisisKits.map((kit, index) => `
+
+                        <div class="crisis-card">
+
+                            <h3 class="text-lg font-bold mb-4">${kit.title}</h3>
+
+                            <div class="flex items-center gap-4">
+
+                               <button class="audio-player-button" data-audio-id="crisis-audio-${index}">
+
+                                    <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+
+                                    <svg class="pause-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg>
+
+                                    <span>Ouvir orientação</span>
+
+                                </button>
+
+                                <audio id="crisis-audio-${index}" src="${kit.audioSrc}"></audio>
+
+                            </div>
+
+                        </div>
+
+                    `).join('')}
+
+                </section>
+
+            `;
+
+            
+
+            document.querySelectorAll('.audio-player-button').forEach(button => {
+
+                button.addEventListener('click', () => {
+
+                    const audioId = button.dataset.audioId;
+
+                    const audio = document.getElementById(audioId);
+
+                    const playIcon = button.querySelector('.play-icon');
+
+                    const pauseIcon = button.querySelector('.pause-icon');
+
+
+
+                    // Pausa todos os outros áudios
+
+                    document.querySelectorAll('audio').forEach(otherAudio => {
+
+                        if (otherAudio.id !== audioId && !otherAudio.paused) {
+
+                            otherAudio.pause();
+
+                        }
+
+                    });
+
+                     document.querySelectorAll('.audio-player-button').forEach(otherButton => {
+
+                        if (otherButton.dataset.audioId !== audioId) {
+
+                            otherButton.querySelector('.play-icon').classList.remove('hidden');
+
+                            otherButton.querySelector('.pause-icon').classList.add('hidden');
+
+                        }
+
+                    });
+
+
+
+                    if (audio.paused) {
+
+                        audio.play();
+
+                        playIcon.classList.add('hidden');
+
+                        pauseIcon.classList.remove('hidden');
+
+                    } else {
+
+                        audio.pause();
+
+                        playIcon.classList.remove('hidden');
+
+                        pauseIcon.classList.add('hidden');
+
+                    }
+
+                });
+
+            });
+
+
+
+             document.querySelectorAll('audio').forEach(audio => {
+
+                audio.addEventListener('ended', () => {
+
+                    const button = document.querySelector(`[data-audio-id="${audio.id}"]`);
+
+                    button.querySelector('.play-icon').classList.remove('hidden');
+
+                    button.querySelector('.pause-icon').classList.add('hidden');
+
+                });
+
+            });
+
+        }
+
+        
+
+        window.renderGoodPracticesContent = renderGoodPracticesContent;
+
+        window.renderGlossaryContent = renderGlossaryContent;
+
+        window.renderContentFunnel = renderContentFunnel;
+
+        window.renderProhibitedContent = renderProhibitedContent;
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Set initial header text
+
+            document.getElementById('main-title').textContent = 'Hub Pedagógico SLAP';
+
+            document.getElementById('main-description').textContent = 'Bem-vindo ao seu centro de recursos para professores do SLAP! Navegue pelas seções para acessar currículos, diretrizes, calendário e muito mais.';
+
+
+
+            document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
+
+            document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
+
+            document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
+
+            document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
+
+            document.getElementById('nav-method').addEventListener('click', renderMethodSection);
+
+            document.getElementById('nav-pdi').addEventListener('click', renderPdiSection);
+
+            
+
+            renderSlapLevelsSection(); // Carrega a seção "Níveis SLAP" por padrão ao iniciar
+
+        });
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
