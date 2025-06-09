@@ -344,6 +344,22 @@
         .info-item:last-child {
             margin-bottom: 0;
         }
+        /* Tag styles */
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px; /* rounded-full */
+            background-color: #f5f5f4; /* stone-100 */
+            border: 1px solid #a8a29e; /* stone-400 */
+            color: #44403c; /* stone-800 */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            text-transform: uppercase;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+        }
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -1108,7 +1124,7 @@
                         <button class="creators-tab" onclick="window.renderGoodPracticesContent()">Boas Práticas</button>
                         <button class="creators-tab" onclick="window.renderGlossaryContent()">Glossário de Termos</button>
                         <button class="creators-tab" onclick="window.renderContentFunnel()">Funil de Conteúdo</button>
-                        <button class="creators-tab active" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
+                        <button class="creators-tab" onclick="window.renderProhibitedContent()">O Que NÃO Fazer</button>
                     </div>
                     <h3 class="text-lg font-semibold mb-4 text-stone-800">Conteúdos e Práticas a Serem Evitadas</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1702,7 +1718,7 @@
              { question: "Despite ___ hard, he failed the exam.", options: ["studying", "he studied", "to study", "study"], correctAnswer: 0, explanation: "'Despite' é seguido por um substantivo ou um verbo no gerúndio (-ing)."},
              { question: "The word 'flabbergasted' means ___.", options: ["Extremely tired", "Extremely common", "Extremely surprising", "Extremely happy"], correctAnswer: 1, explanation: "'Flabbergasted' significa estar extremamente chocado ou surpreso."},
              { question: "You had better ___ now or you'll be late.", options: ["go", "to go", "going", "gone"], correctAnswer: 0, explanation: "A expressão 'had better' é seguida pelo verbo no infinitivo sem 'to'."},
-             { question: "The opposite of 'brave' is ___.", options: ["Strong", "Cowardly", "Smart", "Funny"], correctAnswer: 1, explanation: "'Cowardly' (covarde) é o antônimo de 'brave' (corajoso)."},
+             { question: "The opposite of 'brave' is ___.", options: ["Strong", "Cowardly", "Reckless", "Quiet"], correctAnswer: 2, explanation: "'Reckless' (imprudente) é o oposto de 'brave' (corajoso)."},
              { question: "Could you tell me where ___?", options: ["is the bank", "the bank is", "the bank be", "does the bank is"], correctAnswer: 1, explanation: "Em perguntas indiretas (embedded questions), a ordem da frase é afirmativa (sujeito + verbo)."},
              { question: "She is responsible ___ the marketing department.", options: ["of", "with", "for", "to"], correctAnswer: 2, explanation: "A preposição correta a ser usada com 'responsible' é 'for'."},
              { question: "I can't ___ up with his behavior anymore.", options: ["put", "get", "take", "make"], correctAnswer: 0, explanation: "O phrasal verb 'put up with' significa 'tolerar' ou 'aguentar'."},
@@ -2007,15 +2023,15 @@
                         </div>
                         <div class="info-item">
                             <strong>Pontos Fortes:</strong>
-                            <ul class="text-stone-700 list-disc pl-5">
-                                ${teacher.strengths.map(strength => `<li>${strength}</li>`).join('')}
-                            </ul>
+                            <div class="flex flex-wrap pt-2">
+                                ${teacher.strengths.map(strength => `<span class="tag">${strength}</span>`).join('')}
+                            </div>
                         </div>
                         <div class="info-item">
                             <strong>Interesses:</strong>
-                            <ul class="text-stone-700 list-disc pl-5">
-                                ${teacher.interests.map(interest => `<li>${interest}</li>`).join('')}
-                            </ul>
+                            <div class="flex flex-wrap pt-2">
+                                ${teacher.interests.map(interest => `<span class="tag">${interest}</span>`).join('')}
+                            </div>
                         </div>
                         <div class="info-item">
                             <strong>Assunto Favorito de Ensinar:</strong>
