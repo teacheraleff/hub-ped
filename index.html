@@ -1783,46 +1783,26 @@
         window.renderRegimentoInternoSection = renderRegimentoInternoSection;
         window.renderLinksUteisSection = renderLinksUteisSection;
 
-function startApp() {
-        // Esta função inicializa o seu aplicativo principal
-        document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
-        document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
-        document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
-        document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
-        document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
-        document.getElementById('nav-method').addEventListener('click', renderMethodSection);
-        
-        // General click sound listener
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('button, a')) {
-                clickSound.currentTime = 0;
-                clickSound.play();
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
+            document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
+            document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
+            document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
+            document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
+            document.getElementById('nav-method').addEventListener('click', renderMethodSection);
+            
+            // General click sound listener
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('button, a')) {
+                    clickSound.currentTime = 0;
+                    clickSound.play();
+                }
+            });
+            
+            renderInicioSection(); // Carrega a seção "Início" por padrão
         });
-        
-        renderInicioSection(); // Carrega a seção "Início" por padrão
-    }
-
-    // Lógica de Autenticação do Netlify Identity
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          window.netlifyIdentity.on('login', () => {
-            // Após o login, recarrega a página para iniciar o app
-            document.location.href = "/";
-          });
-        } else {
-            // Se o usuário já estiver logado, inicia o aplicativo
-            console.log('User already logged in:', user);
-            startApp();
-        }
-      });
-    }
-
-
 
     </script>
 
 </body>
 </html>
-
