@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hub Pedagógico SLAP</title>
+    <title>Hub Pedagógico</title>
     <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -152,9 +152,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             border: 1px solid #e7e5e4;
         }
-        .regimento-topic {
-            margin-bottom: 2.5rem;
-        }
         .regimento-topic:last-child {
             margin-bottom: 0;
         }
@@ -267,6 +264,86 @@
          .quiz-nav-button:hover {
             background-color: #eab308;
         }
+
+        /* Teacher's Room specific styles */
+        .teacher-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #e7e5e4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .teacher-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid #F1D24B;
+        }
+        .teacher-dossier-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e7e5e4;
+        }
+        .teacher-dossier-header img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid #F1D24B;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .teacher-dossier-info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        @media (min-width: 768px) {
+            .teacher-dossier-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .info-item {
+            background-color: #f5f5f4;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .info-item strong {
+            display: block;
+            font-weight: 600;
+            color: #44403c;
+            margin-bottom: 0.25rem;
+        }
+        .info-item ul {
+            list-style: disc;
+            list-style-position: inside;
+            margin-top: 0.5rem;
+        }
+        .info-item li {
+            margin-bottom: 0.25rem;
+        }
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -279,7 +356,7 @@
                 <div class="mb-6 text-center">
                     <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
                 </div>
-                <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico SLAP</h1>
+                <h1 class="text-xl font-bold text-[#F1D24B] mb-6">Hub Pedagógico</h1>
                 <nav id="main-navigation" class="space-y-2">
                      <button id="nav-inicio" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -304,6 +381,11 @@
                     <button id="nav-method" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
                         Método SLAP
+                    </button>
+                    <!-- New Teacher's Room Button -->
+                    <button id="nav-teachers-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Teacher's Room
                     </button>
                 </nav>
             </aside>
@@ -1618,7 +1700,7 @@
              { question: "What is a 'hoax'?", options: ["A funny story", "A scientific discovery", "A trick to deceive people", "A type of animal"], correctAnswer: 2, explanation: "Um 'hoax' é um engano ou uma farsa, uma tentativa de enganar as pessoas."},
              { question: "This movie is based ___ a true story.", options: ["in", "on", "at", "from"], correctAnswer: 1, explanation: "A expressão correta é 'based on'."},
              { question: "Despite ___ hard, he failed the exam.", options: ["studying", "he studied", "to study", "study"], correctAnswer: 0, explanation: "'Despite' é seguido por um substantivo ou um verbo no gerúndio (-ing)."},
-             { question: "The word 'flabbergasted' means ___.", options: ["Extremely tired", "Extremely surprised", "Extremely hungry", "Extremely happy"], correctAnswer: 1, explanation: "'Flabbergasted' significa estar extremamente chocado ou surpreso."},
+             { question: "The word 'flabbergasted' means ___.", options: ["Extremely tired", "Extremely common", "Extremely surprising", "Extremely happy"], correctAnswer: 1, explanation: "'Flabbergasted' significa estar extremamente chocado ou surpreso."},
              { question: "You had better ___ now or you'll be late.", options: ["go", "to go", "going", "gone"], correctAnswer: 0, explanation: "A expressão 'had better' é seguida pelo verbo no infinitivo sem 'to'."},
              { question: "The opposite of 'brave' is ___.", options: ["Strong", "Cowardly", "Smart", "Funny"], correctAnswer: 1, explanation: "'Cowardly' (covarde) é o antônimo de 'brave' (corajoso)."},
              { question: "Could you tell me where ___?", options: ["is the bank", "the bank is", "the bank be", "does the bank is"], correctAnswer: 1, explanation: "Em perguntas indiretas (embedded questions), a ordem da frase é afirmativa (sujeito + verbo)."},
@@ -1771,6 +1853,191 @@
             `;
         }
 
+        // --- TEACHER'S ROOM DATA AND FUNCTIONS ---
+        const teachersData = [
+            {
+                id: 'aleff-rodrigues',
+                name: 'Aleff Rodrigues',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professor de Inglês',
+                email: 'aleff.rodrigues@slap.com',
+                certifications: ['FCE (B2 First)'],
+                strengths: ['Gramática', 'Vocabulário', 'Interação com Alunos'],
+                interests: ['Música Pop', 'Games', 'Cultura Geek'],
+                favoriteSubject: 'Conversação sobre Temas Atuais',
+                favoriteMusic: 'Pop e R&B',
+                selfDescription: 'Acredito que o aprendizado de inglês é uma jornada divertida e cheia de descobertas. Minha missão é guiar meus alunos para que se expressem com confiança e naturalidade.'
+            },
+            {
+                id: 'leticia-laganaro',
+                name: 'Letícia Laganaro',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professora de Inglês',
+                email: 'leticia.laganaro@slap.com',
+                certifications: ['CAE (C1 Advanced)'],
+                strengths: ['Pronúncia', 'Escrita Criativa', 'Preparação para Entrevistas'],
+                interests: ['Leitura', 'Cinema Independente', 'Viagens'],
+                favoriteSubject: 'Storytelling e Expressão Oral',
+                favoriteMusic: 'Indie Folk',
+                selfDescription: 'Ensinar inglês é a minha forma de conectar pessoas e culturas. Adoro explorar a língua de maneira criativa, ajudando cada aluno a encontrar sua própria voz em inglês.'
+            },
+            {
+                id: 'victor-teixeira',
+                name: 'Victor Teixeira',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professor de Inglês',
+                email: 'victor.teixeira@slap.com',
+                certifications: ['TOEFL (Score 110)', 'TESOL'],
+                strengths: ['Inglês para Negócios', 'Apresentações', 'Debates'],
+                interests: ['Esportes', 'Finanças Pessoais', 'Atualidades'],
+                favoriteSubject: 'Discussões sobre Economia e Negócios Globais',
+                favoriteMusic: 'Rock Clássico',
+                selfDescription: 'Minha paixão é capacitar meus alunos para o mundo corporativo e além. Com aulas práticas e focadas em resultados, ajudo a construir a confiança necessária para o sucesso profissional.'
+            },
+            {
+                id: 'areli-nunes',
+                name: 'Areli Nunes',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professora de Inglês',
+                email: 'areli.nunes@slap.com',
+                certifications: ['TKT'],
+                strengths: ['Inglês para Iniciantes', 'Aulas Lúdicas', 'Criação de Material Didático'],
+                interests: ['Artesanato', 'Séries de TV', 'Voluntariado'],
+                favoriteSubject: 'Vocabulário do Dia a Dia e Situações Práticas',
+                favoriteMusic: 'Pop Brasileiro',
+                selfDescription: 'Acredito que aprender inglês deve ser leve e divertido. Gosto de criar um ambiente acolhedor onde meus alunos se sintam à vontade para experimentar e aprender sem medo de errar.'
+            },
+            {
+                id: 'felipe-carnelos',
+                name: 'Felipe Carnelós',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professor de Inglês',
+                email: 'felipe.carnelos@slap.com',
+                certifications: ['C2 Proficiency (CPE)'],
+                strengths: ['Gramática Avançada', 'Análise Crítica de Textos', 'Cultura Britânica'],
+                interests: ['História', 'Xadrez', 'Documentários'],
+                favoriteSubject: 'Análise de Notícias e Debates Culturais',
+                favoriteMusic: 'Música Clássica e Jazz',
+                selfDescription: 'Como professor, busco aprofundar o conhecimento dos meus alunos, estimulando o pensamento crítico e a fluidez em temas complexos. A língua inglesa é uma ferramenta para desvendar o mundo.'
+            },
+            {
+                id: 'jaynni-nascimento',
+                name: 'Jaynni Nascimento',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professora de Inglês',
+                email: 'jaynni.nascimento@slap.com',
+                certifications: ['TESOL', 'Graduação em Pedagogia'],
+                strengths: ['Inglês para Crianças', 'Aulas de Reforço', 'Desenvolvimento da Escuta'],
+                interests: ['Passeios ao Ar Livre', 'Culinária Vegana', 'Filmes Animados'],
+                favoriteSubject: 'Músicas e Jogos para o Ensino de Inglês',
+                favoriteMusic: 'MPB',
+                selfDescription: 'Acredito no poder da educação transformadora. Meu objetivo é criar um ambiente divertido e seguro, onde cada criança possa florescer e se apaixonar pelo inglês desde cedo.'
+            },
+            {
+                id: 'anael-castilho',
+                name: 'Anael D Castilho',
+                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
+                role: 'Professor de Inglês',
+                email: 'anael.castilho@slap.com',
+                certifications: ['TEFL', 'Graduação em Jornalismo'],
+                strengths: ['Conversação Fluida', 'Vocabulário Jornalístico', 'Aulas Dinâmicas'],
+                interests: ['Notícias Globais', 'Futebol', 'Podcasts'],
+                favoriteSubject: 'Discussões sobre Mídia e Notícias Internacionais',
+                favoriteMusic: 'Rock Nacional',
+                selfDescription: 'Sou movido pela comunicação e pelo intercâmbio de ideias. Minhas aulas são um espaço para que os alunos explorem o mundo através do inglês, debatendo e se expressando com confiança.'
+            }
+        ];
+
+        function renderTeachersRoomSection() {
+            setActiveHubButton('nav-teachers-room');
+            showHeader();
+            document.getElementById('main-title').textContent = 'Teacher\'s Room';
+            document.getElementById('main-description').textContent = 'Conheça a nossa incrível equipe de professores. Clique na foto para ver mais detalhes!';
+            
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        ${teachersData.map((teacher, index) => `
+                            <div class="teacher-card" onclick="window.renderTeacherDossier(${index})">
+                                <img src="${teacher.photo}" onerror="this.onerror=null;this.src='https://placehold.co/120x120/e0e0e0/ffffff?text=Foto'" alt="${teacher.name}">
+                                <p class="text-base font-semibold text-stone-700">${teacher.name}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+            if (currentChart) {
+                currentChart.destroy();
+            }
+        }
+
+        function renderTeacherDossier(index) {
+            const teacher = teachersData[index];
+            if (!teacher) {
+                contentArea.innerHTML = '<p class="text-red-500">Professor não encontrado.</p>';
+                return;
+            }
+
+            // Hide the main header for the dossier page to allow more content space
+            hideHeader(); 
+            
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 max-w-4xl mx-auto">
+                    <button onclick="window.renderTeachersRoomSection()" class="mb-6 inline-flex items-center text-stone-600 hover:text-[#F1D24B] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        Voltar para Professores
+                    </button>
+
+                    <div class="teacher-dossier-header">
+                        <img src="${teacher.photo}" onerror="this.onerror=null;this.src='https://placehold.co/160x160/e0e0e0/ffffff?text=Foto'" alt="${teacher.name}">
+                        <h2 class="text-3xl font-bold text-[#F1D24B] mt-4">${teacher.name}</h2>
+                        <p class="text-xl text-stone-700 font-medium">${teacher.role}</p>
+                    </div>
+
+                    <div class="teacher-dossier-info-grid">
+                        <div class="info-item">
+                            <strong>Email Corporativo:</strong>
+                            <p class="text-stone-700">${teacher.email}</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Certificações:</strong>
+                            <ul class="text-stone-700 list-disc pl-5">
+                                ${teacher.certifications.map(cert => `<li>${cert}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="info-item">
+                            <strong>Pontos Fortes:</strong>
+                            <ul class="text-stone-700 list-disc pl-5">
+                                ${teacher.strengths.map(strength => `<li>${strength}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="info-item">
+                            <strong>Interesses:</strong>
+                            <ul class="text-stone-700 list-disc pl-5">
+                                ${teacher.interests.map(interest => `<li>${interest}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="info-item">
+                            <strong>Assunto Favorito de Ensinar:</strong>
+                            <p class="text-stone-700">${teacher.favoriteSubject}</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Música Favorita:</strong>
+                            <p class="text-stone-700">${teacher.favoriteMusic}</p>
+                        </div>
+                    </div>
+                    <div class="info-item mt-4">
+                        <strong>Como ${teacher.name.split(' ')[0]} se Descreve:</strong>
+                        <p class="text-stone-700 mt-2">${teacher.selfDescription}</p>
+                    </div>
+                </section>
+            `;
+            if (currentChart) {
+                currentChart.destroy();
+            }
+        }
+
+
         // Add render functions to window scope to be called from onclick attributes
         window.renderInicioSection = renderInicioSection;
         window.renderSlapLevelsSection = renderSlapLevelsSection;
@@ -1782,6 +2049,9 @@
         window.renderPdiSection = renderPdiSection;
         window.renderRegimentoInternoSection = renderRegimentoInternoSection;
         window.renderLinksUteisSection = renderLinksUteisSection;
+        window.renderTeachersRoomSection = renderTeachersRoomSection; // Add new function to window
+        window.renderTeacherDossier = renderTeacherDossier; // Add new function to window
+
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
@@ -1790,6 +2060,7 @@
             document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
             document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
             document.getElementById('nav-method').addEventListener('click', renderMethodSection);
+            document.getElementById('nav-teachers-room').addEventListener('click', renderTeachersRoomSection); // Add event listener for new button
             
             // General click sound listener
             document.addEventListener('click', function(event) {
