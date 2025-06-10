@@ -2724,6 +2724,26 @@ const teachersData = [
 
             ];
 
+            // *** CÓDIGO DE RANDOMIZAÇÃO ADICIONADO AQUI ***
+            // Algoritmo Fisher-Yates (ou Knuth) para embaralhar o array
+            function shuffleArray(array) {
+                let currentIndex = array.length, randomIndex;
+
+                // Enquanto ainda houver elementos para embaralhar.
+                while (currentIndex !== 0) {
+                    // Pega um elemento restante.
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex--;
+
+                    // E troca-o com o elemento atual.
+                    [array[currentIndex], array[randomIndex]] = [
+                        array[randomIndex], array[currentIndex]];
+                }
+                return array;
+            }
+
+            shuffleArray(flashcardsData); // Embaralha os cards assim que a função é chamada
+
             let currentIndex = 0;
             const flashcardElement = document.getElementById('flashcard');
             const flashcardFrontElement = document.getElementById('flashcard-front');
