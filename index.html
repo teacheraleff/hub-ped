@@ -425,6 +425,27 @@
             outline: none;
             box-shadow: 0 0 0 4px rgba(241, 210, 75, 0.5); /* Focus ring */
         }
+        /* Estilos para o novo Menu Dropdown */
+.nav-item.active {
+    background-color: #FFFBEB; /* yellow-50 */
+    color: #F1D24B;
+    font-weight: 600;
+}
+.dropdown-toggle.active-parent {
+    background-color: #f5f5f4; /* stone-100 */
+    color: #44403c; /* stone-700 */
+}
+.dropdown-arrow.rotate-180 {
+    transform: rotate(180deg);
+}
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.submenu.open {
+    max-height: 500px; /* Altura suficiente para os itens */
+}
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -433,48 +454,76 @@
     <div id="app-container">
         <div id="app" class="min-h-screen md:flex">
             
-            <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6">
-                <div class="mb-6 text-center">
-                    <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
-                </div>
-                <h1 class="text-xl font-bold text-stone-800 mb-6 text-center">Hub Pedagógico</h1>
-                <nav id="main-navigation" class="space-y-2">
-                     <button id="nav-inicio" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        Início
-                    </button>
-                    <button id="nav-slap-levels" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
-                        Níveis e CPs
-                    </button>
-                    <button id="nav-cefr" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4"></path><path d="M8 12h8"></path></svg>
-                        CEFR
-                    </button>
-                    <button id="nav-deep-dive" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        Deep Dive
-                    </button>
-                    <button id="nav-creators-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M15 12h.01"></path><path d="M12 12h.01"></path><path d="M9 12h.01"></path><path d="M12 2a3.5 3.5 0 0 0 0 7 3.5 3.5 0 0 0 0-7z"></path><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M22 12a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0 7 0z"></path><path d="M2 12a3.5 3.5 0 0 0 7 0 3.5 3.5 0 0 0-7 0z"></path></svg>
-                        Creators Room
-                    </button>
-                    <button id="nav-method" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-stone-600 group-[.active]:text-[#F1D24B]"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h3v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-2h3a2 2 0 0 0 2-2z"></path><path d="M8 12v2a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2"></path></svg>
-                        Método SLAP
-                    </button>
-                    <!-- New Teacher's Room Button -->
-                    <button id="nav-teachers-room" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        Teacher's Room
-                    </button>
-                    <!-- New BrainFlip Button -->
-                    <button id="nav-brainflip" class="hub-nav-button w-full text-left px-4 py-2 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="2" x2="12" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
-                        BrainFlip
-                    </button>
-                </nav>
-            </aside>
+            <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6 flex flex-col">
+    <div class="mb-6 text-center">
+        <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
+    </div>
+    <h1 class="text-xl font-bold text-stone-800 mb-6 text-center">Hub Pedagógico</h1>
+    <nav id="main-navigation" class="space-y-1 flex-1">
+        <!-- Início -->
+        <button data-target="inicio" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Início
+        </button>
+
+        <!-- Níveis (Dropdown) -->
+        <div class="nav-dropdown">
+            <button class="nav-item dropdown-toggle w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center justify-between font-semibold">
+                <span class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+                    Níveis
+                </span>
+                <svg class="dropdown-arrow w-4 h-4 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="submenu pl-6 mt-1 space-y-1">
+                <button data-target="slap-levels" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">CPs</button>
+                <button data-target="cefr" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">CEFR</button>
+            </div>
+        </div>
+        
+        <!-- SLAP Games (Dropdown) com NOVO ÍCONE -->
+        <div class="nav-dropdown">
+            <button class="nav-item dropdown-toggle w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center justify-between font-semibold">
+                <span class="flex items-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M18.15 17.4a8.37 8.37 0 0 1-12.3 0"/><path d="M3.6 9a4.5 4.5 0 0 1 4.5-4.5h7.8a4.5 4.5 0 0 1 4.5 4.5"/><path d="M8 12h1"/><path d="M15 12h1"/><path d="M11 9v2"/><path d="M11 15v2"/></svg>
+                    SLAP Games
+                </span>
+                <svg class="dropdown-arrow w-4 h-4 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="submenu pl-6 mt-1 space-y-1">
+                <button data-target="brainflip" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">BrainFlip</button>
+                <button data-target="test-your-english" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">English Quiz</button>
+            </div>
+        </div>
+
+        <!-- Teacher's Room -->
+        <button data-target="teachers-room" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Teacher's Room
+        </button>
+
+        <!-- Creators Room -->
+        <button data-target="creators-room" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M15 12h.01"></path><path d="M12 12h.01"></path><path d="M9 12h.01"></path><path d="M12 2a3.5 3.5 0 0 0 0 7 3.5 3.5 0 0 0 0-7z"></path><path d="M12 22a3.5 3.5 0 0 0 0-7 3.5 3.5 0 0 0 0 7z"></path><path d="M22 12a3.5 3.5 0 0 0-7 0 3.5 3.5 0 0 0 7 0z"></path><path d="M2 12a3.5 3.5 0 0 0 7 0 3.5 3.5 0 0 0-7 0z"></path></svg>
+            Creators Room
+        </button>
+
+        <!-- Suporte (Dropdown) -->
+        <div class="nav-dropdown">
+            <button class="nav-item dropdown-toggle w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center justify-between font-semibold">
+                <span class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Suporte
+                </span>
+                <svg class="dropdown-arrow w-4 h-4 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="submenu pl-6 mt-1 space-y-1">
+                <button data-target="deep-dive" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">Deep Dive</button>
+                <button data-target="method" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">Método</button>
+            </div>
+        </div>
+    </nav>
+</aside>
     
             <main class="flex-1 p-4 sm:p-6 md:p-8">
                 <header id="main-header" class="mb-8">
@@ -2756,25 +2805,96 @@
         window.renderBrainFlipGameSection = renderBrainFlipGameSection; // Add new game function to window
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('nav-inicio').addEventListener('click', renderInicioSection);
-            document.getElementById('nav-slap-levels').addEventListener('click', renderSlapLevelsSection);
-            document.getElementById('nav-cefr').addEventListener('click', renderCefrSection);
-            document.getElementById('nav-deep-dive').addEventListener('click', renderDeepDiveSection);
-            document.getElementById('nav-creators-room').addEventListener('click', renderCreatorsRoom);
-            document.getElementById('nav-method').addEventListener('click', renderMethodSection);
-            document.getElementById('nav-teachers-room').addEventListener('click', renderTeachersRoomSection);
-            document.getElementById('nav-brainflip').addEventListener('click', renderBrainFlipGameSection); // Add event listener for new button
-            
-            // General click sound listener
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('button, a')) {
-                    clickSound.currentTime = 0;
-                    clickSound.play();
+    // Mapeamento dos alvos para as funções que renderizam cada página
+    const pageRenderers = {
+        'inicio': renderInicioSection,
+        'slap-levels': renderSlapLevelsSection,
+        'cefr': renderCefrSection,
+        'deep-dive': renderDeepDiveSection,
+        'creators-room': renderCreatorsRoom,
+        'method': renderMethodSection,
+        'teachers-room': renderTeachersRoomSection,
+        'brainflip': renderBrainFlipGameSection,
+        'test-your-english': renderTestYourEnglishSection,
+    };
+
+    // Nova função para gerenciar o estado ativo dos botões
+    function setActiveNavItem(element) {
+        // Remove o estado ativo de todos os itens
+        document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
+            item.classList.remove('active');
+            item.classList.remove('active-parent');
+        });
+
+        if (element) {
+            element.classList.add('active');
+
+            // Se for um item de submenu, destaca também o menu principal
+            const parentDropdown = element.closest('.nav-dropdown');
+            if (parentDropdown) {
+                parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
+            }
+        }
+    }
+
+    const mainNav = document.getElementById('main-navigation');
+
+    // Um único "ouvinte" de eventos para toda a navegação
+    mainNav.addEventListener('click', (event) => {
+        const target = event.target.closest('.nav-item');
+        if (!target) return; // Ignora cliques fora dos botões
+
+        // Toca o som de clique
+        clickSound.currentTime = 0;
+        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
+
+        // Gerencia a abertura/fechamento dos dropdowns
+        if (target.classList.contains('dropdown-toggle')) {
+            const dropdown = target.closest('.nav-dropdown');
+            const submenu = dropdown.querySelector('.submenu');
+            const arrow = target.querySelector('.dropdown-arrow');
+
+            // Fecha outros menus abertos para manter a interface limpa
+            document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
+                if (openSubmenu !== submenu) {
+                    openSubmenu.classList.remove('open');
+                    const otherArrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
+                    if(otherArrow) otherArrow.classList.remove('rotate-180');
                 }
             });
             
-            renderInicioSection(); // Carrega a seção "Início" por padrão
-        });
+            // Abre ou fecha o menu clicado
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+            return; // Para a execução aqui, pois é apenas para abrir o menu
+        }
+
+        // Gerencia a navegação para uma página
+        const pageKey = target.dataset.target;
+        if (pageKey && pageRenderers[pageKey]) {
+            pageRenderers[pageKey]();
+            setActiveNavItem(target);
+            
+            // Fecha todos os menus ao navegar para uma nova página
+             document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
+                openSubmenu.classList.remove('open');
+                 const arrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
+                 if(arrow) arrow.classList.remove('rotate-180');
+            });
+             // Abre o menu pai do item clicado
+            const parentDropdown = target.closest('.nav-dropdown');
+            if (parentDropdown) {
+                 parentDropdown.querySelector('.submenu').classList.add('open');
+                 const arrow = parentDropdown.querySelector('.dropdown-arrow');
+                 if(arrow) arrow.classList.add('rotate-180');
+            }
+        }
+    });
+
+    // Carrega a página inicial e define o botão "Início" como ativo
+    renderInicioSection();
+    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
+});
 
     </script>
 
