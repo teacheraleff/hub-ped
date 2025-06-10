@@ -1989,114 +1989,114 @@
         }
 
         // --- TEACHER'S ROOM DATA AND FUNCTIONS ---
-        const teachersData = [
-            {
-                id: 'aleff-rodrigues',
-                name: 'Aleff Rodrigues',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professor de Inglês',
-                email: 'aleff.rodrigues@slap.com',
-                birthDate: '15 de Julho de 1990',
-                residence: 'Rio de Janeiro, RJ',
-                certifications: ['FCE (B2 First)', 'TKT'],
-                strengths: ['Gramática', 'Vocabulário', 'Interação com Alunos', 'Fluência'],
-                interests: ['Música Pop', 'Games', 'Cultura Geek', 'Novas Tecnologias'],
-                favoriteSubjects: ['Would', 'Present Perfect', 'Verbo To Be'],
-                favoriteArtists: ['Taylor Swift', 'The Weeknd', 'Beyoncé'],
-                selfDescription: 'Acredito que o aprendizado de inglês é uma jornada divertida e cheia de descobertas. Minha missão é guiar meus alunos para que se expressem com confiança e naturalidade.'
-            },
-            {
-                id: 'leticia-laganaro',
-                name: 'Letícia Laganaro',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professora de Inglês',
-                email: 'leticia.laganaro@slap.com',
-                birthDate: '22 de Agosto de 1988',
-                residence: 'São Paulo, SP',
-                certifications: ['CAE (C1 Advanced)', 'Graduação em Letras Inglês'],
-                strengths: ['Pronúncia', 'Escrita Criativa', 'Preparação para Entrevistas', 'Debates'],
-                interests: ['Leitura', 'Cinema Independente', 'Viagens', 'Culinária Internacional'],
-                favoriteSubjects: ['Reported Speech', 'Idioms', 'Phrasal Verbs'],
-                favoriteArtists: ['Fleetwood Mac', 'Norah Jones', 'Bon Iver'],
-                selfDescription: 'Ensinar inglês é a minha forma de conectar pessoas e culturas. Adoro explorar a língua de maneira criativa, ajudando cada aluno a encontrar sua própria voz em inglês.'
-            },
-            {
-                id: 'victor-teixeira',
-                name: 'Victor Teixeira',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professor de Inglês',
-                email: 'victor.teixeira@slap.com',
-                birthDate: '05 de Março de 1992',
-                residence: 'Belo Horizonte, MG',
-                certifications: ['TOEFL (Score 110)', 'TESOL', 'Graduação em Tradução'],
-                strengths: ['Inglês para Negócios', 'Apresentações', 'Debates', 'Vocabulário Técnico'],
-                interests: ['Esportes', 'Finanças Pessoais', 'Atualidades', 'Xadrez'],
-                favoriteSubjects: ['Conditionals', 'Causative Form', 'Business English'],
-                favoriteArtists: ['Led Zeppelin', 'Queen', 'Pink Floyd'],
-                selfDescription: 'Minha paixão é capacitar meus alunos para o mundo corporativo e além. Com aulas práticas e focadas em resultados, ajudo a construir a confiança necessária para o sucesso profissional.'
-            },
-            {
-                id: 'areli-nunes',
-                name: 'Areli Nunes',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professora de Inglês',
-                email: 'areli.nunes@slap.com',
-                birthDate: '10 de Janeiro de 1995',
-                residence: 'Curitiba, PR',
-                certifications: ['TKT'],
-                strengths: ['Inglês para Iniciantes', 'Aulas Lúdicas', 'Criação de Material Didático', 'Motivação'],
-                interests: ['Artesanato', 'Séries de TV', 'Voluntariado', 'Fotografia'],
-                favoriteSubjects: ['Simple Present', 'Past Simple', 'Countable/Uncountable Nouns'],
-                favoriteArtists: ['Anavitória', 'Melim', 'Lagum'],
-                selfDescription: 'Acredito que aprender inglês deve ser leve e divertido. Gosto de criar um ambiente acolhedor onde meus alunos se sintam à vontade para experimentar e aprender sem medo de errar.'
-            },
-            {
-                id: 'felipe-carnelos',
-                name: 'Felipe Carnelós',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professor de Inglês',
-                email: 'felipe.carnelos@slap.com',
-                birthDate: '28 de Fevereiro de 1985',
-                residence: 'Porto Alegre, RS',
-                certifications: ['C2 Proficiency (CPE)', 'Mestrado em Linguística'],
-                strengths: ['Gramática Avançada', 'Análise Crítica de Textos', 'Cultura Britânica', 'Argumentação'],
-                interests: ['História', 'Xadrez', 'Documentários', 'Literatura Clássica'],
-                favoriteSubjects: ['Passive Voice', 'Modal Verbs', 'Advanced Adjectives'],
-                favoriteArtists: ['Johann Sebastian Bach', 'Miles Davis', 'Ludwig van Beethoven'],
-                selfDescription: 'Como professor, busco aprofundar o conhecimento dos meus alunos, estimulando o pensamento crítico e a fluidez em temas complexos. A língua inglesa é uma ferramenta para desvendar o mundo.'
-            },
-            {
-                id: 'jaynni-nascimento',
-                name: 'Jaynni Nascimento',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professora de Inglês',
-                email: 'jaynni.nascimento@slap.com',
-                birthDate: '03 de Novembro de 1993',
-                residence: 'Recife, PE',
-                certifications: ['TESOL', 'Graduação em Pedagogia'],
-                strengths: ['Inglês para Crianças', 'Aulas de Reforço', 'Desenvolvimento da Escuta', 'Jogos Educativos'],
-                interests: ['Passeios ao Ar Livre', 'Culinária Vegana', 'Filmes Animados', 'Contação de Histórias'],
-                favoriteSubjects: ['Numbers', 'Colors', 'Animals'],
-                favoriteArtists: ['Gilberto Gil', 'Caetano Veloso', 'Marisa Monte'],
-                selfDescription: 'Acredito no poder da educação transformadora. Meu objetivo é criar um ambiente divertido e seguro, onde cada criança possa florescer e se apaixonar pelo inglês desde cedo.'
-            },
-            {
-                id: 'anael-castilho',
-                name: 'Anael D Castilho',
-                photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png', // Same as Destaque do Mês
-                role: 'Professor de Inglês',
-                email: 'anael.castilho@slap.com',
-                birthDate: '19 de Abril de 1991',
-                residence: 'Salvador, BA',
-                certifications: ['TEFL', 'Graduação em Jornalismo'],
-                strengths: ['Conversação Fluida', 'Vocabulário Jornalístico', 'Aulas Dinâmicas', 'Análise de Mídia'],
-                interests: ['Notícias Globais', 'Futebol', 'Podcasts', 'Política Internacional'],
-                favoriteSubjects: ['Current Events', 'Media Literacy', 'Debate Skills'],
-                favoriteArtists: ['Legião Urbana', 'Titãs', 'Charlie Brown Jr.'],
-                selfDescription: 'Sou movido pela comunicação e pelo intercâmbio de ideias. Minhas aulas são um espaço para que os alunos explorem o mundo através do inglês, debatendo e se expressando com confiança.'
-            }
-        ];
-
+        // COLE ESTE BLOCO ATUALIZADO NO LUGAR DO ANTIGO
+const teachersData = [
+    {
+        id: 'aleff-rodrigues',
+        name: 'Aleff Rodrigues',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professor de Inglês',
+        email: 'aleff@slapingles.com',
+        birthDate: '27/12/1997',
+        residence: 'João Pessoa, PB',
+        certifications: ['FCE (B2 First)', 'Graduação em Direito'],
+        strengths: ['Gramática', 'Pronúncia', 'Networking', 'Fluência'],
+        interests: ['Música Pop', 'Empreendedorismo', 'Marketing', 'Marvel'],
+        favoriteSubjects: ['Past Simple', 'Present Perfect', 'Modal Verbs'],
+        favoriteArtists: ['Fifth Harmony', 'Olivia Rodrigo', 'Lauren Jauregui'],
+        selfDescription: 'Sou um cara sonhador e extremamente ambicioso — no melhor sentido da palavra. Tenho grandes sonhos, não só para realizar os meus próprios objetivos, mas também para ajudar as pessoas que amo a conquistarem os delas. Sou determinado, focado e sempre busco evoluir. Como todo mundo, tenho meus defeitos, mas prefiro destacar as qualidades porque, afinal, ninguém quer ler coisa ruim, né?'
+    },
+    {
+        id: 'leticia-laganaro',
+        name: 'Letícia Laganaro',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professora de Inglês',
+        email: 'leticia@slapingles.com',
+        birthDate: '25/04/2000',
+        residence: 'Peruíbe, SP',
+        certifications: ['Graduação em Relações Internacionais', 'FCE (B2 First)', 'TOEIC'],
+        strengths: ['Paciência', 'Adaptação', 'Criatividade'],
+        interests: ['Cultura coreana', 'Cozinhar', 'Livros', 'Séries', 'Cinema'],
+        favoriteSubjects: ['Present Simple', 'Would', 'Vocabulário'],
+        favoriteArtists: ['Taylor Swift', 'Ed Sheeran', 'Jimin (BTS)'],
+        selfDescription: 'Uma pessoa muito sensível, que ama aprender coisas novas e gosta de criar conexões verdadeiras com as pessoas. Ama inglês e ama poder compartilhar isso com os alunos.'
+    },
+    {
+        id: 'victor-teixeira',
+        name: 'Victor Teixeira',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professor de Inglês',
+        email: 'victor@slapingles.com',
+        birthDate: '21/02/2000',
+        residence: 'Peruíbe, SP',
+        certifications: ['Nenhuma'],
+        strengths: ['Vocabulário', 'Interação com alunos'],
+        interests: ['Videogame', 'Animais', 'Música', 'Tecnologia'],
+        favoriteSubjects: ['T cousins', 'Tag Questions', 'Animal Vocabulary'],
+        favoriteArtists: ['Nothing Nowhere', 'Lund', 'Vaboh'],
+        selfDescription: 'Introvertido, honesto e levemente niilista. Gosto de fazer piada, de ouvir minhas músicas sozinho e de jogar videogame.'
+    },
+    {
+        id: 'areli-nunes',
+        name: 'Areli Nunes',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professora de Inglês',
+        email: 'areli@slapingles.com',
+        birthDate: '08/09/2001',
+        residence: 'Franca, SP',
+        certifications: ['Não informado'],
+        strengths: ['Interação com os alunos', 'Paciência', 'Facilidade para lidar com pessoas'],
+        interests: ['Shawn Mendes', 'Tênis', 'Livros', 'Música pop', 'Cozinhar'],
+        favoriteSubjects: ['Idioms', '-ED sounds', 'Verbs in the past'],
+        favoriteArtists: ['Shawn Mendes', 'Taylor Swift', 'Selena Gomez'],
+        selfDescription: 'Uma pessoa empática, que gosta muito de conversar, mas também insegura.'
+    },
+    {
+        id: 'felipe-carnelos',
+        name: 'Felipe Carnelós',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professor de Inglês',
+        email: 'felipe.carnelos@slap.com',
+        birthDate: '28 de Fevereiro de 1985',
+        residence: 'Porto Alegre, RS',
+        certifications: ['C2 Proficiency (CPE)', 'Mestrado em Linguística'],
+        strengths: ['Gramática Avançada', 'Análise Crítica de Textos', 'Cultura Britânica', 'Argumentação'],
+        interests: ['História', 'Xadrez', 'Documentários', 'Literatura Clássica'],
+        favoriteSubjects: ['Passive Voice', 'Modal Verbs', 'Advanced Adjectives'],
+        favoriteArtists: ['Johann Sebastian Bach', 'Miles Davis', 'Ludwig van Beethoven'],
+        selfDescription: 'Como professor, busco aprofundar o conhecimento dos meus alunos, estimulando o pensamento crítico e a fluidez em temas complexos. A língua inglesa é uma ferramenta para desvendar o mundo.'
+    },
+    {
+        id: 'jaynni-nascimento',
+        name: 'Jaynni Nascimento',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professora de Inglês',
+        email: 'jaynni@slapingles.com',
+        birthDate: '25/04/2000',
+        residence: 'João Pessoa, PB',
+        certifications: ['Graduação em Psicologia', 'FCE (B2 First)', 'TKT'],
+        strengths: ['Criatividade', 'Organização', 'Paciência'],
+        interests: ['Psicologia', 'Filmes', 'Arte', 'Inglês', 'Cantar'],
+        favoriteSubjects: ['Would', 'Present Perfect', 'Ordinal Numbers'],
+        favoriteArtists: ['Adele', 'Anavitória', 'Liniker'],
+        selfDescription: 'Uma mulher preta, sensível, comunicativa e com uma criança interior muito viva. Muito apaixonada pela vida, por pessoas, por ouvir, conversar, compartilhar e aprender.'
+    },
+    {
+        id: 'anael-castilho',
+        name: 'Anael D Castilho',
+        photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png',
+        role: 'Professor de Inglês',
+        email: 'anael@slapingles.com',
+        birthDate: '23/04/1997',
+        residence: 'João Pessoa, PB',
+        certifications: ['Linguaskill'],
+        strengths: ['Rapport', 'Criatividade', 'Manter os alunos atentos e interessados'],
+        interests: ['Café', 'Musculação', 'Filosofia', 'Cultura japonesa', 'Música (violão)'],
+        favoriteSubjects: ['Present Perfect', 'Phrasal Verbs', 'Prepositions'],
+        favoriteArtists: ['Linkin Park', 'Avenged Sevenfold', 'Disturbed'],
+        selfDescription: 'Uma pessoa peculiar e espontânea. Uma caixa de surpresas, uma montanha-russa de emoções. Sempre quebrando padrões sem ferir ninguém. Fiel aos seus valores e extremamente ético.'
+    }
+];
         function renderTeachersRoomSection() {
             setActiveHubButton('nav-teachers-room');
             showHeader();
