@@ -2200,528 +2200,275 @@ const teachersData = [
 
         // --- BRAINFLIP GAME INTEGRATION ---
         function renderBrainFlipGameSection() {
-            setActiveHubButton('nav-brainflip');
-            showHeader();
-            document.getElementById('main-title').textContent = 'BrainFlip: Jogo de Flashcards Pedagógicos';
-            document.getElementById('main-description').textContent = 'Teste seus conhecimentos em conceitos pedagógicos e SLAP! Clique nos cartões para virar e aprender.';
+    setActiveHubButton('nav-brainflip');
+    showHeader();
+    document.getElementById('main-title').textContent = 'BrainFlip: Jogo de Flashcards Pedagógicos';
+    document.getElementById('main-description').textContent = 'Teste seus conhecimentos em conceitos pedagógicos e SLAP! Clique nos cartões para virar e aprender.';
 
-            contentArea.innerHTML = `
-                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 flex flex-col items-center justify-center min-h-[70vh]">
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 mb-8 mt-4 text-center">BrainFlip</h1>
-                    <p class="text-lg text-stone-700 mb-8 text-center max-w-2xl">
-                        Um jogo interativo de flashcards pedagógicos para professores de inglês. Clique nas cartas para virar e aprender!
-                    </p>
+    contentArea.innerHTML = `
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 flex flex-col items-center justify-center min-h-[70vh]">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-blue-700 mb-8 mt-4 text-center">BrainFlip</h1>
+            <p class="text-lg text-stone-700 mb-8 text-center max-w-2xl">
+                Um jogo interativo de flashcards pedagógicos para professores de inglês. Clique nas cartas para virar e aprender!
+            </p>
 
-                    <div class="flashcard-container mb-8">
-                        <div id="flashcard" class="flashcard cursor-pointer">
-                            <div id="flashcard-front" class="flashcard-face flashcard-front"></div>
-                            <div id="flashcard-back" class="flashcard-face flashcard-back"></div>
-                        </div>
-                    </div>
+            <div class="flashcard-container mb-8">
+                <div id="flashcard" class="flashcard cursor-pointer">
+                    <div id="flashcard-front" class="flashcard-face flashcard-front"></div>
+                    <div id="flashcard-back" class="flashcard-face flashcard-back"></div>
+                </div>
+            </div>
 
-                    <div class="flex items-center justify-center space-x-4 mb-8">
-                        <button id="prev-btn" class="navigation-button-game">
-                            Anterior
-                        </button>
-                        <span id="card-counter" class="text-xl font-semibold text-stone-800">1 / 0</span>
-                        <button id="next-btn" class="navigation-button-game">
-                            Próximo
-                        </button>
-                    </div>
-                </section>
-            `;
+            <div class="flex items-center justify-center space-x-4 mb-8">
+                <button id="prev-btn" class="navigation-button-game">
+                    Anterior
+                </button>
+                <span id="card-counter" class="text-xl font-semibold text-stone-800">1 / 0</span>
+                <button id="next-btn" class="navigation-button-game">
+                    Próximo
+                </button>
+            </div>
+        </section>
+    `;
 
-            // Game Logic
-            const flashcardsData = [
-                // Conceitos Pedagógicos
-                {
-                    front: "Teacher Talking Time (TTT)",
-                    back: "O tempo que o professor fala durante a aula. O ideal é minimizá-lo para maximizar o STT."
-                },
-                {
-                    front: "Student Talking Time (STT)",
-                    back: "O tempo que os alunos falam durante a aula. Um indicador chave de engajamento e prática."
-                },
-                {
-                    front: "Lexical Approach",
-                    back: "Metodologia que foca no ensino de 'chunks' de linguagem (collocations, fixed expressions) em vez de palavras isoladas."
-                },
-                {
-                    front: "Comprehensible Input",
-                    back: "Linguagem que os alunos conseguem entender, mesmo que contenha estruturas novas (i + 1, segundo Krashen)."
-                },
-                {
-                    front: "Teoria de Krashen",
-                    back: "Cinco hipóteses sobre a aquisição de segunda língua: Aquisição-Aprendizagem, Monitor, Ordem Natural, Input e Filtro Afetivo."
-                },
-                {
-                    front: "Scaffolding",
-                    back: "Suporte temporário dado pelo professor para ajudar o aluno a realizar uma tarefa que ele não faria sozinho, removido gradualmente."
-                },
-                {
-                    front: "Error Correction",
-                    back: "Estratégias para corrigir erros dos alunos, que podem ser diretas, indiretas, recasts, elicitation, etc., dependendo do estágio do erro."
-                },
-                {
-                    front: "CEFR (Common European Framework of Reference)",
-                    back: "Padrão internacional para descrever habilidades linguísticas, com níveis de A1 a C2 (Básico, Independente, Proficiente)."
-                },
-                {
-                    front: "PPP vs. TBL (Presentation, Practice, Production vs. Task-Based Learning)",
-                    back: "PPP é uma abordagem linear (apresenta, pratica, produz). TBL é mais comunicativa, focando em tarefas com um objetivo real."
-                },
-                {
-                    front: "Task-Based Learning (TBL)",
-                    back: "Abordagem onde a aprendizagem ocorre através da realização de tarefas significativas que envolvem a comunicação real da língua."
-                },
-                {
-                    front: "Dogme",
-                    back: "Abordagem de ensino 'unplugged', que minimiza materiais pré-fabricados e foca na linguagem emergente dos alunos."
-                },
-                {
-                    front: "Formative Assessment",
-                    back: "Avaliação contínua realizada durante o processo de aprendizagem para monitorar o progresso e fornecer feedback."
-                },
-                {
-                    front: "Andragogia",
-                    back: "Princípios da educação de adultos, que se diferenciam da pedagogia (educação de crianças) pela autonomia e experiência do aprendiz."
-                },
-                {
-                    front: "Metodologia ativa",
-                    back: "Abordagens de ensino que colocam o aluno no centro do processo, tornando-o protagonista da sua aprendizagem (ex: Aprendizagem Baseada em Projetos)."
-                },
-                {
-                    front: "Ensino híbrido (Blended Learning)",
-                    back: "Combinação de ensino presencial e online, utilizando diferentes modalidades para otimizar a aprendizagem."
-                },
-                {
-                    front: "CLIL (Content and Language Integrated Learning)",
-                    back: "Ensino de uma disciplina (ex: história, ciências) através de uma língua estrangeira, desenvolvendo conteúdo e habilidades linguísticas simultaneamente."
-                },
-                {
-                    front: "Warm-ups",
-                    back: "Atividades curtas no início da aula para engajar os alunos, ativar conhecimentos prévios e prepará-los para o tema."
-                },
-                {
-                    front: "Cool downs",
-                    back: "Atividades no final da aula para revisar o conteúdo, consolidar a aprendizagem ou relaxar e refletir."
-                },
-                {
-                    front: "ICQs / CCQs (Instruction Checking Questions / Concept Checking Questions)",
-                    back: "Perguntas curtas para verificar se os alunos entenderam as instruções (ICQs) ou o conceito (CCQs) apresentado."
-                },
-                {
-                    front: "Autonomy in Learning",
-                    back: "Capacidade do aluno de tomar controle de sua própria aprendizagem, definindo metas e escolhendo métodos."
-                },
-                {
-                    front: "Differentiation",
-                    back: "Adaptação do ensino para atender às necessidades diversas dos alunos em uma mesma turma."
-                },
-                {
-                    front: "Feedback",
-                    back: "Informação dada aos alunos sobre seu desempenho, com o objetivo de orientar a melhoria."
-                },
-                {
-                    front: "Intercultural Competence",
-                    back: "Habilidade de se comunicar e interagir de forma eficaz e apropriada com pessoas de diferentes culturas."
-                },
-                {
-                    front: "Affective Filter",
-                    back: "Em Krashen's theory, barreiras emocionais (ansiedade, falta de confiança) que impedem a aquisição da linguagem."
-                },
-                {
-                    front: "Output Hypothesis",
-                    back: "A ideia de que produzir linguagem (falar, escrever) é essencial para a aquisição, pois força o aprendiz a processar a língua de forma mais profunda."
-                },
-                {
-                    front: "Silent Way",
-                    back: "Metodologia que enfatiza a descoberta do aluno e minimiza a fala do professor, usando ferramentas como 'cues' e 'rods'."
-                },
-                {
-                    front: "Community Language Learning (CLL)",
-                    back: "Abordagem humanística onde o professor atua como um 'conselheiro' e os alunos colaboram para construir o currículo."
-                },
-                {
-                    front: "Total Physical Response (TPR)",
-                    back: "Método que usa comandos e respostas físicas para ensinar vocabulário e estruturas, bom para iniciantes."
-                },
-                {
-                    front: "Communicative Language Teaching (CLT)",
-                    back: "Abordagem ampla que foca no desenvolvimento da competência comunicativa, priorizando a interação e o uso real da língua."
-                },
-                {
-                    front: "Content-Based Instruction (CBI)",
-                    back: "Ensino de língua estrangeira através de tópicos de conteúdo (semelhante ao CLIL, mas pode ser mais flexível)."
-                },
-                {
-                    front: "Authentic Materials",
-                    back: "Textos e áudios criados para falantes nativos da língua, não especificamente para fins de ensino (ex: jornais, músicas, filmes)."
-                },
-                {
-                    front: "Extensive Reading",
-                    back: "Leitura de grandes quantidades de texto por prazer, com foco na compreensão geral e fluência."
-                },
-                {
-                    front: "Intensive Reading",
-                    back: "Leitura detalhada de textos curtos para extrair informações específicas e analisar a linguagem."
-                },
-                {
-                    front: "Task Recast",
-                    back: "Uma forma indireta de correção de erro onde o professor reformula a fala incorreta do aluno de forma correta, sem interromper a comunicação."
-                },
-                {
-                    front: "Noticing Hypothesis",
-                    back: "A ideia de que para adquirir uma nova característica da língua, o aprendiz precisa primeiro 'notar' essa característica no input."
-                },
-                {
-                    front: "Zone of Proximal Development (ZPD)",
-                    back: "Conceito de Vygotsky: a distância entre o que um aluno pode fazer sozinho e o que ele pode fazer com a ajuda de um mais capaz (ligado ao scaffolding)."
-                },
-                {
-                    front: "Form-Focused Instruction (FFI)",
-                    back: "Qualquer atividade que intencionalmente direcione a atenção dos alunos para a forma da língua."
-                },
-                {
-                    front: "Interlanguage",
-                    back: "O sistema linguístico único que um aprendiz de segunda língua desenvolve à medida que adquire a nova língua, com características tanto da L1 quanto da L2."
-                },
-                {
-                    front: "Lexical Chunks",
-                    back: "Combinações de palavras que frequentemente ocorrem juntas e funcionam como uma unidade de significado (ex: 'take a shower', 'for example')."
-                },
-                {
-                    front: "Washback Effect",
-                    back: "O impacto que um teste tem sobre o ensino e a aprendizagem que o precede."
-                },
+    // Game Logic
+    const flashcardsData = [
+        // (Aqui estão todos os seus flashcards... O conteúdo não muda)
+        { front: "Teacher Talking Time (TTT)", back: "O tempo que o professor fala durante a aula. O ideal é minimizá-lo para maximizar o STT." },
+        { front: "Student Talking Time (STT)", back: "O tempo que os alunos falam durante a aula. Um indicador chave de engajamento e prática." },
+        { front: "Lexical Approach", back: "Metodologia que foca no ensino de 'chunks' de linguagem (collocations, fixed expressions) em vez de palavras isoladas." },
+        { front: "Comprehensible Input", back: "Linguagem que os alunos conseguem entender, mesmo que contenha estruturas novas (i + 1, segundo Krashen)." },
+        { front: "Teoria de Krashen", back: "Cinco hipóteses sobre a aquisição de segunda língua: Aquisição-Aprendizagem, Monitor, Ordem Natural, Input e Filtro Afetivo." },
+        { front: "Scaffolding", back: "Suporte temporário dado pelo professor para ajudar o aluno a realizar uma tarefa que ele não faria sozinho, removido gradualmente." },
+        { front: "Error Correction", back: "Estratégias para corrigir erros dos alunos, que podem ser diretas, indiretas, recasts, elicitation, etc., dependendo do estágio do erro." },
+        { front: "CEFR (Common European Framework of Reference)", back: "Padrão internacional para descrever habilidades linguísticas, com níveis de A1 a C2 (Básico, Independente, Proficiente)." },
+        { front: "PPP vs. TBL (Presentation, Practice, Production vs. Task-Based Learning)", back: "PPP é uma abordagem linear (apresenta, pratica, produz). TBL é mais comunicativa, focando em tarefas com um objetivo real." },
+        { front: "Task-Based Learning (TBL)", back: "Abordagem onde a aprendizagem ocorre através da realização de tarefas significativas que envolvem a comunicação real da língua." },
+        { front: "Dogme", back: "Abordagem de ensino 'unplugged', que minimiza materiais pré-fabricados e foca na linguagem emergente dos alunos." },
+        { front: "Formative Assessment", back: "Avaliação contínua realizada durante o processo de aprendizagem para monitorar o progresso e fornecer feedback." },
+        { front: "Andragogia", back: "Princípios da educação de adultos, que se diferenciam da pedagogia (educação de crianças) pela autonomia e experiência do aprendiz." },
+        { front: "Metodologia ativa", back: "Abordagens de ensino que colocam o aluno no centro do processo, tornando-o protagonista da sua aprendizagem (ex: Aprendizagem Baseada em Projetos)." },
+        { front: "Ensino híbrido (Blended Learning)", back: "Combinação de ensino presencial e online, utilizando diferentes modalidades para otimizar a aprendizagem." },
+        { front: "CLIL (Content and Language Integrated Learning)", back: "Ensino de uma disciplina (ex: história, ciências) através de uma língua estrangeira, desenvolvendo conteúdo e habilidades linguísticas simultaneamente." },
+        { front: "Warm-ups", back: "Atividades curtas no início da aula para engajar os alunos, ativar conhecimentos prévios e prepará-los para o tema." },
+        { front: "Cool downs", back: "Atividades no final da aula para revisar o conteúdo, consolidar a aprendizagem ou relaxar e refletir." },
+        { front: "ICQs / CCQs (Instruction Checking Questions / Concept Checking Questions)", back: "Perguntas curtas para verificar se os alunos entenderam as instruções (ICQs) ou o conceito (CCQs) apresentado." },
+        { front: "Autonomy in Learning", back: "Capacidade do aluno de tomar controle de sua própria aprendizagem, definindo metas e escolhendo métodos." },
+        { front: "Differentiation", back: "Adaptação do ensino para atender às necessidades diversas dos alunos em uma mesma turma." },
+        { front: "Feedback", back: "Informação dada aos alunos sobre seu desempenho, com o objetivo de orientar a melhoria." },
+        { front: "Intercultural Competence", back: "Habilidade de se comunicar e interagir de forma eficaz e apropriada com pessoas de diferentes culturas." },
+        { front: "Affective Filter", back: "Em Krashen's theory, barreiras emocionais (ansiedade, falta de confiança) que impedem a aquisição da linguagem." },
+        { front: "Output Hypothesis", back: "A ideia de que produzir linguagem (falar, escrever) é essencial para a aquisição, pois força o aprendiz a processar a língua de forma mais profunda." },
+        { front: "Silent Way", back: "Metodologia que enfatiza a descoberta do aluno e minimiza a fala do professor, usando ferramentas como 'cues' e 'rods'." },
+        { front: "Community Language Learning (CLL)", back: "Abordagem humanística onde o professor atua como um 'conselheiro' e os alunos colaboram para construir o currículo." },
+        { front: "Total Physical Response (TPR)", back: "Método que usa comandos e respostas físicas para ensinar vocabulário e estruturas, bom para iniciantes." },
+        { front: "Communicative Language Teaching (CLT)", back: "Abordagem ampla que foca no desenvolvimento da competência comunicativa, priorizando a interação e o uso real da língua." },
+        { front: "Content-Based Instruction (CBI)", back: "Ensino de língua estrangeira através de tópicos de conteúdo (semelhante ao CLIL, mas pode ser mais flexível)." },
+        { front: "Authentic Materials", back: "Textos e áudios criados para falantes nativos da língua, não especificamente para fins de ensino (ex: jornais, músicas, filmes)." },
+        { front: "Extensive Reading", back: "Leitura de grandes quantidades de texto por prazer, com foco na compreensão geral e fluência." },
+        { front: "Intensive Reading", back: "Leitura detalhada de textos curtos para extrair informações específicas e analisar a linguagem." },
+        { front: "Task Recast", back: "Uma forma indireta de correção de erro onde o professor reformula a fala incorreta do aluno de forma correta, sem interromper a comunicação." },
+        { front: "Noticing Hypothesis", back: "A ideia de que para adquirir uma nova característica da língua, o aprendiz precisa primeiro 'notar' essa característica no input." },
+        { front: "Zone of Proximal Development (ZPD)", back: "Conceito de Vygotsky: a distância entre o que um aluno pode fazer sozinho e o que ele pode fazer com a ajuda de um mais capaz (ligado ao scaffolding)." },
+        { front: "Form-Focused Instruction (FFI)", back: "Qualquer atividade que intencionalmente direcione a atenção dos alunos para a forma da língua." },
+        { front: "Interlanguage", back: "O sistema linguístico único que um aprendiz de segunda língua desenvolve à medida que adquire a nova língua, com características tanto da L1 quanto da L2." },
+        { front: "Lexical Chunks", back: "Combinações de palavras que frequentemente ocorrem juntas e funcionam como uma unidade de significado (ex: 'take a shower', 'for example')." },
+        { front: "Washback Effect", back: "O impacto que um teste tem sobre o ensino e a aprendizagem que o precede." },
+        { front: "SLAP: Spark", back: "Despertar interesse e engajamento. Criar uma conexão emocional com o tema." },
+        { front: "SLAP: Learn", back: "Apresentar conteúdo com clareza e propósito. Foco na compreensão e assimilação de novas informações." },
+        { front: "SLAP: Apply", back: "Colocar em prática de forma significativa. Usar o que foi aprendido em contextos reais e relevantes." },
+        { front: "SLAP: Perform", back: "Consolidar, revisar e transferir conhecimento. Avaliar o progresso e garantir a retenção a longo prazo." },
+        { front: "SLAP (Geral)", back: "Framework para planejar e executar aulas engajadoras e eficazes: Spark, Learn, Apply, Perform." },
+        { front: "Ação Comunicativa", back: "Qualquer ato de comunicação que visa transmitir ou receber uma mensagem com um propósito real." },
+        { front: "Aprendizagem Colaborativa", back: "Alunos trabalhando juntos em grupos para atingir um objetivo comum de aprendizagem." },
+        { front: "Autenticidade (Material)", back: "Materiais reais, não adaptados, usados para falantes nativos (ex: notícias, músicas, filmes)." },
+        { front: "Brainstorming", back: "Técnica para gerar ideias rapidamente, sem julgamento, para um tópico específico." },
+        { front: "Coerência (Texto)", back: "A qualidade de um texto que o torna compreensível, com ideias conectadas logicamente." },
+        { front: "Coesão (Texto)", back: "Uso de elementos linguísticos (pronomes, conectivos) para ligar frases e parágrafos em um texto." },
+        { front: "Comunicação Não-Verbal", back: "Mensagens transmitidas através de gestos, expressões faciais, postura, tom de voz." },
+        { front: "Constructivismo", back: "Teoria da aprendizagem onde o aluno constrói seu próprio conhecimento ativamente, em vez de apenas recebê-lo." },
+        { front: "Critérios de Sucesso", back: "Definições claras do que um aluno precisa fazer para demonstrar que alcançou o objetivo de aprendizagem." },
+        { front: "Cultura do Alvo", back: "Os aspectos culturais de um país ou comunidade onde a língua alvo é falada." },
+        { front: "Curadoria de Conteúdo", back: "O processo de selecionar, organizar e apresentar materiais relevantes para o aprendizado." },
+        { front: "Didática", back: "A arte e ciência do ensino, que estuda os melhores métodos e técnicas para a aprendizagem." },
+        { front: "Engajamento do Aluno", back: "Nível de envolvimento e participação do aluno nas atividades de aprendizagem." },
+        { front: "Estratégias de Aprendizagem", back: "Ações e pensamentos que os alunos usam para melhorar a aquisição, armazenamento e recuperação de informações." },
+        { front: "Estilos de Aprendizagem", back: "As preferências individuais de como os alunos absorvem, processam e retêm informações (visual, auditivo, cinestésico)." },
+        { front: "Fluência", back: "A capacidade de falar ou escrever uma língua de forma suave, sem hesitação excessiva, e com bom ritmo." },
+        { front: "Grammar-Translation Method", back: "Método tradicional focado na tradução de textos e no estudo de regras gramaticais, com pouca ênfase na fala." },
+        { front: "Habilidades Receptivas", back: "Compreensão auditiva (listening) e compreensão de leitura (reading)." },
+        { front: "Habilidades Produtivas", back: "Fala (speaking) e escrita (writing)." },
+        { front: "Inferência", back: "A capacidade de deduzir significado de palavras ou frases desconhecidas a partir do contexto." },
+        { front: "Input vs. Intake", back: "Input é a linguagem a que o aluno é exposto. Intake é a parte do input que o aluno processa e internaliza para a aquisição." },
+        { front: "Interação", back: "A comunicação bidirecional entre professor-aluno ou aluno-aluno, essencial para a aprendizagem de línguas." },
+        { front: "Language Acquisition Device (LAD)", back: "Conceito de Chomsky: um mecanismo inato na mente humana que facilita a aquisição da linguagem." },
+        { front: "Loop de Feedback", back: "Ciclo contínuo de dar feedback, receber, agir sobre ele e então dar mais feedback." },
+        { front: "Micro-ensino", back: "Prática de ensino onde professores treinam habilidades específicas em sessões curtas e focadas, geralmente gravadas para análise." },
+        { front: "Motivação Intrínseca", back: "Desejo de aprender por interesse próprio, satisfação pessoal ou desafio." },
+        { front: "Motivação Extrínseca", back: "Desejo de aprender por recompensas externas, como notas, reconhecimento ou pressão social." },
+        { front: "Neuroplasticidade", back: "A capacidade do cérebro de se adaptar e reorganizar, formando novas conexões neurais ao longo da vida, importante para a aprendizagem." },
+        { front: "Objetivos de Aprendizagem", back: "Declarações claras do que os alunos serão capazes de fazer ao final de uma aula ou unidade." },
+        { front: "Peer Correction", back: "Correção de erros feita pelos próprios colegas de turma." },
+        { front: "Performance", back: "O uso real da linguagem pelo aluno em um determinado momento, que pode ser diferente de sua competência subjacente." },
+        { front: "Personalização (Ensino)", back: "Adaptação do conteúdo, ritmo ou métodos de ensino às necessidades e interesses individuais de cada aluno." },
+        { front: "Prática Controlada", back: "Atividades onde os alunos praticam o uso da língua com foco na forma e precisão, com pouca liberdade de expressão." },
+        { front: "Prática Livre", back: "Atividades onde os alunos usam a língua de forma mais espontânea e criativa, com foco na fluência e comunicação." },
+        { front: "Projetos (Aprendizagem Baseada em)", back: "Metodologia onde os alunos aprendem através da criação de um produto ou resolução de um problema real." },
+        { front: "Rapport", back: "A relação de confiança e entendimento mútuo entre professor e aluno, ou entre os próprios alunos." },
+        { front: "Recursos Visuais", back: "Mapas mentais, infográficos, imagens, vídeos, etc., usados para apoiar a aprendizagem." },
+        { front: "Reflexão (Pedagogia)", back: "O processo de pensar criticamente sobre a própria prática de ensino ou aprendizagem para melhorá-la." },
+        { front: "Role-Play (Simulação)", back: "Atividade onde os alunos assumem papéis e simulam situações da vida real para praticar a língua." },
+        { front: "Self-Correction", back: "A capacidade do aluno de identificar e corrigir seus próprios erros." },
+        { front: "Silent Period", back: "Um período inicial em que os alunos de uma nova língua podem preferir ouvir e processar antes de começar a falar." },
+        { front: "Storytelling (Contação de Histórias)", back: "Uso de narrativas para engajar os alunos, apresentar vocabulário ou conceitos, e desenvolver a compreensão auditiva." },
+        { front: "Summative Assessment", back: "Avaliação que ocorre no final de uma unidade ou curso para medir o que foi aprendido (ex: provas finais)." },
+        { front: "Target Language", back: "A língua que está sendo aprendida (neste caso, o inglês)." },
+        { front: "Task-Based Syllabus", back: "Um currículo organizado em torno de uma série de tarefas que os alunos devem realizar." },
+        { front: "Teaching for Understanding", back: "Abordagem que visa que os alunos não apenas memorizem, mas realmente compreendam os conceitos e possam aplicá-los." },
+        { front: "Think-Pair-Share", back: "Estratégia colaborativa: alunos pensam individualmente, discutem em pares, e depois compartilham com a turma." },
+        { front: "Timing (Gerenciamento de Tempo)", back: "A habilidade de planejar e executar atividades dentro de um tempo limite adequado na aula." },
+        { front: "Transferência de Conhecimento", back: "A capacidade de aplicar o que foi aprendido em um contexto para uma nova situação ou problema." },
+        { front: "Utilização de Tecnologia", back: "Integração de ferramentas digitais e recursos online para aprimorar o processo de ensino e aprendizagem." },
+        { front: "Variedade de Atividades", back: "Uso de diferentes tipos de exercícios e tarefas para manter o engajamento e atender a diversos estilos de aprendizagem." },
+        { front: "Visualização (Aprendizagem)", back: "Técnica de criar imagens mentais para ajudar a lembrar e processar informações." },
+        { front: "Vocabulário Produtivo", back: "Palavras que um aluno pode usar ativamente na fala e na escrita." },
+        { front: "Vocabulário Receptivo", back: "Palavras que um aluno pode entender ao ouvir ou ler, mas não necessariamente usar ativamente." },
+        { front: "Whole Class Interaction", back: "Atividades que envolvem a participação de todos os alunos na turma ao mesmo tempo." },
+        { front: "Word Cloud", back: "Representação visual de palavras onde o tamanho de cada palavra indica sua frequência ou importância em um texto." },
+        { front: "Zone of Actual Development (ZAD)", back: "O que um aluno pode fazer independentemente, sem ajuda." },
+        { front: "Peer Teaching", back: "Alunos ensinando uns aos outros, o que pode reforçar a compreensão do conteúdo." },
+        { front: "Active Recall", back: "Estratégia de estudo onde o aluno tenta recuperar informações da memória sem pistas, como em flashcards." },
+        { front: "Spaced Repetition", back: "Técnica de estudo onde o material é revisado em intervalos crescentes para otimizar a retenção a longo prazo." },
+        { front: "Metacognition", back: "Consciência e compreensão dos próprios processos de pensamento e aprendizagem." },
+        { front: "Task-Based Assessment", back: "Avaliação baseada na conclusão de uma tarefa, focando na comunicação e no uso da língua em contexto real." },
+        { front: "Language Awareness", back: "A capacidade de perceber e analisar aspectos da língua, tanto em si mesmo quanto em outros." },
+        { front: "Corpus Linguistics", back: "Estudo da linguagem usando grandes coleções de textos e fala ('corpora') para identificar padrões de uso." },
+        { front: "Blended Learning", back: "Ensino híbrido, que combina modalidades online e presenciais." },
+        { front: "Flipped Classroom", back: "Sala de aula invertida, onde os alunos estudam o conteúdo em casa e praticam na escola." },
+        { front: "Gamification", back: "Aplicação de elementos de jogos em contextos não-jogo para aumentar o engajamento e a motivação." },
+        { front: "Peer Assessment", back: "Avaliação mútua entre alunos, onde eles fornecem feedback sobre o trabalho uns dos outros." },
+        { front: "Self-Assessment", back: "Avaliação do próprio desempenho ou aprendizagem por parte do aluno." },
+        { front: "Growth Mindset", back: "Mentalidade de crescimento, a crença de que habilidades e inteligência podem ser desenvolvidas através de esforço e dedicação." },
+        { front: "Fixed Mindset", back: "Mentalidade fixa, a crença de que habilidades e inteligência são traços inatos e não podem ser fundamentalmente alterados." },
+        { front: "Critical Thinking", back: "A capacidade de analisar informações de forma objetiva e razoável, formando um julgamento." },
+        { front: "Creative Thinking", back: "A capacidade de gerar novas ideias e soluções originais para problemas." },
+        { front: "Problem-Based Learning (PBL)", back: "Aprendizagem baseada em problemas, onde os alunos aprendem resolvendo problemas complexos e reais." },
+        { front: "Project-Based Learning (PBL)", back: "Aprendizagem baseada em projetos, onde os alunos trabalham em um projeto estendido para investigar e responder a uma questão ou problema." },
+        { front: "Inquiry-Based Learning", back: "Aprendizagem baseada em investigação, onde os alunos exploram perguntas, dados e fenômenos em busca de compreensão." },
+        { front: "Active Listening", back: "Habilidade de ouvir atentamente e demonstrar compreensão, fazendo perguntas e fornecendo feedback." },
+        { front: "Non-Native English Speaking Teacher (NNEST)", back: "Professor de inglês cuja língua materna não é o inglês." },
+        { front: "Native English Speaking Teacher (NEST)", back: "Professor de inglês cuja língua materna é o inglês." },
+        { front: "Corpus", back: "Uma grande coleção de textos e/ou falas, usada para estudar padrões linguísticos." },
+        { front: "Authentic Task", back: "Uma tarefa que simula uma situação de comunicação real, que um falante da língua faria na vida real." },
+        { front: "Simplified Input", back: "Linguagem que é simplificada para os alunos, com vocabulário e estruturas mais simples, sem perder o significado." },
+        { front: "Recasting", back: "Reformular a fala incorreta do aluno de forma correta, sem explicitamente indicar o erro, mantendo o fluxo da conversa." },
+        { front: "Elicitation", back: "Técnica de correção onde o professor tenta fazer com que o aluno se corrija, através de perguntas ou pausas sugestivas." },
+        { front: "Clarification Request", back: "Pedido do professor ou colega para que o aluno reformule ou explique o que disse, indicando que a mensagem não foi clara." },
+        { front: "Self-monitoring", back: "A capacidade de um aluno de observar e avaliar sua própria produção de linguagem." },
+        { front: "Extensive Listening", back: "Ouvir longos trechos de áudio para prazer ou compreensão geral, sem focar em detalhes minuciosos." },
+        { front: "Intensive Listening", back: "Ouvir áudios curtos e focar em detalhes específicos, vocabulário ou pronúncia." },
+        { front: "Lesson Plan", back: "Um guia detalhado para o professor sobre o que, como e por que ensinar em uma aula específica." },
+        { front: "Scheme of Work", back: "Um plano de longo prazo que descreve os objetivos, conteúdo e sequência de aulas para um curso ou período." },
+        { front: "Needs Analysis", back: "O processo de identificar o que os alunos precisam aprender e por que, antes de planejar um curso." },
+        { front: "Course Design", back: "O processo de criar o plano geral de um curso, incluindo objetivos, conteúdo, atividades e avaliação." },
+        { front: "Diagnostic Assessment", back: "Avaliação inicial para identificar os pontos fortes e fracos dos alunos antes do ensino começar." },
+        { front: "Criterion-Referenced Assessment", back: "Avaliação que compara o desempenho do aluno com um conjunto predefinido de padrões de desempenho." },
+        { front: "Norm-Referenced Assessment", back: "Avaliação que compara o desempenho do aluno com o desempenho de outros alunos em um grupo." },
+        { front: "Reliability (Assessment)", back: "A consistência de um teste ou avaliação; se produziria os mesmos resultados se repetido sob as mesmas condições." },
+        { front: "Validity (Assessment)", back: "A extensão em que um teste mede o que se propõe a medir." },
+        { front: "Practicality (Assessment)", back: "A viabilidade de um teste em termos de recursos, tempo e facilidade de administração e pontuação." },
+        { front: "Authenticity (Assessment)", back: "A extensão em que uma tarefa de avaliação reflete tarefas do mundo real." },
+        { front: "Washback", back: "O efeito que um teste tem sobre o ensino e a aprendizagem que o precede." },
+        { front: "Common European Framework of Reference (CEFR)", back: "Um sistema amplamente aceito para descrever a proficiência em línguas estrangeiras (A1, A2, B1, B2, C1, C2)." },
+        { front: "Can-Do Statements", back: "Afirmações que descrevem o que um usuário da língua pode fazer em cada nível do CEFR (ex: 'Posso me apresentar')." },
+        { front: "Curriculum", back: "O plano geral de estudos para um curso, incluindo objetivos, conteúdo, metodologia e avaliação." },
+        { front: "Syllabus", back: "Um documento que descreve o conteúdo específico e os requisitos de um curso, geralmente mais detalhado que o currículo." },
+        { front: "Content-Based Language Teaching", back: "Ensino de uma língua através do conteúdo de outras disciplinas, com o objetivo de desenvolver a língua e o conhecimento do conteúdo." },
+        { front: "Affective Factors", back: "Emoções, atitudes e sentimentos que influenciam a aprendizagem de uma segunda língua (ex: motivação, ansiedade, autoconfiança)." },
+        { front: "Cognitive Factors", back: "Processos mentais envolvidos na aprendizagem, como memória, atenção, percepção e resolução de problemas." },
+        { front: "Interaction Hypothesis", back: "A teoria de que a interação comunicativa (negociação de significado) é crucial para a aquisição da segunda língua." },
+        { front: "Output-Driven Instruction", back: "Ensino que enfatiza a produção de linguagem pelos alunos, forçando-os a usar o que sabem e a identificar lacunas." },
+        { front: "Corrective Feedback", back: "Informação dada aos alunos sobre seus erros linguísticos, visando a melhoria." },
+        { front: "Extensive Output", back: "Produção de longos trechos de linguagem (escrita ou falada) de forma fluida, sem foco excessivo na precisão." },
+        { front: "Intensive Output", back: "Produção de linguagem com foco na precisão gramatical e no uso correto do vocabulário." },
+        { front: "Teacher's Role", back: "O papel do professor na sala de aula, que pode variar de facilitador, mentor, transmissor de conhecimento, entre outros." },
+        { front: "Learner's Role", back: "O papel do aluno na sala de aula, que pode ser ativo, passivo, colaborativo, autônomo, etc." },
+        { front: "Target Audience", back: "O público para quem o material ou a comunicação é destinada." },
+        { front: "Proficiency", back: "O nível de habilidade e competência em uma língua." },
+        { front: "Accuracy", back: "A correção gramatical e o uso apropriado do vocabulário." },
+        { front: "Lexical Resources", back: "O vocabulário e o conhecimento de expressões idiomáticas que um falante possui." },
+        { front: "Grammatical Resources", back: "O conhecimento e a capacidade de usar as regras gramaticais da língua." },
+        { front: "Phonological Resources", back: "O conhecimento e a capacidade de usar os sons e a entonação da língua." },
+        { front: "Strategic Competence", back: "A capacidade de usar estratégias de comunicação para superar lacunas no conhecimento da língua (ex: paráfrase, pedir clareza)." },
+        { front: "Sociolinguistic Competence", back: "A capacidade de usar a linguagem de forma apropriada em diferentes contextos sociais e culturais." },
+        { front: "Discourse Competence", back: "A capacidade de produzir e entender textos coerentes e coesos." },
+        { front: "Fluency vs. Accuracy", back: "Fluência refere-se à facilidade e ao ritmo da fala, enquanto precisão se refere à correção gramatical e ao uso apropriado do vocabulário." }
+    ];
 
-                // Conceitos SLAP
-                {
-                    front: "SLAP: Spark",
-                    back: "Despertar interesse e engajamento. Criar uma conexão emocional com o tema."
-                },
-                {
-                    front: "SLAP: Learn",
-                    back: "Apresentar conteúdo com clareza e propósito. Foco na compreensão e assimilação de novas informações."
-                },
-                {
-                    front: "SLAP: Apply",
-                    back: "Colocar em prática de forma significativa. Usar o que foi aprendido em contextos reais e relevantes."
-                },
-                {
-                    front: "SLAP: Perform",
-                    back: "Consolidar, revisar e transferir conhecimento. Avaliar o progresso e garantir a retenção a longo prazo."
-                },
-                {
-                    front: "SLAP (Geral)",
-                    back: "Framework para planejar e executar aulas engajadoras e eficazes: Spark, Learn, Apply, Perform."
-                },
-                // Adicione mais 60+ flashcards aqui para atingir 100+
-                { front: "Ação Comunicativa", back: "Qualquer ato de comunicação que visa transmitir ou receber uma mensagem com um propósito real." },
-                { front: "Aprendizagem Colaborativa", back: "Alunos trabalhando juntos em grupos para atingir um objetivo comum de aprendizagem." },
-                { front: "Autenticidade (Material)", back: "Materiais reais, não adaptados, usados para falantes nativos (ex: notícias, músicas, filmes)." },
-                { front: "Brainstorming", back: "Técnica para gerar ideias rapidamente, sem julgamento, para um tópico específico." },
-                { front: "Coerência (Texto)", back: "A qualidade de um texto que o torna compreensível, com ideias conectadas logicamente." },
-                { front: "Coesão (Texto)", back: "Uso de elementos linguísticos (pronomes, conectivos) para ligar frases e parágrafos em um texto." },
-                { front: "Comunicação Não-Verbal", back: "Mensagens transmitidas através de gestos, expressões faciais, postura, tom de voz." },
-                { front: "Constructivismo", back: "Teoria da aprendizagem onde o aluno constrói seu próprio conhecimento ativamente, em vez de apenas recebê-lo." },
-                { front: "Critérios de Sucesso", back: "Definições claras do que um aluno precisa fazer para demonstrar que alcançou o objetivo de aprendizagem." },
-                { front: "Cultura do Alvo", back: "Os aspectos culturais de um país ou comunidade onde a língua alvo é falada." },
-                { front: "Curadoria de Conteúdo", back: "O processo de selecionar, organizar e apresentar materiais relevantes para o aprendizado." },
-                { front: "Didática", back: "A arte e ciência do ensino, que estuda os melhores métodos e técnicas para a aprendizagem." },
-                { front: "Engajamento do Aluno", back: "Nível de envolvimento e participação do aluno nas atividades de aprendizagem." },
-                { front: "Estratégias de Aprendizagem", back: "Ações e pensamentos que os alunos usam para melhorar a aquisição, armazenamento e recuperação de informações." },
-                { front: "Estilos de Aprendizagem", back: "As preferências individuais de como os alunos absorvem, processam e retêm informações (visual, auditivo, cinestésico)." },
-                { front: "Fluência", back: "A capacidade de falar ou escrever uma língua de forma suave, sem hesitação excessiva, e com bom ritmo." },
-                { front: "Grammar-Translation Method", back: "Método tradicional focado na tradução de textos e no estudo de regras gramaticais, com pouca ênfase na fala." },
-                { front: "Habilidades Receptivas", back: "Compreensão auditiva (listening) e compreensão de leitura (reading)." },
-                { front: "Habilidades Produtivas", back: "Fala (speaking) e escrita (writing)." },
-                { front: "Inferência", back: "A capacidade de deduzir significado de palavras ou frases desconhecidas a partir do contexto." },
-                { front: "Input vs. Intake", back: "Input é a linguagem a que o aluno é exposto. Intake é a parte do input que o aluno processa e internaliza para a aquisição." },
-                { front: "Interação", back: "A comunicação bidirecional entre professor-aluno ou aluno-aluno, essencial para a aprendizagem de línguas." },
-                { front: "Language Acquisition Device (LAD)", back: "Conceito de Chomsky: um mecanismo inato na mente humana que facilita a aquisição da linguagem." },
-                { front: "Loop de Feedback", back: "Ciclo contínuo de dar feedback, receber, agir sobre ele e então dar mais feedback." },
-                { front: "Micro-ensino", back: "Prática de ensino onde professores treinam habilidades específicas em sessões curtas e focadas, geralmente gravadas para análise." },
-                { front: "Motivação Intrínseca", back: "Desejo de aprender por interesse próprio, satisfação pessoal ou desafio." },
-                { front: "Motivação Extrínseca", back: "Desejo de aprender por recompensas externas, como notas, reconhecimento ou pressão social." },
-                { front: "Neuroplasticidade", back: "A capacidade do cérebro de se adaptar e reorganizar, formando novas conexões neurais ao longo da vida, importante para a aprendizagem." },
-                { front: "Objetivos de Aprendizagem", back: "Declarações claras do que os alunos serão capazes de fazer ao final de uma aula ou unidade." },
-                { front: "Peer Correction", back: "Correção de erros feita pelos próprios colegas de turma." },
-                { front: "Performance", back: "O uso real da linguagem pelo aluno em um determinado momento, que pode ser diferente de sua competência subjacente." },
-                { front: "Personalização (Ensino)", back: "Adaptação do conteúdo, ritmo ou métodos de ensino às necessidades e interesses individuais de cada aluno." },
-                { front: "Prática Controlada", back: "Atividades onde os alunos praticam o uso da língua com foco na forma e precisão, com pouca liberdade de expressão." },
-                { front: "Prática Livre", back: "Atividades onde os alunos usam a língua de forma mais espontânea e criativa, com foco na fluência e comunicação." },
-                { front: "Projetos (Aprendizagem Baseada em)", back: "Metodologia onde os alunos aprendem através da criação de um produto ou resolução de um problema real." },
-                { front: "Rapport", back: "A relação de confiança e entendimento mútuo entre professor e aluno, ou entre os próprios alunos." },
-                { front: "Recursos Visuais", back: "Mapas mentais, infográficos, imagens, vídeos, etc., usados para apoiar a aprendizagem." },
-                { front: "Reflexão (Pedagogia)", back: "O processo de pensar criticamente sobre a própria prática de ensino ou aprendizagem para melhorá-la." },
-                { front: "Role-Play (Simulação)", back: "Atividade onde os alunos assumem papéis e simulam situações da vida real para praticar a língua." },
-                { front: "Self-Correction", back: "A capacidade do aluno de identificar e corrigir seus próprios erros." },
-                { front: "Silent Period", back: "Um período inicial em que os alunos de uma nova língua podem preferir ouvir e processar antes de começar a falar." },
-                { front: "Storytelling (Contação de Histórias)", back: "Uso de narrativas para engajar os alunos, apresentar vocabulário ou conceitos, e desenvolver a compreensão auditiva." },
-                { front: "Summative Assessment", back: "Avaliação que ocorre no final de uma unidade ou curso para medir o que foi aprendido (ex: provas finais)." },
-                { front: "Target Language", back: "A língua que está sendo aprendida (neste caso, o inglês)." },
-                { front: "Task-Based Syllabus", back: "Um currículo organizado em torno de uma série de tarefas que os alunos devem realizar." },
-                { front: "Teaching for Understanding", back: "Abordagem que visa que os alunos não apenas memorizem, mas realmente compreendam os conceitos e possam aplicá-los." },
-                { front: "Think-Pair-Share", back: "Estratégia colaborativa: alunos pensam individualmente, discutem em pares, e depois compartilham com a turma." },
-                { front: "Timing (Gerenciamento de Tempo)", back: "A habilidade de planejar e executar atividades dentro de um tempo limite adequado na aula." },
-                { front: "Transferência de Conhecimento", back: "A capacidade de aplicar o que foi aprendido em um contexto para uma nova situação ou problema." },
-                { front: "Utilização de Tecnologia", back: "Integração de ferramentas digitais e recursos online para aprimorar o processo de ensino e aprendizagem." },
-                { front: "Variedade de Atividades", back: "Uso de diferentes tipos de exercícios e tarefas para manter o engajamento e atender a diversos estilos de aprendizagem." },
-                { front: "Visualização (Aprendizagem)", back: "Técnica de criar imagens mentais para ajudar a lembrar e processar informações." },
-                { front: "Vocabulário Produtivo", back: "Palavras que um aluno pode usar ativamente na fala e na escrita." },
-                { front: "Vocabulário Receptivo", back: "Palavras que um aluno pode entender ao ouvir ou ler, mas não necessariamente usar ativamente." },
-                { front: "Whole Class Interaction", back: "Atividades que envolvem a participação de todos os alunos na turma ao mesmo tempo." },
-                { front: "Word Cloud", back: "Representação visual de palavras onde o tamanho de cada palavra indica sua frequência ou importância em um texto." },
-                { front: "Zone of Actual Development (ZAD)", back: "O que um aluno pode fazer independentemente, sem ajuda." },
-                { front: "Peer Teaching", back: "Alunos ensinando uns aos outros, o que pode reforçar a compreensão do conteúdo." },
-                { front: "Active Recall", back: "Estratégia de estudo onde o aluno tenta recuperar informações da memória sem pistas, como em flashcards." },
-                { front: "Spaced Repetition", back: "Técnica de estudo onde o material é revisado em intervalos crescentes para otimizar a retenção a longo prazo." },
-                { front: "Metacognition", back: "Consciência e compreensão dos próprios processos de pensamento e aprendizagem." },
-                { front: "Task-Based Assessment", back: "Avaliação baseada na conclusão de uma tarefa, focando na comunicação e no uso da língua em contexto real." },
-                { front: "Language Awareness", back: "A capacidade de perceber e analisar aspectos da língua, tanto em si mesmo quanto em outros." },
-                { front: "Corpus Linguistics", back: "Estudo da linguagem usando grandes coleções de textos e fala ('corpora') para identificar padrões de uso." },
-                {
-                    front: "Blended Learning",
-                    back: "Ensino híbrido, que combina modalidades online e presenciais."
-                },
-                {
-                    front: "Flipped Classroom",
-                    back: "Sala de aula invertida, onde os alunos estudam o conteúdo em casa e praticam na escola."
-                },
-                {
-                    front: "Gamification",
-                    back: "Aplicação de elementos de jogos em contextos não-jogo para aumentar o engajamento e a motivação."
-                },
-                {
-                    front: "Peer Assessment",
-                    back: "Avaliação mútua entre alunos, onde eles fornecem feedback sobre o trabalho uns dos outros."
-                },
-                {
-                    front: "Self-Assessment",
-                    back: "Avaliação do próprio desempenho ou aprendizagem por parte do aluno."
-                },
-                {
-                    front: "Growth Mindset",
-                    back: "Mentalidade de crescimento, a crença de que habilidades e inteligência podem ser desenvolvidas através de esforço e dedicação."
-                },
-                {
-                    front: "Fixed Mindset",
-                    back: "Mentalidade fixa, a crença de que habilidades e inteligência são traços inatos e não podem ser fundamentalmente alterados."
-                },
-                {
-                    front: "Critical Thinking",
-                    back: "A capacidade de analisar informações de forma objetiva e razoável, formando um julgamento."
-                },
-                {
-                    front: "Creative Thinking",
-                    back: "A capacidade de gerar novas ideias e soluções originais para problemas."
-                },
-                {
-                    front: "Problem-Based Learning (PBL)",
-                    back: "Aprendizagem baseada em problemas, onde os alunos aprendem resolvendo problemas complexos e reais."
-                },
-                {
-                    front: "Project-Based Learning (PBL)",
-                    back: "Aprendizagem baseada em projetos, onde os alunos trabalham em um projeto estendido para investigar e responder a uma questão ou problema."
-                },
-                {
-                    front: "Inquiry-Based Learning",
-                    back: "Aprendizagem baseada em investigação, onde os alunos exploram perguntas, dados e fenômenos em busca de compreensão."
-                },
-                {
-                    front: "Active Listening",
-                    back: "Habilidade de ouvir atentamente e demonstrar compreensão, fazendo perguntas e fornecendo feedback."
-                },
-                {
-                    front: "Non-Native English Speaking Teacher (NNEST)",
-                    back: "Professor de inglês cuja língua materna não é o inglês."
-                },
-                {
-                    front: "Native English Speaking Teacher (NEST)",
-                    back: "Professor de inglês cuja língua materna é o inglês."
-                },
-                {
-                    front: "Corpus",
-                    back: "Uma grande coleção de textos e/ou falas, usada para estudar padrões linguísticos."
-                },
-                {
-                    front: "Authentic Task",
-                    back: "Uma tarefa que simula uma situação de comunicação real, que um falante da língua faria na vida real."
-                },
-                {
-                    front: "Simplified Input",
-                    back: "Linguagem que é simplificada para os alunos, com vocabulário e estruturas mais simples, sem perder o significado."
-                },
-                {
-                    front: "Recasting",
-                    back: "Reformular a fala incorreta do aluno de forma correta, sem explicitamente indicar o erro, mantendo o fluxo da conversa."
-                },
-                {
-                    front: "Elicitation",
-                    back: "Técnica de correção onde o professor tenta fazer com que o aluno se corrija, através de perguntas ou pausas sugestivas."
-                },
-                {
-                    front: "Clarification Request",
-                    back: "Pedido do professor ou colega para que o aluno reformule ou explique o que disse, indicando que a mensagem não foi clara."
-                },
-                {
-                    front: "Self-monitoring",
-                    back: "A capacidade de um aluno de observar e avaliar sua própria produção de linguagem."
-                },
-                {
-                    front: "Extensive Listening",
-                    back: "Ouvir longos trechos de áudio para prazer ou compreensão geral, sem focar em detalhes minuciosos."
-                },
-                {
-                    front: "Intensive Listening",
-                    back: "Ouvir áudios curtos e focar em detalhes específicos, vocabulário ou pronúncia."
-                },
-                {
-                    front: "Lesson Plan",
-                    back: "Um guia detalhado para o professor sobre o que, como e por que ensinar em uma aula específica."
-                },
-                {
-                    front: "Scheme of Work",
-                    back: "Um plano de longo prazo que descreve os objetivos, conteúdo e sequência de aulas para um curso ou período."
-                },
-                {
-                    front: "Needs Analysis",
-                    back: "O processo de identificar o que os alunos precisam aprender e por que, antes de planejar um curso."
-                },
-                {
-                    front: "Course Design",
-                    back: "O processo de criar o plano geral de um curso, incluindo objetivos, conteúdo, atividades e avaliação."
-                },
-                {
-                    front: "Diagnostic Assessment",
-                    back: "Avaliação inicial para identificar os pontos fortes e fracos dos alunos antes do ensino começar."
-                },
-                {
-                    front: "Criterion-Referenced Assessment",
-                    back: "Avaliação que compara o desempenho do aluno com um conjunto predefinido de padrões de desempenho."
-                },
-                {
-                    front: "Norm-Referenced Assessment",
-                    back: "Avaliação que compara o desempenho do aluno com o desempenho de outros alunos em um grupo."
-                },
-                {
-                    front: "Reliability (Assessment)",
-                    back: "A consistência de um teste ou avaliação; se produziria os mesmos resultados se repetido sob as mesmas condições."
-                },
-                {
-                    front: "Validity (Assessment)",
-                    back: "A extensão em que um teste mede o que se propõe a medir."
-                },
-                {
-                    front: "Practicality (Assessment)",
-                    back: "A viabilidade de um teste em termos de recursos, tempo e facilidade de administração e pontuação."
-                },
-                {
-                    front: "Authenticity (Assessment)",
-                    back: "A extensão em que uma tarefa de avaliação reflete tarefas do mundo real."
-                },
-                {
-                    front: "Washback",
-                    back: "O efeito que um teste tem sobre o ensino e a aprendizagem que o precede."
-                },
-                {
-                    front: "Common European Framework of Reference (CEFR)",
-                    back: "Um sistema amplamente aceito para descrever a proficiência em línguas estrangeiras (A1, A2, B1, B2, C1, C2)."
-                },
-                {
-                    front: "Can-Do Statements",
-                    back: "Afirmações que descrevem o que um usuário da língua pode fazer em cada nível do CEFR (ex: 'Posso me apresentar')."
-                },
-                {
-                    front: "Curriculum",
-                    back: "O plano geral de estudos para um curso, incluindo objetivos, conteúdo, metodologia e avaliação."
-                },
-                {
-                    front: "Syllabus",
-                    back: "Um documento que descreve o conteúdo específico e os requisitos de um curso, geralmente mais detalhado que o currículo."
-                },
-                {
-                    front: "Content-Based Language Teaching",
-                    back: "Ensino de uma língua através do conteúdo de outras disciplinas, com o objetivo de desenvolver a língua e o conhecimento do conteúdo."
-                },
-                {
-                    front: "Affective Factors",
-                    back: "Emoções, atitudes e sentimentos que influenciam a aprendizagem de uma segunda língua (ex: motivação, ansiedade, autoconfiança)."
-                },
-                {
-                    front: "Cognitive Factors",
-                    back: "Processos mentais envolvidos na aprendizagem, como memória, atenção, percepção e resolução de problemas."
-                },
-                {
-                    front: "Interaction Hypothesis",
-                    back: "A teoria de que a interação comunicativa (negociação de significado) é crucial para a aquisição da segunda língua."
-                },
-                {
-                    front: "Output-Driven Instruction",
-                    back: "Ensino que enfatiza a produção de linguagem pelos alunos, forçando-os a usar o que sabem e a identificar lacunas."
-                },
-                {
-                    front: "Corrective Feedback",
-                    back: "Informação dada aos alunos sobre seus erros linguísticos, visando a melhoria."
-                },
-                {
-                    front: "Extensive Output",
-                    back: "Produção de longos trechos de linguagem (escrita ou falada) de forma fluida, sem foco excessivo na precisão."
-                },
-                {
-                    front: "Intensive Output",
-                    back: "Produção de linguagem com foco na precisão gramatical e no uso correto do vocabulário."
-                },
-                {
-                    front: "Teacher's Role",
-                    back: "O papel do professor na sala de aula, que pode variar de facilitador, mentor, transmissor de conhecimento, entre outros."
-                },
-                {
-                    front: "Learner's Role",
-                    back: "O papel do aluno na sala de aula, que pode ser ativo, passivo, colaborativo, autônomo, etc."
-                },
-                {
-                    front: "Target Audience",
-                    back: "O público para quem o material ou a comunicação é destinada."
-                },
-                {
-                    front: "Proficiency",
-                    back: "O nível de habilidade e competência em uma língua."
-                },
-                {
-                    front: "Accuracy",
-                    back: "A correção gramatical e o uso apropriado do vocabulário."
-                },
-                {
-                    front: "Lexical Resources",
-                    back: "O vocabulário e o conhecimento de expressões idiomáticas que um falante possui."
-                },
-                {
-                    front: "Grammatical Resources",
-                    back: "O conhecimento e a capacidade de usar as regras gramaticais da língua."
-                },
-                {
-                    front: "Phonological Resources",
-                    back: "O conhecimento e a capacidade de usar os sons e a entonação da língua."
-                },
-                {
-                    front: "Strategic Competence",
-                    back: "A capacidade de usar estratégias de comunicação para superar lacunas no conhecimento da língua (ex: paráfrase, pedir clareza)."
-                },
-                {
-                    front: "Sociolinguistic Competence",
-                    back: "A capacidade de usar a linguagem de forma apropriada em diferentes contextos sociais e culturais."
-                },
-                {
-                    front: "Discourse Competence",
-                    back: "A capacidade de produzir e entender textos coerentes e coesos."
-                },
-                {
-                    front: "Fluency vs. Accuracy",
-                    back: "Fluência refere-se à facilidade e ao ritmo da fala, enquanto precisão se refere à correção gramatical e ao uso apropriado do vocabulário."
-                }
+    // *** CÓDIGO DE RANDOMIZAÇÃO ADICIONADO AQUI ***
+    // Fisher-Yates (ou Knuth) Shuffle para embaralhar o array
+    function shuffleArray(array) {
+        let currentIndex = array.length, randomIndex;
 
+        // Enquanto ainda houver elementos para embaralhar.
+        while (currentIndex !== 0) {
+            // Pegue um elemento restante.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // E troque-o com o elemento atual.
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    shuffleArray(flashcardsData); // Embaralha os cards assim que a função é chamada
+
+    let currentIndex = 0;
+    const flashcardElement = document.getElementById('flashcard');
+    const flashcardFrontElement = document.getElementById('flashcard-front');
+    const flashcardBackElement = document.getElementById('flashcard-back');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const cardCounter = document.getElementById('card-counter');
+
+    function displayCard(index) {
+        if (index < 0) {
+            currentIndex = flashcardsData.length - 1;
+        } else if (index >= flashcardsData.length) {
+            currentIndex = 0;
+        } else {
+            currentIndex = index;
+        }
+
+        flashcardFrontElement.textContent = flashcardsData[currentIndex].front;
+        flashcardBackElement.textContent = flashcardsData[currentIndex].back;
+        cardCounter.textContent = `${currentIndex + 1} / ${flashcardsData.length}`;
+
+        if (flashcardElement.classList.contains('flipped')) {
+            flashcardElement.classList.remove('flipped');
+        }
+    }
+
+    function flipCard() {
+        flashcardElement.classList.toggle('flipped');
+    }
+
+    function nextCard() {
+        displayCard(currentIndex + 1);
+    }
+
+    function prevCard() {
+        displayCard(currentIndex - 1);
+    }
+
+    flashcardElement.addEventListener('click', flipCard);
+    nextBtn.addEventListener('click', nextCard);
+    prevBtn.addEventListener('click', prevCard);
+
+    displayCard(currentIndex);
+}
             ];
 
             let currentIndex = 0;
