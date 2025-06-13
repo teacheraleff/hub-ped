@@ -707,118 +707,360 @@
             reason: "Pelo seu incrível empenho na organização dos eventos culturais e por sempre trazer novas ideias que engajam nossos alunos e equipe. Sua proatividade é uma inspiração para todos!"
         };
 
-        const courseData = [
-            {
-                name: "Starter 1",
-                lessons: ["OPEN HOUSE", "FEELINGS", "NAMES & GREETINGS", "NUMBERS PT. 1", "NUMBERS PT. 2", "SPELLING", "ORDINAL NUMBERS", "BASIC VERBS", "BASIC ADJECTIVES", "DEMONSTRATIVE PRONOUNS", "VERB TO BE", "COUNTRIES & NATIONALITIES", "NEIGHBORHOOD", "FAMILY MEMBERS", "SIMPLE PRESENT PT. 1", "SIMPLE PRESENT PT. 2", "CAN & CAN’T", "OBJECT PRONOUNS", "LIKES AND DISLIKES", "FREE TIME ACTIVITIES", "MONTHS & HOLIDAYS", "POSSESSIVE ADJECTIVES", "POSSESSIVE PRONOUNS", "FOOD & FRUITS", "HOURS", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
-                focusPoints: [
-                    "Falar sobre si mesmo",
-                    "Absorver vocabulário básico (como números e emoções)",
-                    "Absorver gramática básica (como verbo to be, simple present)",
-                    "Falar sobre horas",
-                    "Criar um contato inicial com o inglês"
-                ]
+const courseData = [
+    {
+        name: "Starter 1",
+        lessons: [{ 
+                title: "OPEN HOUSE", 
+                communicativeObjective: "Apresentar-se e conhecer os colegas de turma.", 
+                functions: ["Greetings (Hi, Hello)", "My name is...", "Nice to meet you."], 
+                vocabulary: ["teacher", "student", "classroom", "name"], 
+                grammarTopic: ["Verb To Be (am, is)"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Starter 2",
-                lessons: ["OPEN HOUSE", "FREQUENCY", "ROUTINE", "WHY & BECAUSE", "PLACES IN TOWN", "PREPOSITIONS OF PLACE", "IN, ON, AT + TRANSPORTATIONS", "POSSESSIVES", "PARTS OF THE HOUSE", "FURNITURE & CHORES", "PRESENT CONTINUOUS", "PRESENT CONTINUOUS FOR FUTURE SITUATIONS", "MANY & MUCH", "RESTAURANT PT. 1", "RESTAURANT PT. 2", "FUTURE SIMPLE", "WHAT WILL YOU DO?", "OCCUPATIONS", "FALSE FRIENDS", "AGREEING & DISAGREEING", "DESCRIBING PEOPLE", "MOVIE GENRES", "PREPOSITIONS OF TIME", "FAST FOOD & TASTES", "WEATHER", "PRESENTATION", "KAHOOT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
-                focusPoints: [
-                    "Falar sobre frequência",
-                    "Usar preposições corretamente",
-                    "Usar present continuous",
-                    "Saber concordar e discordar",
-                    "Formar frases básicas"
-                ]
+            { 
+                title: "FEELINGS", 
+                communicativeObjective: "Falar sobre sentimentos e responder perguntas simples sobre como está se sentindo.", 
+                functions: ["How are you?", "I'm fine.", "How are you feeling?", "I’m (happy/sad/etc).", "What’s up?", "How’s it going?"], 
+                vocabulary: ["happy", "sad", "angry", "tired", "sleepy", "hungry", "thirsty", "scared", "excited", "bored"], 
+                grammarTopic: ["Verbo to be no presente simples"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Freshman 1",
-                lessons: ["OPEN HOUSE", "PARTS OF THE BODY", "SHOULD", "ACHES", "PHYSICAL TRAITS", "WHAT SHOULD I DO?", "TO & FOR", "SUPERMARKET PT. 1", "SUPERMARKET PT. 2", "ARE YOU A COUCH POTATO?", "FALSE FRIENDS", "WAS & WERE", "VERBS IN THE PAST", "-ED SOUNDS", "WATER UNDER THE BRIDGE", "CHILD’S PLAY", "VERBS OF SENSES", "GET PT. 1", "GET PT. 2", "THE INFLUENCERS ERA", "BEING HEALTHY IS BEING HAPPY", "INTERNET LANGUAGE", "PREPOSITIONS OF TIME", "FUTURE FORMS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
-                focusPoints: [
-                    "Falar sobre partes do corpo",
-                    "Dar conselhos usando should",
-                    "Começar a utilizar verbos no passado",
-                    "Utilizar get de forma funcional",
-                    "Começar a falar sobre futuro"
-                ]
+            { 
+                title: "NAMES AND GREETINGS", 
+                communicativeObjective: "Se apresentar e falar sobre nomes.", 
+                functions: ["What’s your name?", "What’s your first name?", "What’s your middle name?", "What’s your last name?", "What’s your nickname?", "My name is..."], 
+                vocabulary: ["good morning", "good afternoon", "good evening", "good night", "hi", "hello"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Freshman 2",
-                lessons: ["OPEN HOUSE", "IS POP REALLY CULTURE?", "COULD", "USED TO", "WOULD PT. 1", "WOULD PT. 2", "HAVE TO & NEED TO", "SIMPLE PAST PT. 1", "SIMPLE PAST PT. 2", "WHAT THE HELL HAPPENED?", "BRITISH x AMERICAN", "COULD, SHOULD, WOULD", "WE ARE THE FUTURE", "SCHOOL & COLLEGE LIFE", "PAST CONTINUOUS PT. 1", "PAST CONTINUOUS PT. 2", "MILLENNIALS x GEN Z", "GO FIND A JOB", "WHEN WE WERE YOUNG", "USES OF LIKE", "TASTES & TEXTURES", "INTENSIFIERS", "CHERISH THE MOMENTS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO GERAL"],
-                focusPoints: [
-                    "Narrar eventos passados com simple past e past continuous",
-                    "Expressar hábitos passados com 'used to'",
-                    "Discutir sobre diferenças culturais (inglês britânico x americano)",
-                    "Utilizar 'could', 'should' e 'would' para expressar possibilidade, conselho e desejo",
-                    "Expandir vocabulário sobre vida escolar e profissional"
-                ]
+            { 
+                title: "NUMBERS PT. 1", 
+                communicativeObjective: "Falar a idade e reconhecer números de 1 a 99.", 
+                functions: ["How old are you?", "I am ___ years old."], 
+                vocabulary: ["one to ten", "twenty to ninety-nine"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Sophomore 1",
-                lessons: ["OPEN HOUSE", "ALL YOU NEED IS LOVE", "MUST", "MAY & MIGHT", "LEAVE THE PAST IN THE PAST", "MY BUCKET LIST", "AIRPORT ESSENTIALS", "HOTEL ESSENTIALS", "WEATHER", "MONEY ESSENTIALS", "-ING & VERBS OF PREFERENCE", "MONEY x HAPPINESS", "EMBEDDED QUESTIONS", "COMPARATIVES", "SUPERLATIVES", "DO YOU VOLUNTEER?", "ADVERBS OF TIME", "AMERICAN TRADITIONS", "COFFEE, PLEASE", "GIVING ADVICE", "THE STORY OF ROCK", "OUGHT TO & HAD BETTER", "USES OF ENOUGH", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "REVISÃO DE CONTEÚDO"],
-                focusPoints: [
-                    "Dominar o uso de comparativos e superlativos",
-                    "Utilizar modais de obrigação e possibilidade (must, may, might)",
-                    "Formular perguntas indiretas (embedded questions)",
-                    "Expandir vocabulário para situações de viagem (aeroporto, hotel)",
-                    "Dar conselhos de forma mais assertiva com 'ought to' e 'had better'"
-                ]
+            { 
+                title: "NUMBERS PT. 2", 
+                communicativeObjective: "Falar sobre datas de aniversário e compreender números maiores.", 
+                functions: ["When is your birthday?", "My birthday is on..."], 
+                vocabulary: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "hundreds", "thousands"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Sophomore 2",
-                lessons: ["OPEN HOUSE", "2020’S PANDEMIC", "BE ALLOWED TO", "PAST FORMS", "PAST PARTICIPLE", "PRESENT PERFECT PT. 1", "PRESENT PERFECT PT. 2", "YET, JUST, STILL & ALREADY", "QUESTION TAGS PT. 1", "QUESTION TAGS PT. 2", "MODAL VERBS REVIEW", "I HAVE TIME MACHINE", "PRESENT PERFECT CONTINUOUS", "YOU’RE JOKING, RIGHT?", "CLOTHES & ACCESSORIES", "THE REVOLUTION OF AI", "LET’S TALK INEQUALITY", "WHO DOESN’T LOVE PETS?", "RELATIVE CLAUSES", "COMMON IDIOMS", "FAME DOES HAVE PRICE", "CULTURAL DIFFERENCES", "IT’S GOTTA BE ALIENS", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DISCUSSÃO ABERTA"],
-                focusPoints: [
-                    "Dominar o Present Perfect e o Present Perfect Continuous",
-                    "Utilizar advérbios como 'yet', 'just', 'still' e 'already' corretamente",
-                    "Confirmar informações com 'question tags'",
-                    "Construir frases mais complexas com 'relative clauses'",
-                    "Debater sobre temas atuais como IA e desigualdade"
-                ]
+            { 
+                title: "SPELLING", 
+                communicativeObjective: "Soletrar nomes e palavras simples usando o alfabeto.", 
+                functions: ["How do you spell your name?", "It’s..."], 
+                vocabulary: ["letras do alfabeto (A–Z)"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Junior 1",
-                lessons: ["OPEN HOUSE", "STUDYING ABROAD", "PHRASAL VERBS PT. 1", "PHRASAL VERBS PT. 2", "BODY IDIOMS", "TELLING STORIES", "ZERO & FIRST CONDITIONALS", "ANIMAL IDIOMS", "WHO’S YOUR HERO?", "SECOND CONDITIONAL", "OVER & UNDER", "PRESENT PERFECT RECAP", "PHRASAL VERBS (SEEN)", "COLOR IDIOMS", "PRETTY HURTS", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "GEOGRAPHY IDIOMS", "ADVANCED ADJECTIVES", "COMPOUND ADJECTIVES", "LEGAL ENGLISH", "WHAT’S RIGHT IS RIGHT", "SECOND CHANCES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PRÁTICA DE FLUÊNCIA"],
-                focusPoints: [
-                    "Utilizar os condicionais Zero, First e Second para criar hipóteses",
-                    "Expandir o repertório de Phrasal Verbs e Expressões Idiomáticas",
-                    "Narrar histórias com mais detalhes e fluidez",
-                    "Usar adjetivos avançados para descrições mais ricas",
-                    "Compreender vocabulário de áreas específicas (médica, legal)"
-                ]
+            { 
+                title: "ORDINAL NUMBERS", 
+                communicativeObjective: "Falar sobre datas de aniversário com uso de números ordinais.", 
+                functions: ["When is your birthday?", "My birthday is on..."], 
+                vocabulary: ["st", "nd", "rd", "th", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Junior 2",
-                lessons: ["OPEN HOUSE", "FAMILY MATTERS", "FAMILY IDIOMS", "PHRASAL VERBS - KEEP", "ASTROLOGY? REALLY?", "CONJUNCTIONS", "AS IT WAS", "ABROAD CULTURE", "GIVING ADVICE", "PHRASAL VERBS - PUT", "SUCCESS x FAILURE", "CRIME DOESN’T PAY", "WHALE POOP IS GREAT", "ARE GHOSTS REAL?", "YOU NEED SUGAR, LOVE", "FLIGHT FUEL", "IS YOUR PHONE CHANGING YOU?", "WORK, WORK, WORK", "CONDITIONALS REVIEW (ZERO, FIRST, SECOND)", "WHAT IF?", "MODERN RELATIONS", "ANXIETY RULES", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "DEBATE TEMÁTICO", "REVISÃO DE CONTEÚDO"],
-                focusPoints: [
-                    "Conectar ideias de forma mais complexa usando conjunções",
-                    "Debater sobre temas abstratos e culturais",
-                    "Dominar o uso de Phrasal Verbs com 'keep' e 'put'",
-                    "Expressar opiniões e conselhos de forma mais elaborada",
-                    "Analisar e discutir sobre relações modernas e comportamento"
-                ]
+            { 
+                title: "BASIC VERBS", 
+                communicativeObjective: "Descrever ações e rotinas básicas.", 
+                functions: ["I work every day.", "She studies English.", "What do you do?"], 
+                vocabulary: ["work", "study", "have", "like", "eat", "sleep", "drink", "drink", "live", "watch"], 
+                grammarTopic: ["Simple Present (I, you, we, they)"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Senior 1",
-                lessons: ["OPEN HOUSE", "EATING HABITS", "NEVER HAVE I EVER", "CAUSATIVE FORM", "REFLEXIVE PRONOUNS", "GOING VIRAL", "CLOTHING IDIOMS", "PAST PERFECT PT. 1", "PAST PERFECT PT. 2", "PAST MODALS", "THIRD CONDITIONAL", "PAST PERFECT CONT.", "MENTAL HEALTH", "I WISH I HAD NO EXPECTATIONS", "REPORTED SPEECH PT. 1", "REPORTED SPEECH PT. 2", "IT’S GEN Z’S WORLD", "BUT DO YOU AGREE?", "PHRASAL VERBS - GIVE", "CLEFT SENTENCES", "LOVE IDIOMS", "LIVING IN THE CITY", "IT’S ALL ABOUT THE MONEY", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "OT REVIEW", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK", "PROJETO FINAL"],
-                focusPoints: [
-                    "Dominar tempos verbais complexos como o Past Perfect",
-                    "Relatar falas de terceiros com 'Reported Speech'",
-                    "Utilizar o Third Conditional para falar sobre passados hipotéticos",
-                    "Expressar arrependimentos com 'wish'",
-                    "Dar ênfase a partes específicas de uma frase com 'Cleft Sentences'"
-                ]
+            { 
+                title: "BASIC ADJECTIVES", 
+                communicativeObjective: "Descrever pessoas, lugares e objetos com adjetivos simples.", 
+                functions: ["Is it...", "This is..."], 
+                vocabulary: ["big", "small", "good", "bad", "beautiful", "ugly", "expensive", "cheap"], 
+                grammarTopic: ["Nenhum"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-            {
-                name: "Senior 2",
-                lessons: ["OPEN HOUSE", "MAKING IT ABROAD", "WISH & IF ONLY", "USES OF RATHER", "PHRASAL VERBS - BRING", "DO YOU HAVE ANY REGRETS?", "CONDITIONALS (ALL)", "MIXED COND. PT. 1", "MIXED COND. PT. 2", "RELATIONSHIP GOALS", "PHRASAL VERBS - LOOK", "NETFLIX & CHILL", "SPLIT INFINITIVE", "LET’S GO BACKPACKING", "COMMON EUPHEMISMS", "LIAR, LIAR, PANTS ON FIRE", "THE SWIFT IMPACT", "FUTURE IN THE PAST", "BE ALLOWED & BE SUPPOSED TO", "SLANGS ARE LIT", "YOLO, FOMO & FOMU", "PHRASAL VERBS - COME", "SOCIAL MEDIA DISASTER", "OVER & UNDER", "PRESENTATION", "KAHOOT REVIEW", "MT REVIEW", "MIDTERM TEST", "MT CORRECTION", "LISTENING TEST", "GRAMMAR TEST", "GT & LT CORRECTION", "ORAL TEST – DAY 1", "ORAL TEST – DAY 2", "GENERAL FEEDBACK"],
-                focusPoints: [
-                    "Dominar todos os tipos de condicionais, incluindo os mistos",
-                    "Usar estruturas avançadas como 'wish' e 'if only'",
-                    "Compreender e usar gírias modernas e eufemismos",
-                    "Expressar o futuro no passado para falar de planos que mudaram",
-                    "Debater sobre temas complexos como cultura digital e redes sociais"
-                ]
+            { 
+                title: "THERE IS / THERE ARE", 
+                communicativeObjective: "Descrever a existência de coisas em um lugar.", 
+                functions: ["Nenhum"], 
+                vocabulary: ["Nenhum"], 
+                grammarTopic: ["There to be"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
             },
-        ];
+            { 
+                title: "PREPOSITIONS OF PLACE", 
+                communicativeObjective: "Descrever a localização de objetos.", 
+                functions: ["The cat is under the table.", "My keys are in the box.", "The clock is on the wall."], 
+                vocabulary: ["in", "on", "under", "next to", "between", "behind", "in front of"], 
+                grammarTopic: ["Prepositions of Place"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 12: POSSESSIVE ADJECTIVES", 
+                communicativeObjective: "Falar sobre posse e pertencimento.", 
+                functions: ["This is my car.", "What is her name?", "Their house is blue."], 
+                vocabulary: ["my", "your", "his", "her", "its", "our", "their", "family members"], 
+                grammarTopic: ["Possessive Adjectives"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 13: CAN / CAN'T", 
+                communicativeObjective: "Falar sobre habilidades e permissões.", 
+                functions: ["I can swim.", "Can you speak English?", "You can't park here."], 
+                vocabulary: ["swim", "dance", "sing", "cook", "drive", "play the guitar"], 
+                grammarTopic: ["Modal Verb 'Can'"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 14: PRESENT CONTINUOUS", 
+                communicativeObjective: "Descrever ações acontecendo no momento da fala.", 
+                functions: ["I am studying now.", "What are you doing?", "She isn't working."], 
+                vocabulary: ["wearing", "reading", "writing", "listening", "talking"], 
+                grammarTopic: ["Present Continuous"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 15: SIMPLE PRESENT X PRESENT CONTINUOUS", 
+                communicativeObjective: "Diferenciar rotinas de ações momentâneas.", 
+                functions: ["I usually drink coffee, but today I'm drinking tea."], 
+                vocabulary: ["usually", "always", "now", "at the moment", "today"], 
+                grammarTopic: ["Simple Present vs. Present Continuous"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 16: REVIEW", 
+                communicativeObjective: "Revisar e consolidar o conteúdo das aulas 1-15.", 
+                functions: ["General Review"], 
+                vocabulary: ["General Review"], 
+                grammarTopic: ["General Review"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { title: "LESSON 17: MIDTERM TEST", communicativeObjective: "Avaliar o conhecimento adquirido na primeira metade do curso.", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#" },
+            { title: "LESSON 18: GRAMMAR TEST", communicativeObjective: "Avaliar o conhecimento gramatical adquirido.", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#" },
+            { 
+                title: "LESSON 19: SIMPLE PAST (TO BE)", 
+                communicativeObjective: "Descrever estados e situações no passado.", 
+                functions: ["I was tired yesterday.", "Were you at the party?", "They weren't at home."], 
+                vocabulary: ["yesterday", "last night", "last week", "at the party", "at school"], 
+                grammarTopic: ["Simple Past of Verb To Be (was/were)"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 20: SIMPLE PAST (REGULAR VERBS)", 
+                communicativeObjective: "Falar sobre ações completas no passado.", 
+                functions: ["I worked yesterday.", "She studied for the test.", "He watched a movie."], 
+                vocabulary: ["worked", "studied", "watched", "played", "talked", "visited"], 
+                grammarTopic: ["Simple Past with regular verbs (-ed)"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 21: SIMPLE PAST (IRREGULAR VERBS)", 
+                communicativeObjective: "Falar sobre ações completas no passado usando verbos irregulares.", 
+                functions: ["I went to the beach.", "She saw a movie.", "They ate pizza."], 
+                vocabulary: ["went", "saw", "ate", "drank", "had", "bought", "made"], 
+                grammarTopic: ["Simple Past with irregular verbs"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 22: QUESTIONS IN THE PAST", 
+                communicativeObjective: "Fazer perguntas sobre o passado.", 
+                functions: ["Did you go out last night?", "What did she do?", "Where did they go?"], 
+                vocabulary: ["go out", "last night", "yesterday afternoon"], 
+                grammarTopic: ["Simple Past - Interrogative Form (Did)"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 23: OBJECT PRONOUNS", 
+                communicativeObjective: "Usar pronomes para substituir o objeto de uma frase.", 
+                functions: ["She called me.", "I saw him at the mall.", "He gave it to her."], 
+                vocabulary: ["me", "you", "him", "her", "it", "us", "them"], 
+                grammarTopic: ["Object Pronouns"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 24: COUNTABLE / UNCOUNTABLE", 
+                communicativeObjective: "Diferenciar substantivos contáveis e incontáveis.", 
+                functions: ["I need some water.", "Do you have any apples?", "There is a lot of traffic."], 
+                vocabulary: ["water", "apple", "money", "time", "friend", "information"], 
+                grammarTopic: ["Countable/Uncountable Nouns with some/any"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 25: HOW MUCH / HOW MANY", 
+                communicativeObjective: "Perguntar sobre quantidades.", 
+                functions: ["How much money do you have?", "How many friends are coming?"], 
+                vocabulary: ["money", "friends", "time", "books", "sugar", "people"], 
+                grammarTopic: ["Quantifiers: How much / How many"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 26: ADVERBS OF FREQUENCY", 
+                communicativeObjective: "Descrever a frequência com que ações acontecem.", 
+                functions: ["I always wake up early.", "She sometimes goes to the gym.", "They never eat meat."], 
+                vocabulary: ["always", "usually", "often", "sometimes", "rarely", "never"], 
+                grammarTopic: ["Adverbs of Frequency"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 27: GOING TO", 
+                communicativeObjective: "Falar sobre planos e intenções futuras.", 
+                functions: ["I'm going to travel next month.", "What are you going to do?", "She is going to study more."], 
+                vocabulary: ["travel", "next month", "tomorrow", "next week", "plans"], 
+                grammarTopic: ["Future with 'going to'"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 28: WILL", 
+                communicativeObjective: "Falar sobre previsões e decisões espontâneas.", 
+                functions: ["I think it will rain tomorrow.", "I'll have the salad.", "Will you help me?"], 
+                vocabulary: ["I think", "I guess", "probably", "predictions"], 
+                grammarTopic: ["Future with 'will'"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 29: COMPARATIVE ADJECTIVES", 
+                communicativeObjective: "Comparar duas pessoas, lugares ou coisas.", 
+                functions: ["My house is bigger than yours.", "She is more intelligent than her brother."], 
+                vocabulary: ["bigger", "smaller", "faster", "more expensive", "more beautiful"], 
+                grammarTopic: ["Comparative Adjectives"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 30: SUPERLATIVE ADJECTIVES", 
+                communicativeObjective: "Descrever o extremo em um grupo.", 
+                functions: ["This is the tallest building in the city.", "He is the most famous singer in the world."], 
+                vocabulary: ["the tallest", "the best", "the worst", "the most famous"], 
+                grammarTopic: ["Superlative Adjectives"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 31: PRESENT PERFECT (EXPERIENCE)", 
+                communicativeObjective: "Falar sobre experiências de vida sem especificar quando.", 
+                functions: ["Have you ever been to Paris?", "I have never eaten sushi.", "She has traveled a lot."], 
+                vocabulary: ["ever", "never", "been to", "traveled", "eaten", "seen"], 
+                grammarTopic: ["Present Perfect with ever/never"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 32: PRESENT PERFECT (DURATION)", 
+                communicativeObjective: "Falar sobre ações que começaram no passado e continuam até o presente.", 
+                functions: ["I have lived here for 10 years.", "She has worked here since 2020."], 
+                vocabulary: ["for", "since", "how long"], 
+                grammarTopic: ["Present Perfect with for/since"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { 
+                title: "LESSON 33: FINAL REVIEW", 
+                communicativeObjective: "Revisar e consolidar todo o conteúdo do curso.", 
+                functions: ["General Review"], 
+                vocabulary: ["General Review"], 
+                grammarTopic: ["General Review"], 
+                teacherMaterialUrl: "#", 
+                studentMaterialUrl: "#" 
+            },
+            { title: "LESSON 34: ORAL TEST – DAY 1", communicativeObjective: "Avaliar a habilidade de comunicação oral.", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#" },
+            { title: "LESSON 35: ORAL TEST – DAY 2", communicativeObjective: "Avaliar a habilidade de comunicação oral.", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#" },
+            { title: "LESSON 36: LISTENING TEST", communicativeObjective: "Avaliar a habilidade de compreensão auditiva.", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#" }],
+        focusPoints: ["Falar sobre si mesmo", "Absorver vocabulário básico", "Absorver gramática básica", "Falar sobre horas", "Criar um contato inicial com o inglês"]
+    },
+    {
+        name: "Starter 2",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Freshman 1",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Freshman 2",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Sophomore 1",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Junior 1",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Junior 2",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Senior 1",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    },
+    {
+        name: "Senior 2",
+        lessons: Array.from({ length: 36 }, (_, i) => ({
+            title: `LESSON ${String(i + 1).padStart(2, '0')}`,
+            communicativeObjective: "A ser preenchido", functions: [], vocabulary: [], grammarTopic: [], teacherMaterialUrl: "#", studentMaterialUrl: "#"
+        })),
+        focusPoints: ["A ser preenchido"]
+    }
+];
 
         // Function to convert string to title case, preserving specific uppercase terms
         const toTitleCase = (str) => {
@@ -1036,36 +1278,37 @@
             renderLevel(0); /* Carrega Starter 1 por padrão quando Níveis SLAP é selecionado */
         }
 
-        function renderLevel(index) {
+       function renderLevel(index) {
             const level = courseData[index];
             
             document.getElementById('lessons-title').textContent = `CP do Nível: ${level.name}`;
             
             const lessonsGrid = document.getElementById('lessons-grid');
             lessonsGrid.innerHTML = level.lessons.map((lesson, i) => {
-                const isTest = isTestOrReview(lesson);
+                // Agora acessamos lesson.title, pois 'lesson' é um objeto
+                const isTest = isTestOrReview(lesson.title);
                 const bgColorClass = isTest ? 'bg-[#F1D24B]' : 'bg-stone-100';
                 const textColorClass = isTest ? 'text-stone-800' : 'text-stone-700';
                 const numberColorClass = isTest ? 'text-stone-800' : 'text-[#F1D24B]';
 
+                // A div foi trocada por um botão com onclick
                 return `
-                    <div class="${bgColorClass} p-3 rounded-lg flex flex-col items-start shadow-sm hover:transform hover:-translate-y-1 transition-transform duration-200">
+                    <button onclick="window.renderLessonDetail(${index}, ${i})" class="w-full text-left ${bgColorClass} p-3 rounded-lg flex flex-col items-start shadow-sm hover:transform hover:-translate-y-1 transition-transform duration-200">
                         <span class="text-sm font-bold ${numberColorClass} mb-1">${String(i + 1).padStart(2, '0')}</span>
-                        <span class="text-sm ${textColorClass} w-full">${toTitleCase(lesson)}</span>
-                    </div>
+                        <span class="text-sm ${textColorClass} w-full">${toTitleCase(lesson.title)}</span>
+                    </button>
                 `;
             }).join('');
 
             document.querySelectorAll('#level-sub-navigation .nav-button').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.dataset.index === index) {
+                if (btn.dataset.index === String(index)) { // Comparação corrigida para string
                     btn.classList.add('active');
                 }
             });
 
             renderFocusPoints(level);
         }
-
         function renderFocusPoints(level) {
             const focusPointsGrid = document.getElementById('focus-points-grid');
             focusPointsGrid.innerHTML = level.focusPoints.map((point) => {
@@ -1076,6 +1319,74 @@
                 `;
             }).join('');
         }
+
+        function renderLessonDetail(courseIndex, lessonIndex) {
+    hideHeader();
+
+    const level = courseData[courseIndex];
+    const lesson = level.lessons[lessonIndex];
+
+    if (!lesson || typeof lesson !== 'object') {
+        contentArea.innerHTML = '<p>Erro: Dados da aula não encontrados ou em formato incorreto.</p>';
+        return;
+    }
+
+    const createTagsHtml = (items) => {
+        if (!items || items.length === 0) return '<p class="text-sm text-stone-500">N/A</p>';
+        return items.map(item => `<span class="tag">${item}</span>`).join('');
+    };
+
+    contentArea.innerHTML = `
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 max-w-4xl mx-auto">
+            <button onclick="window.renderSlapLevelsSection()" class="mb-6 inline-flex items-center text-stone-600 hover:text-[#F1D24B] transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Voltar para a lista de aulas
+            </button>
+
+            <div class="text-center border-b border-stone-200 pb-6 mb-6">
+                <h2 class="text-3xl font-bold text-[#F1D24B]">${toTitleCase(lesson.title)}</h2>
+                <p class="text-xl text-stone-700 font-medium">${level.name}</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="info-item bg-stone-50 p-4 rounded-lg">
+                    <strong>Objetivo Comunicativo:</strong>
+                    <p class="text-stone-700 mt-1">${lesson.communicativeObjective || 'Não especificado.'}</p>
+                </div>
+                
+                <div class="info-item bg-stone-50 p-4 rounded-lg">
+                    <strong>Funções / Chunks:</strong>
+                    <div class="flex flex-wrap pt-2 gap-2">
+                        ${createTagsHtml(lesson.functions)}
+                    </div>
+                </div>
+                
+                <div class="info-item bg-stone-50 p-4 rounded-lg">
+                    <strong>Vocabulário Principal:</strong>
+                    <div class="flex flex-wrap pt-2 gap-2">
+                        ${createTagsHtml(lesson.vocabulary)}
+                    </div>
+                </div>
+
+                <div class="info-item bg-stone-50 p-4 rounded-lg">
+                    <strong>Tópico Gramatical:</strong>
+                    <div class="flex flex-wrap pt-2 gap-2">
+                        ${createTagsHtml(lesson.grammarTopic)}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-stone-200 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="${lesson.teacherMaterialUrl}" target="_blank" class="navigation-button-game text-center">
+                    📥 Faça o download da aula aqui
+                </a>
+                <a href="${lesson.studentMaterialUrl}" target="_blank" class="navigation-button-game text-center">
+                    📥 Faça o download do material do aluno aqui
+                </a>
+            </div>
+        </section>
+    `;
+}
 
         function renderCefrSection() {
             setActiveHubButton('nav-cefr');
@@ -2946,7 +3257,12 @@ const teachersData = [
         window.renderLinksUteisSection = renderLinksUteisSection;
         window.renderTeachersRoomSection = renderTeachersRoomSection;
         window.renderTeacherDossier = renderTeacherDossier;
-        window.renderBrainFlipGameSection = renderBrainFlipGameSection; // Add new game function to window
+        window.renderBrainFlipGameSection = renderBrainFlipGameSection;
+        // ...
+window.renderTeacherDossier = renderTeacherDossier;
+window.renderBrainFlipGameSection = renderBrainFlipGameSection;
+window.renderLessonDetail = renderLessonDetail; // <-- Adicione esta linha
+// ...// Add new game function to window
 
         document.addEventListener('DOMContentLoaded', () => {
     // Mapeamento dos alvos para as funções que renderizam cada página
