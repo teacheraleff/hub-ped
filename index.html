@@ -522,40 +522,39 @@
     background-color: #F1D24B;
     border-color: #eab308;
 }
-        /* Grade Section Tabs */
-.grade-tab-container {
-    display: flex;
-    flex-wrap: wrap;
+/* Estilo para o Menu Suspenso (Select) da Grade */
+.grade-select-container {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid #e7e5e4; /* stone-200 */
-    gap: 1rem;
+    max-width: 400px;
 }
-.grade-tab {
-    padding: 0.75rem 0.25rem;
-    text-align: center;
+.grade-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #d6d3d1; /* stone-300 */
+    background-color: #ffffff;
     font-weight: 600;
-    color: #78716c; /* stone-500 */
+    color: #44403c; /* stone-700 */
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease-in-out;
 }
-.grade-tab:hover {
-    color: #F1D24B;
-}
-.grade-tab.active {
-    color: #F1D24B;
-    border-color: #F1D24B;
-}
-
-/* Grade Schedule Styles */
+        
+/* CORREÇÃO para o container da Grade de Horários */
 .schedule-container {
     display: grid;
-    grid-template-columns: auto 1fr; /* Coluna para horários e o resto para os dias */
+    /* Define uma coluna para os horários e 5 colunas (uma para cada dia) */
+    grid-template-columns: auto repeat(5, 1fr); 
     gap: 4px;
     background-color: #e7e5e4; /* stone-200 */
     border: 1px solid #e7e5e4;
     border-radius: 0.5rem;
-    overflow: hidden;
+    overflow-x: auto; /* Adiciona rolagem horizontal em telas pequenas para não quebrar o layout */
     width: 100%;
 }
 .schedule-header, .schedule-time, .schedule-cell {
@@ -744,19 +743,22 @@ function renderGradeSection() {
     setActiveHubButton(null);
     showHeader();
     document.getElementById('main-title').textContent = 'Grade de Horários';
-    document.getElementById('main-description').textContent = 'Selecione um professor para ver a grade de horários individual ou visualize a grade geral.';
+    document.getElementById('main-description').textContent = 'Selecione um professor no menu suspenso para ver a grade de horários individual ou visualize a grade geral.';
 
-    // Cria a navegação por abas dinamicamente
-    let tabHtml = '<button class="grade-tab active" data-teacher="all">Todos os Professores</button>';
+    // Cria as opções para o menu suspenso
+    let optionsHtml = '<option value="all">Todos os Professores</option>';
     Object.keys(scheduleData).forEach(teacher => {
-        tabHtml += `<button class="grade-tab" data-teacher="${teacher}">${teacher}</button>`;
+        optionsHtml += `<option value="${teacher}">${teacher}</option>`;
     });
 
-    // Define a estrutura principal da página da Grade
+    // Define a estrutura da página da Grade com um menu suspenso (<select>)
     contentArea.innerHTML = `
         <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div class="grade-tab-container">
-                ${tabHtml}
+            <div class="grade-select-container">
+                <label for="teacher-select" class="block text-sm font-medium text-stone-700 mb-1">Selecione uma grade:</label>
+                <select id="teacher-select" class="grade-select">
+                    ${optionsHtml}
+                </select>
             </div>
             <div id="schedule-grid-container">
                 <!-- A tabela de horários será renderizada aqui -->
@@ -764,23 +766,16 @@ function renderGradeSection() {
         </section>
     `;
 
-    // Adiciona o "ouvinte" de eventos para as abas
-    const tabContainer = contentArea.querySelector('.grade-tab-container');
-    tabContainer.addEventListener('click', (event) => {
-        const target = event.target.closest('.grade-tab');
-        if (!target) return;
-
-        tabContainer.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
-        target.classList.add('active');
-
-        const teacherFilter = target.dataset.teacher;
-        renderScheduleGrid(teacherFilter);
+    // Adiciona o evento "onchange" para o menu suspenso
+    const teacherSelect = document.getElementById('teacher-select');
+    teacherSelect.addEventListener('change', (event) => {
+        const teacherFilter = event.target.value;
+        renderScheduleGrid(teacherFilter); // Re-renderiza a grade com o filtro
     });
 
     // Renderiza a grade inicial com "Todos os Professores"
     renderScheduleGrid('all');
 }
-
 function renderScheduleGrid(teacherFilter) {
     const gridContainer = document.getElementById('schedule-grid-container');
     if (!gridContainer) return;
