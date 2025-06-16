@@ -548,13 +548,13 @@
 /* CORREÇÃO para o container da Grade de Horários */
 .schedule-container {
     display: grid;
-    /* Define uma coluna para os horários e 5 colunas (uma para cada dia) */
-    grid-template-columns: auto repeat(5, 1fr); 
+    /* Define 5 colunas de tamanho igual (uma para cada dia) */
+    grid-template-columns: repeat(5, 1fr); 
     gap: 4px;
     background-color: #e7e5e4; /* stone-200 */
     border: 1px solid #e7e5e4;
     border-radius: 0.5rem;
-    overflow-x: auto; /* Adiciona rolagem horizontal em telas pequenas para não quebrar o layout */
+    overflow-x: auto;
     width: 100%;
 }
 .schedule-header, .schedule-time, .schedule-cell {
@@ -567,28 +567,22 @@
     background-color: #f5f5f4; /* stone-100 */
     color: #44403c; /* stone-700 */
 }
-.schedule-time {
-    font-size: 0.75rem; /* text-xs */
-    color: #57534e; /* stone-600 */
-    min-width: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .schedule-cell {
     min-height: 80px;
     border-top: 1px solid #e7e5e4;
     border-left: 1px solid #e7e5e4;
 }
 .class-entry {
-    padding: 0.5rem;
+    padding: 0.75rem; /* Aumenta o padding para melhor espaçamento */
     border-radius: 0.375rem; /* rounded-md */
-    font-size: 0.875rem; /* text-sm */
     text-align: left;
     margin-bottom: 0.5rem;
     color: #44403c;
     border-left: 4px solid;
     transition: transform 0.2s;
+    display: flex; /* Adicionado para alinhar o conteúdo */
+    flex-direction: column; /* Adicionado para empilhar os itens */
+    gap: 0.25rem; /* Adiciona um pequeno espaço entre as linhas */
 }
 .class-entry:hover {
     transform: scale(1.05);
@@ -596,6 +590,7 @@
 .class-entry strong {
     display: block;
     font-weight: 700;
+    font-size: 1rem; /* Aumenta um pouco o nome do aluno */
 }
 /* Cores para os professores */
 .entry-color-1 { background-color: #E0F2FE; border-color: #38BDF8; } /* sky-100, sky-500 */
@@ -776,13 +771,14 @@ function renderGradeSection() {
     // Renderiza a grade inicial com "Todos os Professores"
     renderScheduleGrid('all');
 }
+// Ação: Substitua esta função inteira
 function renderScheduleGrid(teacherFilter) {
     const gridContainer = document.getElementById('schedule-grid-container');
     if (!gridContainer) return;
 
     const days = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
-    const timeSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
     
+    // Associa uma cor consistente para cada professor
     const teacherColors = {};
     let colorIndex = 1;
     Object.keys(scheduleData).forEach(teacher => {
@@ -790,42 +786,53 @@ function renderScheduleGrid(teacherFilter) {
         colorIndex = (colorIndex % 5) + 1;
     });
 
-    let gridHtml = `<div class="schedule-container" style="grid-template-rows: auto repeat(${timeSlots.length}, 1fr);">`;
+    let gridHtml = `<div class="schedule-container">`;
     
-    gridHtml += '<div class="bg-white"></div>';
+    // Cabeçalho com os dias da semana
     days.forEach(day => gridHtml += `<div class="schedule-header">${day}</div>`);
 
-    timeSlots.forEach(time => {
-        gridHtml += `<div class="schedule-time">${time}</div>`;
-        days.forEach(day => {
-            gridHtml += `<div class="schedule-cell">`;
+    // Células dos dias (uma para cada dia da semana)
+    days.forEach(day => {
+        let cellContent = '';
 
-            if (teacherFilter === 'all') {
-                Object.keys(scheduleData).forEach(teacher => {
-                    const classInfo = scheduleData[teacher]?.[day]?.[time];
-                    if (classInfo) {
-                        gridHtml += `
-                            <div class="class-entry ${teacherColors[teacher]}">
-                                <strong>${teacher.replace('Teacher ', '')}</strong>
-                                <span>${classInfo.student} (${classInfo.level})</span>
-                            </div>`;
-                    }
-                });
-            } else {
-                const classInfo = scheduleData[teacherFilter]?.[day]?.[time];
-                if (classInfo) {
-                     gridHtml += `
-                        <div class="class-entry ${teacherColors[teacherFilter]}">
-                            <strong>${classInfo.student}</strong>
-                            <span>${classInfo.level}</span>
-                        </div>`;
+        // Coleta todas as aulas do dia
+        const dailyClasses = [];
+        Object.keys(scheduleData).forEach(teacher => {
+            if (teacherFilter === 'all' || teacherFilter === teacher) {
+                if (scheduleData[teacher][day]) {
+                    Object.keys(scheduleData[teacher][day]).forEach(startTime => {
+                        const classInfo = scheduleData[teacher][day][startTime];
+                        dailyClasses.push({
+                            startTime: startTime,
+                            ...classInfo,
+                            teacher: teacher
+                        });
+                    });
                 }
             }
-            gridHtml += `</div>`;
         });
+        
+        // Ordena as aulas pelo horário de início
+        dailyClasses.sort((a, b) => a.startTime.localeCompare(b.startTime));
+
+        // Monta o HTML para cada aula do dia
+        dailyClasses.forEach(classInfo => {
+            const teacherName = teacherFilter === 'all' ? `<em>(${classInfo.teacher.replace('Teacher ', '')})</em>` : '';
+            const colorClass = teacherColors[classInfo.teacher] || 'entry-color-5';
+
+            cellContent += `
+                <div class="class-entry ${colorClass}">
+                    <span class="text-xs text-stone-600">${classInfo.startTime.replace(':00','h')} às ${classInfo.endTime.replace(':00','h')}</span>
+                    <strong>${classInfo.student} ${teacherName}</strong>
+                    <span class="text-sm text-stone-700">${classInfo.level}</span>
+                </div>`;
+        });
+        
+        // Adiciona a célula do dia ao grid
+        gridHtml += `<div class="schedule-cell">${cellContent}</div>`;
     });
 
-    gridHtml += '</div>';
+    gridHtml += '</div>'; // Fecha o container
     gridContainer.innerHTML = gridHtml;
 }
         const motivationalQuotes = [
@@ -886,39 +893,39 @@ function renderScheduleGrid(teacherFilter) {
             photo: "https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png",
             reason: "Pelo seu incrível empenho na organização dos eventos culturais e por sempre trazer novas ideias que engajam nossos alunos e equipe. Sua proatividade é uma inspiração para todos!"
         };
+// Ação: Substitua este bloco de código
 const scheduleData = {
     "Teacher Victor": {
         "Segunda": {
-            "10:00": { student: "Carlos Silva", level: "Freshman 2" },
-            "14:00": { student: "Mariana Costa", level: "Starter 1" },
+            "10:00": { student: "Carlos Silva", level: "Freshman 2", endTime: "11:00" },
+            "14:00": { student: "Mariana Costa", level: "Starter 1", endTime: "15:00" },
         },
         "Quarta": {
-            "11:00": { student: "Pedro Martins", level: "Sophomore 1" },
+            "11:00": { student: "Pedro Martins", level: "Sophomore 1", endTime: "12:00" },
         },
         "Sexta": {
-            "09:00": { student: "Ana Beatriz", level: "Freshman 2" },
+            "09:00": { student: "Ana Beatriz", level: "Freshman 2", endTime: "10:00" },
         }
     },
     "Teacher Letícia": {
         "Terça": {
-            "15:00": { student: "Juliana Souza", level: "Junior 1" },
-            "16:00": { student: "Ricardo Alves", level: "Junior 1" },
+            "15:00": { student: "Juliana Souza", level: "Junior 1", endTime: "16:00" },
+            "16:00": { student: "Ricardo Alves", level: "Junior 1", endTime: "17:00" },
         },
         "Quinta": {
-            "10:00": { student: "Fernanda Lima", level: "Senior 2" },
-            "11:00": { student: "Lucas Pereira", level: "Senior 2" },
+            "10:00": { student: "Fernanda Lima", level: "Senior 2", endTime: "11:00" },
+            "11:00": { student: "Lucas Pereira", level: "Senior 2", endTime: "12:00" },
         }
     },
     "Teacher Areli": {
         "Segunda": {
-            "11:00": { student: "Gabriel Rocha", level: "Starter 2" },
+            "11:00": { student: "Gabriel Rocha", level: "Starter 2", endTime: "12:00" },
         },
         "Quarta": {
-            "16:00": { student: "Beatriz Mendes", level: "Freshman 1" },
-            "17:00": { student: "Rafael Gomes", level: "Freshman 1" },
+            "16:00": { student: "Beatriz Mendes", level: "Freshman 1", endTime: "17:00" },
+            "17:00": { student: "Rafael Gomes", level: "Freshman 1", endTime: "18:00" },
         }
     }
-    // Você pode adicionar mais professores e horários aqui
 };
 const courseData = [
     {
