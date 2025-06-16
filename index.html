@@ -522,7 +522,88 @@
     background-color: #F1D24B;
     border-color: #eab308;
 }
-        
+        /* Grade Section Tabs */
+.grade-tab-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e7e5e4; /* stone-200 */
+    gap: 1rem;
+}
+.grade-tab {
+    padding: 0.75rem 0.25rem;
+    text-align: center;
+    font-weight: 600;
+    color: #78716c; /* stone-500 */
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+.grade-tab:hover {
+    color: #F1D24B;
+}
+.grade-tab.active {
+    color: #F1D24B;
+    border-color: #F1D24B;
+}
+
+/* Grade Schedule Styles */
+.schedule-container {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Coluna para horários e o resto para os dias */
+    gap: 4px;
+    background-color: #e7e5e4; /* stone-200 */
+    border: 1px solid #e7e5e4;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    width: 100%;
+}
+.schedule-header, .schedule-time, .schedule-cell {
+    padding: 0.75rem;
+    background-color: #ffffff;
+    text-align: center;
+    font-weight: 600;
+}
+.schedule-header {
+    background-color: #f5f5f4; /* stone-100 */
+    color: #44403c; /* stone-700 */
+}
+.schedule-time {
+    font-size: 0.75rem; /* text-xs */
+    color: #57534e; /* stone-600 */
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.schedule-cell {
+    min-height: 80px;
+    border-top: 1px solid #e7e5e4;
+    border-left: 1px solid #e7e5e4;
+}
+.class-entry {
+    padding: 0.5rem;
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.875rem; /* text-sm */
+    text-align: left;
+    margin-bottom: 0.5rem;
+    color: #44403c;
+    border-left: 4px solid;
+    transition: transform 0.2s;
+}
+.class-entry:hover {
+    transform: scale(1.05);
+}
+.class-entry strong {
+    display: block;
+    font-weight: 700;
+}
+/* Cores para os professores */
+.entry-color-1 { background-color: #E0F2FE; border-color: #38BDF8; } /* sky-100, sky-500 */
+.entry-color-2 { background-color: #D1FAE5; border-color: #34D399; } /* green-100, green-400 */
+.entry-color-3 { background-color: #FEF3C7; border-color: #FBBF24; } /* amber-100, amber-400 */
+.entry-color-4 { background-color: #FCE7F3; border-color: #EC4899; } /* pink-100, pink-500 */
+.entry-color-5 { background-color: #E5E7EB; border-color: #6B7280; } /* gray-200, gray-500 */
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -579,6 +660,14 @@
     </div>
 </div>
 
+        <!-- Grade -->
+<button data-target="grade" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line>
+    </svg>
+    Grade
+</button>
+        
         <!-- Teacher's Room -->
         <button data-target="teachers-room" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -648,6 +737,102 @@
 
 
     <script>
+
+        // --- Funções para a Grade de Horários ---
+
+function renderGradeSection() {
+    setActiveHubButton(null);
+    showHeader();
+    document.getElementById('main-title').textContent = 'Grade de Horários';
+    document.getElementById('main-description').textContent = 'Selecione um professor para ver a grade de horários individual ou visualize a grade geral.';
+
+    // Cria a navegação por abas dinamicamente
+    let tabHtml = '<button class="grade-tab active" data-teacher="all">Todos os Professores</button>';
+    Object.keys(scheduleData).forEach(teacher => {
+        tabHtml += `<button class="grade-tab" data-teacher="${teacher}">${teacher}</button>`;
+    });
+
+    // Define a estrutura principal da página da Grade
+    contentArea.innerHTML = `
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <div class="grade-tab-container">
+                ${tabHtml}
+            </div>
+            <div id="schedule-grid-container">
+                <!-- A tabela de horários será renderizada aqui -->
+            </div>
+        </section>
+    `;
+
+    // Adiciona o "ouvinte" de eventos para as abas
+    const tabContainer = contentArea.querySelector('.grade-tab-container');
+    tabContainer.addEventListener('click', (event) => {
+        const target = event.target.closest('.grade-tab');
+        if (!target) return;
+
+        tabContainer.querySelectorAll('.grade-tab').forEach(tab => tab.classList.remove('active'));
+        target.classList.add('active');
+
+        const teacherFilter = target.dataset.teacher;
+        renderScheduleGrid(teacherFilter);
+    });
+
+    // Renderiza a grade inicial com "Todos os Professores"
+    renderScheduleGrid('all');
+}
+
+function renderScheduleGrid(teacherFilter) {
+    const gridContainer = document.getElementById('schedule-grid-container');
+    if (!gridContainer) return;
+
+    const days = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    const timeSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+    
+    const teacherColors = {};
+    let colorIndex = 1;
+    Object.keys(scheduleData).forEach(teacher => {
+        teacherColors[teacher] = `entry-color-${colorIndex}`;
+        colorIndex = (colorIndex % 5) + 1;
+    });
+
+    let gridHtml = `<div class="schedule-container" style="grid-template-rows: auto repeat(${timeSlots.length}, 1fr);">`;
+    
+    gridHtml += '<div class="bg-white"></div>';
+    days.forEach(day => gridHtml += `<div class="schedule-header">${day}</div>`);
+
+    timeSlots.forEach(time => {
+        gridHtml += `<div class="schedule-time">${time}</div>`;
+        days.forEach(day => {
+            gridHtml += `<div class="schedule-cell">`;
+
+            if (teacherFilter === 'all') {
+                Object.keys(scheduleData).forEach(teacher => {
+                    const classInfo = scheduleData[teacher]?.[day]?.[time];
+                    if (classInfo) {
+                        gridHtml += `
+                            <div class="class-entry ${teacherColors[teacher]}">
+                                <strong>${teacher.replace('Teacher ', '')}</strong>
+                                <span>${classInfo.student} (${classInfo.level})</span>
+                            </div>`;
+                    }
+                });
+            } else {
+                const classInfo = scheduleData[teacherFilter]?.[day]?.[time];
+                if (classInfo) {
+                     gridHtml += `
+                        <div class="class-entry ${teacherColors[teacherFilter]}">
+                            <strong>${classInfo.student}</strong>
+                            <span>${classInfo.level}</span>
+                        </div>`;
+                }
+            }
+            gridHtml += `</div>`;
+        });
+    });
+
+    gridHtml += '</div>';
+    gridContainer.innerHTML = gridHtml;
+}
         const motivationalQuotes = [
             { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
             { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
@@ -706,7 +891,40 @@
             photo: "https://res.cloudinary.com/dqfi22uz0/image/upload/v1749377016/AVATAR_FEM_LARANJA_ym6wjt.png",
             reason: "Pelo seu incrível empenho na organização dos eventos culturais e por sempre trazer novas ideias que engajam nossos alunos e equipe. Sua proatividade é uma inspiração para todos!"
         };
-
+const scheduleData = {
+    "Teacher Victor": {
+        "Segunda": {
+            "10:00": { student: "Carlos Silva", level: "Freshman 2" },
+            "14:00": { student: "Mariana Costa", level: "Starter 1" },
+        },
+        "Quarta": {
+            "11:00": { student: "Pedro Martins", level: "Sophomore 1" },
+        },
+        "Sexta": {
+            "09:00": { student: "Ana Beatriz", level: "Freshman 2" },
+        }
+    },
+    "Teacher Letícia": {
+        "Terça": {
+            "15:00": { student: "Juliana Souza", level: "Junior 1" },
+            "16:00": { student: "Ricardo Alves", level: "Junior 1" },
+        },
+        "Quinta": {
+            "10:00": { student: "Fernanda Lima", level: "Senior 2" },
+            "11:00": { student: "Lucas Pereira", level: "Senior 2" },
+        }
+    },
+    "Teacher Areli": {
+        "Segunda": {
+            "11:00": { student: "Gabriel Rocha", level: "Starter 2" },
+        },
+        "Quarta": {
+            "16:00": { student: "Beatriz Mendes", level: "Freshman 1" },
+            "17:00": { student: "Rafael Gomes", level: "Freshman 1" },
+        }
+    }
+    // Você pode adicionar mais professores e horários aqui
+};
 const courseData = [
     {
         name: "Starter 1",
@@ -3264,6 +3482,7 @@ const teachersData = [
         window.renderTeachersRoomSection = renderTeachersRoomSection;
         window.renderTeacherDossier = renderTeacherDossier;
         window.renderBrainFlipGameSection = renderBrainFlipGameSection;
+        window.renderGradeSection = renderGradeSection;
         // ...
 window.renderTeacherDossier = renderTeacherDossier;
 window.renderBrainFlipGameSection = renderBrainFlipGameSection;
@@ -3282,6 +3501,7 @@ window.renderLessonDetail = renderLessonDetail; // <-- Adicione esta linha
         'teachers-room': renderTeachersRoomSection,
         'brainflip': renderBrainFlipGameSection,
         'test-your-english': renderTestYourEnglishSection,
+        'grade': renderGradeSection,
     };
 
     // Nova função para gerenciar o estado ativo dos botões
