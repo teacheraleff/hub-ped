@@ -598,6 +598,155 @@
 .entry-color-3 { background-color: #FEF3C7; border-color: #FBBF24; } /* amber-100, amber-400 */
 .entry-color-4 { background-color: #FCE7F3; border-color: #EC4899; } /* pink-100, pink-500 */
 .entry-color-5 { background-color: #E5E7EB; border-color: #6B7280; } /* gray-200, gray-500 */
+        /* --- Estilos para o Calendário --- */
+.calendar-container {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e7e5e4;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.calendar-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #44403c;
+}
+
+.calendar-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.calendar-day-header {
+    font-weight: 600;
+    color: #a8a29e;
+    font-size: 0.875rem;
+    padding-bottom: 0.5rem;
+}
+
+.calendar-day {
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-day.other-month {
+    color: #d6d3d1;
+    cursor: default;
+}
+
+.calendar-day.current-month:hover {
+    background-color: #FFFBEB; /* yellow-50 */
+}
+
+.calendar-day.today {
+    background-color: #F1D24B;
+    color: #44403c;
+    font-weight: 700;
+}
+
+.event-dot {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.dot-event { background-color: #8671D1; } /* Roxo para eventos SLAP */
+.dot-holiday { background-color: #FF5C3D; } /* Laranja para feriados */
+
+/* --- Estilos para o Modal de Eventos --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.3s;
+}
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e7e5e4;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+.modal-header h4 { font-size: 1.25rem; font-weight: 700; color: #44403c; }
+.modal-close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a8a29e;
+}
+.modal-event-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f5f5f4;
+}
+.modal-event-item:last-child {
+    border-bottom: none;
+}
+.modal-event-item .event-type {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.event-type-holiday { background-color: #FFE4E6; color: #9F1239; } /* red-100, red-800 */
+.event-type-event { background-color: #EFEBFF; color: #4C1D95; } /* violet-100, violet-800 */
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -660,6 +809,12 @@
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line>
     </svg>
     Grade
+</button>
+
+        <!-- Calendário -->
+<button data-target="calendario" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
+    Calendário
 </button>
         
         <!-- Teacher's Room -->
@@ -835,6 +990,123 @@ function renderScheduleGrid(teacherFilter) {
     gridHtml += '</div>'; // Fecha o container
     gridContainer.innerHTML = gridHtml;
 }
+        // --- Funções para a Seção Calendário ---
+
+let currentDate = new Date();
+
+function renderCalendarSection() {
+    setActiveHubButton(null);
+    showHeader();
+    document.getElementById('main-title').textContent = 'Calendário de Eventos';
+    document.getElementById('main-description').textContent = 'Navegue pelo calendário para ver feriados nacionais e eventos importantes do SLAP.';
+
+    contentArea.innerHTML = `
+        <div id="calendar-wrapper"></div>
+        <div id="calendar-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-date"></h4>
+                    <button class="modal-close-btn" onclick="closeCalendarModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+    `;
+
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+}
+
+// Ação: Substitua esta função inteira
+function generateCalendar(year, month) {
+    const calendarWrapper = document.getElementById('calendar-wrapper');
+    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startDayOfWeek = firstDay.getDay();
+
+    let calendarHtml = `
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="calendar-nav-btn" onclick="changeMonth(-1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z"/></svg>
+                </button>
+                <h3>${monthNames[month]} ${year}</h3>
+                <button class="calendar-nav-btn" onclick="changeMonth(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.59L10 18l6-6l-6-6l-1.41 1.41L13.17 12z"/></svg>
+                </button>
+            </div>
+            <div class="calendar-grid">
+                ${daysOfWeek.map(day => `<div class="calendar-day-header">${day}</div>`).join('')}
+    `;
+
+    for (let i = 0; i < startDayOfWeek; i++) {
+        calendarHtml += `<div></div>`;
+    }
+
+    const today = new Date();
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        let dayClasses = 'calendar-day current-month';
+        let dotsHtml = '';
+
+        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+            dayClasses += ' today';
+        }
+
+        if (eventData[dateStr]) {
+            const hasHoliday = eventData[dateStr].some(e => e.type === 'holiday');
+            const hasEvent = eventData[dateStr].some(e => e.type === 'event');
+            if (hasHoliday) dotsHtml += '<div class="event-dot dot-holiday"></div>';
+            if (hasEvent) dotsHtml += '<div class="event-dot dot-event"></div>';
+        }
+
+        calendarHtml += `<div class="${dayClasses}" data-date="${dateStr}" onclick="showCalendarModal('${dateStr}')">${day}${dotsHtml}</div>`;
+    }
+
+    calendarHtml += `</div></div>`;
+    calendarWrapper.innerHTML = calendarHtml;
+}
+
+function changeMonth(direction) {
+    currentDate.setMonth(currentDate.getMonth() + direction);
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+}
+
+// Ação: Substitua esta função inteira
+function showCalendarModal(dateStr) {
+    if (!eventData[dateStr]) return;
+
+    const modal = document.getElementById('calendar-modal');
+    const modalDate = document.getElementById('modal-date');
+    const modalBody = document.getElementById('modal-body');
+
+    const date = new Date(dateStr.replace(/-/g, '/'));
+    modalDate.textContent = date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    let eventsHtml = '';
+    eventData[dateStr].forEach(event => {
+        const typeClass = event.type === 'holiday' ? 'event-type-holiday' : 'event-type-event';
+        const typeText = event.type === 'holiday' ? 'Feriado' : 'Evento';
+        eventsHtml += `
+            <div class="modal-event-item">
+                <span class="event-type ${typeClass}">${typeText}</span>
+                <p class="text-stone-700">${event.description}</p>
+            </div>
+        `;
+    });
+    modalBody.innerHTML = eventsHtml || '<p>Nenhum evento para este dia.</p>';
+    modal.classList.add('visible');
+}
+
+function closeCalendarModal() {
+    const modal = document.getElementById('calendar-modal');
+    modal.classList.remove('visible');
+}
         const motivationalQuotes = [
             { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
             { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
@@ -939,6 +1211,28 @@ const scheduleData = {
     "Teacher Gabriella": {
         // Adicione aqui as aulas da Teacher Gabriella
     }
+};
+        const eventData = {
+    // --- Feriados Nacionais 2025 (Brasil) ---
+    "2025-01-01": [{ type: "holiday", description: "Confraternização Universal (Ano Novo)" }],
+    "2025-03-03": [{ type: "holiday", description: "Carnaval (Ponto Facultativo)" }],
+    "2025-03-04": [{ type: "holiday", description: "Carnaval (Ponto Facultativo)" }],
+    "2025-04-18": [{ type: "holiday", description: "Paixão de Cristo" }],
+    "2025-04-21": [{ type: "holiday", description: "Tiradentes" }],
+    "2025-05-01": [{ type: "holiday", description: "Dia do Trabalho" }],
+    "2025-06-19": [{ type: "holiday", description: "Corpus Christi (Ponto Facultativo)" }],
+    "2025-09-07": [{ type: "holiday", description: "Independência do Brasil" }],
+    "2025-10-12": [{ type: "holiday", description: "Nossa Senhora Aparecida" }],
+    "2025-10-15": [{ type: "holiday", description: "Dia do Professor" }],
+    "2025-11-02": [{ type: "holiday", description: "Finados" }],
+    "2025-11-15": [{ type: "holiday", description: "Proclamação da República" }],
+    "2025-11-20": [{ type: "holiday", description: "Dia da Consciência Negra" }],
+    "2025-12-25": [{ type: "holiday", description: "Natal" }],
+
+    // --- Eventos SLAP (Exemplos) ---
+    "2025-06-27": [{ type: "event", description: "Reunião Pedagógica Mensal" }],
+    "2025-07-15": [{ type: "event", description: "Início das Inscrições para Novas Turmas" }],
+    "2025-07-30": [{ type: "event", description: "Prazo Final: Entrega de Planejamentos" }]
 };
 const courseData = [
     {
@@ -3502,6 +3796,10 @@ const teachersData = [
 window.renderTeacherDossier = renderTeacherDossier;
 window.renderBrainFlipGameSection = renderBrainFlipGameSection;
 window.renderLessonDetail = renderLessonDetail; // <-- Adicione esta linha
+window.renderCalendarSection = renderCalendarSection; // <-- ADICIONE ESTA
+window.changeMonth = changeMonth;                 // <-- ADICIONE ESTA
+window.showCalendarModal = showCalendarModal;     // <-- ADICIONE ESTA
+window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -3517,6 +3815,7 @@ window.renderLessonDetail = renderLessonDetail; // <-- Adicione esta linha
         'brainflip': renderBrainFlipGameSection,
         'test-your-english': renderTestYourEnglishSection,
         'grade': renderGradeSection,
+        'calendario': renderCalendarSection,
     };
 
     // Nova função para gerenciar o estado ativo dos botões
