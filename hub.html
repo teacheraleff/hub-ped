@@ -901,7 +901,14 @@
 // Declara a variável do utilizador aqui fora, para que todos a possam aceder.
 let loggedInUser = null;
 
-      document.addEventListener('DOMContentLoaded', () => {
+// Função que inicia o Hub (botões, conteúdo, etc.)
+// Ela só será chamada DEPOIS que o login for confirmado.
+function initializeHub() {
+    // Exibe as informações do utilizador que foram guardadas.
+    document.getElementById('username-display').textContent = loggedInUser.username;
+    document.getElementById('role-display').textContent = loggedInUser.role;
+
+    document.addEventListener('DOMContentLoaded', () => {
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
         'inicio': renderInicioSection,
@@ -917,13 +924,111 @@ let loggedInUser = null;
         'calendario': renderCalendarSection,
     };
 
-// Função que inicia o Hub (botões, conteúdo, etc.)
-// Ela só será chamada DEPOIS que o login for confirmado.
-function initializeHub() {
-    // Exibe as informações do utilizador que foram guardadas.
-    document.getElementById('username-display').textContent = loggedInUser.username;
-    document.getElementById('role-display').textContent = loggedInUser.role;
+    // Nova função para gerenciar o estado ativo dos botões
+    function setActiveNavItem(element) {
+        // Remove o estado ativo de todos os itens
+        document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
+            item.classList.remove('active');
+            item.classList.remove('active-parent');
+        });
 
+        if (element) {
+            element.classList.add('active');
+
+            // Se for um item de submenu, destaca também o menu principal
+            const parentDropdown = element.closest('.nav-dropdown');
+            if (parentDropdown) {
+                parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
+            }
+        }
+    }
+
+    const mainNav = document.getElementById('main-navigation');
+
+    // Um único "ouvinte" de eventos para toda a navegação
+    mainNav.addEventListener('click', (event) => {
+        const target = event.target.closest('.nav-item');
+        if (!target) return; // Ignora cliques fora dos botões
+
+        // Toca o som de clique
+        clickSound.currentTime = 0;
+        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
+
+        // Gerencia a abertura/fechamento dos dropdowns
+        if (target.classList.contains('dropdown-toggle')) {
+            const dropdown = target.closest('.nav-dropdown');
+            const submenu = dropdown.querySelector('.submenu');
+            const arrow = target.querySelector('.dropdown-arrow');
+
+            // Fecha outros menus abertos para manter a interface limpa
+            document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
+                if (openSubmenu !== submenu) {
+                    openSubmenu.classList.remove('open');
+                    const otherArrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
+                    if(otherArrow) otherArrow.classList.remove('rotate-180');
+                }
+            });
+            
+            // Abre ou fecha o menu clicado
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+            return; // Para a execução aqui, pois é apenas para abrir o menu
+        }
+
+        // Gerencia a navegação para uma página
+        const pageKey = target.dataset.target;
+        if (pageKey && pageRenderers[pageKey]) {
+            pageRenderers[pageKey]();
+            setActiveNavItem(target);
+            
+            // Fecha todos os menus ao navegar para uma nova página
+             document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
+                openSubmenu.classList.remove('open');
+                 const arrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
+                 if(arrow) arrow.classList.remove('rotate-180');
+            });
+             // Abre o menu pai do item clicado
+            const parentDropdown = target.closest('.nav-dropdown');
+            if (parentDropdown) {
+                 parentDropdown.querySelector('.submenu').classList.add('open');
+                 const arrow = parentDropdown.querySelector('.dropdown-arrow');
+                 if(arrow) arrow.classList.add('rotate-180');
+            }
+        }
+    });
+
+    // Carrega a página inicial e define o botão "Início" como ativo
+    renderInicioSection();
+    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
+});
+
+      const mainNav = document.getElementById('main-navigation');
+    const clickSound = document.getElementById('click-sound');
+
+    mainNav.addEventListener('click', (event) => {
+        const target = event.target.closest('.nav-item');
+        if (!target) return;
+
+        clickSound.currentTime = 0;
+        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
+
+        if (target.classList.contains('dropdown-toggle')) {
+            const dropdown = target.closest('.nav-dropdown');
+            const submenu = dropdown.querySelector('.submenu');
+            const arrow = target.querySelector('.dropdown-arrow');
+            
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+            return;
+        }
+
+        const pageKey = target.dataset.target;
+        if (pageKey && pageRenderers[pageKey]) {
+            pageRenderers[pageKey]();
+            setActiveNavItem(target);
+        }
+    });
+    
     // Adiciona a lógica de clique para a navegação principal.
     const mainNav = document.getElementById('main-navigation');
     const clickSound = document.getElementById('click-sound');
@@ -3690,80 +3795,7 @@ window.showCalendarModal = showCalendarModal;     // <-- ADICIONE ESTA
 window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
-
-    // Nova função para gerenciar o estado ativo dos botões
-    function setActiveNavItem(element) {
-        // Remove o estado ativo de todos os itens
-        document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
-            item.classList.remove('active');
-            item.classList.remove('active-parent');
-        });
-
-        if (element) {
-            element.classList.add('active');
-
-            // Se for um item de submenu, destaca também o menu principal
-            const parentDropdown = element.closest('.nav-dropdown');
-            if (parentDropdown) {
-                parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
-            }
-        }
-    }
-
-    const mainNav = document.getElementById('main-navigation');
-
-    // Um único "ouvinte" de eventos para toda a navegação
-    mainNav.addEventListener('click', (event) => {
-        const target = event.target.closest('.nav-item');
-        if (!target) return; // Ignora cliques fora dos botões
-
-        // Toca o som de clique
-        clickSound.currentTime = 0;
-        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
-
-        // Gerencia a abertura/fechamento dos dropdowns
-        if (target.classList.contains('dropdown-toggle')) {
-            const dropdown = target.closest('.nav-dropdown');
-            const submenu = dropdown.querySelector('.submenu');
-            const arrow = target.querySelector('.dropdown-arrow');
-
-            // Fecha outros menus abertos para manter a interface limpa
-            document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
-                if (openSubmenu !== submenu) {
-                    openSubmenu.classList.remove('open');
-                    const otherArrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
-                    if(otherArrow) otherArrow.classList.remove('rotate-180');
-                }
-            });
-            
-            // Abre ou fecha o menu clicado
-            submenu.classList.toggle('open');
-            arrow.classList.toggle('rotate-180');
-            return; // Para a execução aqui, pois é apenas para abrir o menu
-        }
-
-        // Gerencia a navegação para uma página
-        const pageKey = target.dataset.target;
-        if (pageKey && pageRenderers[pageKey]) {
-            pageRenderers[pageKey]();
-            setActiveNavItem(target);
-            
-            // Fecha todos os menus ao navegar para uma nova página
-             document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
-                openSubmenu.classList.remove('open');
-                 const arrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
-                 if(arrow) arrow.classList.remove('rotate-180');
-            });
-             // Abre o menu pai do item clicado
-            const parentDropdown = target.closest('.nav-dropdown');
-            if (parentDropdown) {
-                 parentDropdown.querySelector('.submenu').classList.add('open');
-                 const arrow = parentDropdown.querySelector('.dropdown-arrow');
-                 if(arrow) arrow.classList.add('rotate-180');
-            }
-        }
-    });
-});
+        
     </script>
 
 </body>
