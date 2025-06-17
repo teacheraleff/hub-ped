@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Hub Pedagógico</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749543469/SLAP_FAVICON_AMARELO_coilvj.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-stone-50">
+
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        
+        <div class="w-full max-w-sm">
+            <!-- Logo -->
+            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" alt="SLAP Logo" class="w-24 h-auto mx-auto mb-4 rounded-lg">
+            <h1 class="text-2xl font-bold text-stone-800 mb-6 text-center">Hub Pedagógico</h1>
+
+            <!-- Formulário de Login -->
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-stone-200">
+                <form id="login-form">
+                    <div class="mb-4">
+                        <label for="username" class="block text-stone-700 text-sm font-bold mb-2">Usuário</label>
+                        <input type="text" id="username" name="username" required
+                               class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1D24B]">
+                    </div>
+                    <div class="mb-6">
+                        <label for="password" class="block text-stone-700 text-sm font-bold mb-2">Senha</label>
+                        <input type="password" id="password" name="password" required
+                               class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1D24B]">
+                    </div>
+                    
+                    <!-- Mensagem de Erro (inicialmente oculta) -->
+                    <div id="error-message" class="text-red-600 text-sm text-center mb-4 hidden">
+                        Usuário ou senha inválidos.
+                    </div>
+
+                    <button type="submit"
+                            class="w-full bg-[#F1D24B] hover:bg-yellow-500 text-stone-800 font-bold py-2 px-4 rounded-lg transition-colors">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Lógica de Login ---
+
+        // 1. Defina aqui os usuários permitidos. 
+        // Por enquanto, apenas o 'admin'.
+        const allowedUsers = {
+            "admin": {
+                password: "slap.admin.2024", // Uma senha um pouco mais segura
+                role: "admin"
+            }
+            // No futuro, podemos adicionar outros:
+            // "leticia": { password: "456", role: "coordenador" }
+        };
+
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+
+        loginForm.addEventListener('submit', (event) => {
+            // Impede o recarregamento da página
+            event.preventDefault(); 
+
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
+
+            const user = allowedUsers[username];
+
+            // 2. Verifica se o usuário existe e se a senha está correta
+            if (user && user.password === password) {
+                // Sucesso!
+                errorMessage.classList.add('hidden');
+
+                // 3. Guarda as informações do usuário no navegador (isso dura até a aba ser fechada)
+                const userData = {
+                    username: username,
+                    role: user.role
+                };
+                sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
+
+                // 4. Redireciona para a página principal do Hub
+                // IMPORTANTE: Renomeie seu arquivo principal para 'hub.html' ou mude aqui.
+                window.location.href = 'index.html'; // <<< Altere aqui se o nome do seu arquivo principal for outro
+            } else {
+                // Erro
+                errorMessage.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+</html>
