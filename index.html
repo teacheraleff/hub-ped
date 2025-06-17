@@ -52,47 +52,46 @@
     <script>
         // --- Lógica de Login ---
 
-        // 1. Defina aqui os usuários permitidos. 
-        // Por enquanto, apenas o 'admin'.
+        // 1. Definição dos usuários e senhas.
+        // A verificação será feita com base nesta lista.
         const allowedUsers = {
-            "admin": {
-                password: "slap.admin.2024", // Uma senha um pouco mais segura
-                role: "admin"
-            }
-            // No futuro, podemos adicionar outros:
-            // "leticia": { password: "456", role: "coordenador" }
+            "admin": { password: "slap.admin.2024", role: "admin" },
+            "leticia": { password: "456", role: "coordenador" },
+            "victor": { password: "789", role: "professor" }
         };
 
         const loginForm = document.getElementById('login-form');
         const errorMessage = document.getElementById('error-message');
 
         loginForm.addEventListener('submit', (event) => {
-            // Impede o recarregamento da página
+            // Impede que o formulário recarregue a página, para que nosso script possa funcionar.
             event.preventDefault(); 
 
             const username = loginForm.username.value;
             const password = loginForm.password.value;
 
+            // Busca o usuário na nossa lista
             const user = allowedUsers[username];
 
-            // 2. Verifica se o usuário existe e se a senha está correta
+            // 2. Verifica se o usuário foi encontrado E se a senha digitada é a mesma da lista.
             if (user && user.password === password) {
-                // Sucesso!
-                errorMessage.classList.add('hidden');
+                // Se deu certo:
+                errorMessage.classList.add('hidden'); // Esconde a mensagem de erro
 
-                // 3. Guarda as informações do usuário no navegador (isso dura até a aba ser fechada)
+                // 3. Guarda as informações do usuário no navegador.
+                // Isso cria uma "sessão" que dura até a aba ser fechada.
                 const userData = {
                     username: username,
                     role: user.role
                 };
                 sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
 
-                // 4. Redireciona para a página principal do Hub
-                // IMPORTANTE: Renomeie seu arquivo principal para 'hub.html' ou mude aqui.
-                window.location.href = 'hub.html'; // <<< Altere aqui se o nome do seu arquivo principal for outro
+                // 4. Redireciona para a página principal do Hub.
+                // O nome do arquivo do Hub deve ser 'hub.html'.
+                window.location.href = 'hub.html'; 
             } else {
-                // Erro
-                errorMessage.classList.remove('hidden');
+                // Se deu errado:
+                errorMessage.classList.remove('hidden'); // Mostra a mensagem de erro.
             }
         });
     </script>
