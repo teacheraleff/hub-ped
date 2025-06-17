@@ -908,7 +908,8 @@ function initializeHub() {
     document.getElementById('username-display').textContent = loggedInUser.username;
     document.getElementById('role-display').textContent = loggedInUser.role;
 
-    document.addEventListener('DOMContentLoaded', () => {
+    // --- Início do Bloco ÚNICO de Navegação (CORRIGIDO) ---
+
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
         'inicio': renderInicioSection,
@@ -926,7 +927,6 @@ function initializeHub() {
 
     // Nova função para gerenciar o estado ativo dos botões
     function setActiveNavItem(element) {
-        // Remove o estado ativo de todos os itens
         document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
             item.classList.remove('active');
             item.classList.remove('active-parent');
@@ -934,8 +934,6 @@ function initializeHub() {
 
         if (element) {
             element.classList.add('active');
-
-            // Se for um item de submenu, destaca também o menu principal
             const parentDropdown = element.closest('.nav-dropdown');
             if (parentDropdown) {
                 parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
@@ -944,13 +942,13 @@ function initializeHub() {
     }
 
     const mainNav = document.getElementById('main-navigation');
+    const clickSound = document.getElementById('click-sound');
 
     // Um único "ouvinte" de eventos para toda a navegação
     mainNav.addEventListener('click', (event) => {
         const target = event.target.closest('.nav-item');
-        if (!target) return; // Ignora cliques fora dos botões
+        if (!target) return; 
 
-        // Toca o som de clique
         clickSound.currentTime = 0;
         clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
 
@@ -959,8 +957,8 @@ function initializeHub() {
             const dropdown = target.closest('.nav-dropdown');
             const submenu = dropdown.querySelector('.submenu');
             const arrow = target.querySelector('.dropdown-arrow');
-
-            // Fecha outros menus abertos para manter a interface limpa
+            
+            // Fecha outros menus abertos (OPCIONAL, mas melhora a UI)
             document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
                 if (openSubmenu !== submenu) {
                     openSubmenu.classList.remove('open');
@@ -968,104 +966,13 @@ function initializeHub() {
                     if(otherArrow) otherArrow.classList.remove('rotate-180');
                 }
             });
-            
-            // Abre ou fecha o menu clicado
+
             submenu.classList.toggle('open');
             arrow.classList.toggle('rotate-180');
-            return; // Para a execução aqui, pois é apenas para abrir o menu
+            return; 
         }
 
         // Gerencia a navegação para uma página
-        const pageKey = target.dataset.target;
-        if (pageKey && pageRenderers[pageKey]) {
-            pageRenderers[pageKey]();
-            setActiveNavItem(target);
-            
-            // Fecha todos os menus ao navegar para uma nova página
-             document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
-                openSubmenu.classList.remove('open');
-                 const arrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
-                 if(arrow) arrow.classList.remove('rotate-180');
-            });
-             // Abre o menu pai do item clicado
-            const parentDropdown = target.closest('.nav-dropdown');
-            if (parentDropdown) {
-                 parentDropdown.querySelector('.submenu').classList.add('open');
-                 const arrow = parentDropdown.querySelector('.dropdown-arrow');
-                 if(arrow) arrow.classList.add('rotate-180');
-            }
-        }
-    });
-
-    // Carrega a página inicial e define o botão "Início" como ativo
-    renderInicioSection();
-    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
-});
-
-      const mainNav = document.getElementById('main-navigation');
-    const clickSound = document.getElementById('click-sound');
-
-    mainNav.addEventListener('click', (event) => {
-        const target = event.target.closest('.nav-item');
-        if (!target) return;
-
-        clickSound.currentTime = 0;
-        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
-
-        if (target.classList.contains('dropdown-toggle')) {
-            const dropdown = target.closest('.nav-dropdown');
-            const submenu = dropdown.querySelector('.submenu');
-            const arrow = target.querySelector('.dropdown-arrow');
-            
-            submenu.classList.toggle('open');
-            arrow.classList.toggle('rotate-180');
-            return;
-        }
-
-        const pageKey = target.dataset.target;
-        if (pageKey && pageRenderers[pageKey]) {
-            pageRenderers[pageKey]();
-            setActiveNavItem(target);
-        }
-    });
-    
-    // Adiciona a lógica de clique para a navegação principal.
-    const mainNav = document.getElementById('main-navigation');
-    const clickSound = document.getElementById('click-sound');
-
-    // Mapeamento dos alvos para as funções que renderizam cada página
-    // (As suas funções de renderização serão coladas mais abaixo)
-    const pageRenderers = {
-        'inicio': renderInicioSection,
-        'slap-levels': renderSlapLevelsSection,
-        'cefr': renderCefrSection,
-        'deep-dive': renderDeepDiveSection,
-        'creators-room': renderCreatorsRoom,
-        'method': renderMethodSection,
-        'teachers-room': renderTeachersRoomSection,
-        'brainflip': renderBrainFlipGameSection,
-        'test-your-english': renderTestYourEnglishSection,
-        'grade': renderGradeSection,
-        'calendario': renderCalendarSection,
-    };
-    
-    mainNav.addEventListener('click', (event) => {
-        const target = event.target.closest('.nav-item');
-        if (!target) return;
-
-        clickSound.currentTime = 0;
-        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
-
-        if (target.classList.contains('dropdown-toggle')) {
-            const dropdown = target.closest('.nav-dropdown');
-            const submenu = dropdown.querySelector('.submenu');
-            const arrow = target.querySelector('.dropdown-arrow');
-            
-            submenu.classList.toggle('open');
-            arrow.classList.toggle('rotate-180');
-            return;
-        }
-
         const pageKey = target.dataset.target;
         if (pageKey && pageRenderers[pageKey]) {
             pageRenderers[pageKey]();
