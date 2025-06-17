@@ -905,7 +905,7 @@ const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 // Se NÃO HOUVER usuário logado, expulsa para a página de login
 if (!loggedInUser) {
     // IMPORTANTE: Certifique-se que o nome do arquivo de login está correto aqui.
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 }
 
 // Função para verificar se o usuário logado tem uma das permissões necessárias
@@ -945,7 +945,7 @@ logoutButton.addEventListener('click', () => {
     // Remove os dados do usuário do navegador
     sessionStorage.removeItem('loggedInUser');
     // Redireciona para a página de login
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 });
         // --- Funções para a Grade de Horários ---
 
