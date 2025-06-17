@@ -887,44 +887,79 @@
 
     <script>
 
-        // --- Funções para a Grade de Horários ---
+        // Ação: Substitua sua função renderGradeSection() inteira por esta:
 
 function renderGradeSection() {
     setActiveHubButton(null);
     showHeader();
     document.getElementById('main-title').textContent = 'Grade de Horários';
-    document.getElementById('main-description').textContent = 'Selecione um professor no menu suspenso para ver a grade de horários individual ou visualize a grade geral.';
 
-    // Cria as opções para o menu suspenso
-    let optionsHtml = '<option value="all">Todos os Professores</option>';
-    Object.keys(scheduleData).forEach(teacher => {
-        optionsHtml += `<option value="${teacher}">${teacher}</option>`;
-    });
+    // Verifica a função do utilizador logado para decidir o que mostrar
+    if (loggedInUser && loggedInUser.role === 'professor') {
+        // --- VISÃO RESTRITA PARA PROFESSORES ---
+        document.getElementById('main-description').textContent = 'Visualize sua grade de horários individual.';
 
-    // Define a estrutura da página da Grade com um menu suspenso (<select>)
-    contentArea.innerHTML = `
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div class="grade-select-container">
-                <label for="teacher-select" class="block text-sm font-medium text-stone-700 mb-1">Selecione uma grade:</label>
-                <select id="teacher-select" class="grade-select">
-                    ${optionsHtml}
-                </select>
-            </div>
-            <div id="schedule-grid-container">
-                <!-- A tabela de horários será renderizada aqui -->
-            </div>
-        </section>
-    `;
+        // Mapeia o nome de utilizador para a chave no objeto de dados da grade
+        // Ex: 'victor' -> 'Teacher Victor'
+        const teacherName = loggedInUser.username.charAt(0).toUpperCase() + loggedInUser.username.slice(1);
+        const teacherKey = `Teacher ${teacherName}`;
 
-    // Adiciona o evento "onchange" para o menu suspenso
-    const teacherSelect = document.getElementById('teacher-select');
-    teacherSelect.addEventListener('change', (event) => {
-        const teacherFilter = event.target.value;
-        renderScheduleGrid(teacherFilter); // Re-renderiza a grade com o filtro
-    });
+        // Verifica se o professor tem uma grade de horários nos dados
+        if (scheduleData[teacherKey]) {
+            // Renderiza o conteúdo SEM o menu de seleção
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div id="schedule-grid-container">
+                        <!-- A tabela de horários do professor será renderizada aqui -->
+                    </div>
+                </section>
+            `;
+            // Chama a função para desenhar a grade apenas para o professor logado
+            renderScheduleGrid(teacherKey);
+        } else {
+            // Mensagem de fallback caso a grade do professor não seja encontrada
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <p>Sua grade de horários ainda não foi configurada.</p>
+                </section>
+            `;
+        }
+        
+    } else {
+        // --- VISÃO COMPLETA PARA COORDENADORES E ADMINS ---
+        document.getElementById('main-description').textContent = 'Selecione um professor no menu suspenso para ver a grade de horários individual ou visualize a grade geral.';
 
-    // Renderiza a grade inicial com "Todos os Professores"
-    renderScheduleGrid('all');
+        // Cria as opções para o menu suspenso
+        let optionsHtml = '<option value="all">Todos os Professores</option>';
+        Object.keys(scheduleData).forEach(teacher => {
+            optionsHtml += `<option value="${teacher}">${teacher}</option>`;
+        });
+
+        // Define a estrutura da página da Grade com um menu suspenso (<select>)
+        contentArea.innerHTML = `
+            <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                <div class="grade-select-container">
+                    <label for="teacher-select" class="block text-sm font-medium text-stone-700 mb-1">Selecione uma grade:</label>
+                    <select id="teacher-select" class="grade-select">
+                        ${optionsHtml}
+                    </select>
+                </div>
+                <div id="schedule-grid-container">
+                    <!-- A tabela de horários será renderizada aqui -->
+                </div>
+            </section>
+        `;
+
+        // Adiciona o evento "onchange" para o menu suspenso
+        const teacherSelect = document.getElementById('teacher-select');
+        teacherSelect.addEventListener('change', (event) => {
+            const teacherFilter = event.target.value;
+            renderScheduleGrid(teacherFilter); // Re-renderiza a grade com o filtro
+        });
+
+        // Renderiza a grade inicial com "Todos os Professores"
+        renderScheduleGrid('all');
+    }
 }
 // Ação: Substitua esta função inteira
 function renderScheduleGrid(teacherFilter) {
