@@ -900,113 +900,6 @@
 
 // Declara a variável do utilizador aqui fora, para que todos a possam aceder.
 let loggedInUser = null;
-
-// Função que inicia o Hub (botões, conteúdo, etc.)
-// Ela só será chamada DEPOIS que o login for confirmado.
-function initializeHub() {
-    // Exibe as informações do utilizador que foram guardadas.
-    document.getElementById('username-display').textContent = loggedInUser.username;
-    document.getElementById('role-display').textContent = loggedInUser.role;
-
-    // --- Início do Bloco ÚNICO de Navegação (CORRIGIDO) ---
-
-    // Mapeamento dos alvos para as funções que renderizam cada página
-    const pageRenderers = {
-        'inicio': renderInicioSection,
-        'slap-levels': renderSlapLevelsSection,
-        'cefr': renderCefrSection,
-        'deep-dive': renderDeepDiveSection,
-        'creators-room': renderCreatorsRoom,
-        'method': renderMethodSection,
-        'teachers-room': renderTeachersRoomSection,
-        'brainflip': renderBrainFlipGameSection,
-        'test-your-english': renderTestYourEnglishSection,
-        'grade': renderGradeSection,
-        'calendario': renderCalendarSection,
-    };
-
-    // Nova função para gerenciar o estado ativo dos botões
-    function setActiveNavItem(element) {
-        document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
-            item.classList.remove('active');
-            item.classList.remove('active-parent');
-        });
-
-        if (element) {
-            element.classList.add('active');
-            const parentDropdown = element.closest('.nav-dropdown');
-            if (parentDropdown) {
-                parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
-            }
-        }
-    }
-
-    const mainNav = document.getElementById('main-navigation');
-    const clickSound = document.getElementById('click-sound');
-
-    // Um único "ouvinte" de eventos para toda a navegação
-    mainNav.addEventListener('click', (event) => {
-        const target = event.target.closest('.nav-item');
-        if (!target) return; 
-
-        clickSound.currentTime = 0;
-        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
-
-        // Gerencia a abertura/fechamento dos dropdowns
-        if (target.classList.contains('dropdown-toggle')) {
-            const dropdown = target.closest('.nav-dropdown');
-            const submenu = dropdown.querySelector('.submenu');
-            const arrow = target.querySelector('.dropdown-arrow');
-            
-            // Fecha outros menus abertos (OPCIONAL, mas melhora a UI)
-            document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
-                if (openSubmenu !== submenu) {
-                    openSubmenu.classList.remove('open');
-                    const otherArrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
-                    if(otherArrow) otherArrow.classList.remove('rotate-180');
-                }
-            });
-
-            submenu.classList.toggle('open');
-            arrow.classList.toggle('rotate-180');
-            return; 
-        }
-
-        // Gerencia a navegação para uma página
-        const pageKey = target.dataset.target;
-        if (pageKey && pageRenderers[pageKey]) {
-            pageRenderers[pageKey]();
-            setActiveNavItem(target);
-        }
-    });
-    
-    // Adiciona a lógica do botão de logout
-    const logoutButton = document.getElementById('logout-button');
-    logoutButton.addEventListener('click', () => {
-        sessionStorage.removeItem('loggedInUser');
-        window.location.href = 'index.html';
-    });
-
-    // Carrega a página inicial por defeito
-    renderInicioSection();
-    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
-}
-
-// --- VERIFICAÇÃO DE LOGIN ---
-// Espera 50ms para dar tempo ao navegador de carregar a informação da página anterior.
-setTimeout(() => {
-    loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-
-    if (!loggedInUser) {
-        console.error("Autenticação falhou. A redirecionar para o login.");
-        window.location.href = 'index.html';
-    } else {
-        // Se o login foi bem-sucedido, chama a função para montar a página.
-        console.log("Autenticação bem-sucedida para:", loggedInUser.username);
-        initializeHub(); 
-    }
-}, 50);
-
         const motivationalQuotes = [
             { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
             { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
@@ -3672,6 +3565,113 @@ const teachersData = [
             flashcardElement.addEventListener('click', flipCard);
             nextBtn.addEventListener('click', nextCard);
             prevBtn.addEventListener('click', prevCard);
+
+      
+// Função que inicia o Hub (botões, conteúdo, etc.)
+// Ela só será chamada DEPOIS que o login for confirmado.
+function initializeHub() {
+    // Exibe as informações do utilizador que foram guardadas.
+    document.getElementById('username-display').textContent = loggedInUser.username;
+    document.getElementById('role-display').textContent = loggedInUser.role;
+
+    // --- Início do Bloco ÚNICO de Navegação (CORRIGIDO) ---
+
+    // Mapeamento dos alvos para as funções que renderizam cada página
+    const pageRenderers = {
+        'inicio': renderInicioSection,
+        'slap-levels': renderSlapLevelsSection,
+        'cefr': renderCefrSection,
+        'deep-dive': renderDeepDiveSection,
+        'creators-room': renderCreatorsRoom,
+        'method': renderMethodSection,
+        'teachers-room': renderTeachersRoomSection,
+        'brainflip': renderBrainFlipGameSection,
+        'test-your-english': renderTestYourEnglishSection,
+        'grade': renderGradeSection,
+        'calendario': renderCalendarSection,
+    };
+
+    // Nova função para gerenciar o estado ativo dos botões
+    function setActiveNavItem(element) {
+        document.querySelectorAll('#main-navigation .nav-item').forEach(item => {
+            item.classList.remove('active');
+            item.classList.remove('active-parent');
+        });
+
+        if (element) {
+            element.classList.add('active');
+            const parentDropdown = element.closest('.nav-dropdown');
+            if (parentDropdown) {
+                parentDropdown.querySelector('.dropdown-toggle').classList.add('active-parent');
+            }
+        }
+    }
+
+    const mainNav = document.getElementById('main-navigation');
+    const clickSound = document.getElementById('click-sound');
+
+    // Um único "ouvinte" de eventos para toda a navegação
+    mainNav.addEventListener('click', (event) => {
+        const target = event.target.closest('.nav-item');
+        if (!target) return; 
+
+        clickSound.currentTime = 0;
+        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
+
+        // Gerencia a abertura/fechamento dos dropdowns
+        if (target.classList.contains('dropdown-toggle')) {
+            const dropdown = target.closest('.nav-dropdown');
+            const submenu = dropdown.querySelector('.submenu');
+            const arrow = target.querySelector('.dropdown-arrow');
+            
+            // Fecha outros menus abertos (OPCIONAL, mas melhora a UI)
+            document.querySelectorAll('.submenu.open').forEach(openSubmenu => {
+                if (openSubmenu !== submenu) {
+                    openSubmenu.classList.remove('open');
+                    const otherArrow = openSubmenu.closest('.nav-dropdown').querySelector('.dropdown-arrow');
+                    if(otherArrow) otherArrow.classList.remove('rotate-180');
+                }
+            });
+
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+            return; 
+        }
+
+        // Gerencia a navegação para uma página
+        const pageKey = target.dataset.target;
+        if (pageKey && pageRenderers[pageKey]) {
+            pageRenderers[pageKey]();
+            setActiveNavItem(target);
+        }
+    });
+    
+    // Adiciona a lógica do botão de logout
+    const logoutButton = document.getElementById('logout-button');
+    logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem('loggedInUser');
+        window.location.href = 'index.html';
+    });
+
+    // Carrega a página inicial por defeito
+    renderInicioSection();
+    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
+}
+
+// --- VERIFICAÇÃO DE LOGIN ---
+// Espera 50ms para dar tempo ao navegador de carregar a informação da página anterior.
+setTimeout(() => {
+    loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+    if (!loggedInUser) {
+        console.error("Autenticação falhou. A redirecionar para o login.");
+        window.location.href = 'index.html';
+    } else {
+        // Se o login foi bem-sucedido, chama a função para montar a página.
+        console.log("Autenticação bem-sucedida para:", loggedInUser.username);
+        initializeHub(); 
+    }
+}, 50);
 
             // Initialize the game by displaying the first card
             displayCard(currentIndex);
