@@ -63,20 +63,13 @@
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault(); 
 
-            // **CORREÇÃO APLICADA AQUI**
-            // O método .trim() remove espaços em branco do início e do fim das strings.
-            // Isso resolve problemas de digitação ou de "copiar e colar" com espaços extras.
             const username = loginForm.username.value.trim();
             const password = loginForm.password.value.trim();
-
-            console.log("--- Tentativa de Login (Após .trim()) ---");
-            console.log("Utilizador tratado:", `'${username}'`);
-            console.log("Palavra-passe tratada:", `'${password}'`);
             
             const user = allowedUsers[username];
 
             if (user && user.password === password) {
-                console.log("Sucesso! A verificação funcionou. A redirecionar...");
+                console.log("Sucesso! A verificação funcionou. A preparar o redirecionamento...");
                 errorMessage.classList.add('hidden');
                 
                 const userData = {
@@ -85,15 +78,19 @@
                 };
                 sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
 
-                window.location.href = 'hub.html'; 
+                // **CORREÇÃO APLICADA AQUI**
+                // Adiciona um pequeno atraso ao redirecionamento para garantir que o 'sessionStorage' seja definido antes.
+                setTimeout(() => {
+                    console.log("A executar o redirecionamento para hub.html...");
+                    window.location.href = 'hub.html';
+                }, 100); // Atraso de 100ms
+                 
             } else {
                 console.error("Falha! A verificação foi falsa.");
                 if (!user) {
                     console.error("Motivo: Utilizador '" + username + "' não encontrado na lista 'allowedUsers'.");
                 } else {
                     console.error("Motivo: A palavra-passe digitada não corresponde à palavra-passe guardada.");
-                    console.log("Tamanho da palavra-passe digitada:", password.length);
-                    console.log("Tamanho da palavra-passe guardada:", user.password.length);
                 }
                 
                 errorMessage.classList.remove('hidden');
