@@ -844,6 +844,17 @@
             </div>
         </div>
     </nav>
+                    <!-- BOTÃO DE LOGOUT (ADICIONE ISSO) -->
+    <div class="mt-auto pt-4 border-t border-stone-200">
+        <div id="user-info" class="text-center mb-4">
+            <p class="text-sm font-semibold text-stone-700">Usuário: <span id="username-display" class="text-[#8671D1]"></span></p>
+            <p class="text-xs text-stone-500">Cargo: <span id="role-display"></span></p>
+        </div>
+        <button id="logout-button" class="w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-red-50 hover:text-red-600 transition-colors flex items-center font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair
+        </button>
+    </div>
 </aside>
     
             <main class="flex-1 p-4 sm:p-6 md:p-8">
@@ -887,6 +898,56 @@
 
     <script>
 
+        // --- SESSÃO DE AUTENTICAÇÃO E CONTROLE DE ACESSO ---
+
+// Pega o usuário que fez login e foi guardado na sessionStorage
+const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+// Se NÃO HOUVER usuário logado, expulsa para a página de login
+if (!loggedInUser) {
+    // IMPORTANTE: Certifique-se que o nome do arquivo de login está correto aqui.
+    window.location.href = 'login.html';
+}
+
+// Função para verificar se o usuário logado tem uma das permissões necessárias
+function hasAccess(allowedRoles) {
+    if (!loggedInUser) return false; // Se não há usuário, não tem acesso
+    return allowedRoles.includes(loggedInUser.role);
+}
+
+// Função para renderizar uma tela de acesso negado
+function renderAccessDenied() {
+    showHeader();
+    document.getElementById('main-title').textContent = 'Acesso Negado';
+    document.getElementById('main-description').textContent = 'Você não tem permissão para visualizar esta seção.';
+    contentArea.innerHTML = `
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5l-3-3 1.06-1.06L10.5 13.44l4.94-4.94L16.5 9.5l-6 6z" transform="rotate(45 12 12)"></path>
+            </svg>
+            <h3 class="mt-4 text-xl font-semibold text-stone-800">Acesso Restrito</h3>
+            <p class="mt-2 text-stone-600">Por favor, contate um administrador se você acredita que isso é um erro.</p>
+        </section>
+    `;
+}
+
+// --- FIM DA SESSÃO DE AUTENTICAÇÃO ---
+
+        // --- Lógica de Logout ---
+const logoutButton = document.getElementById('logout-button');
+
+// Mostra o nome e cargo do usuário logado
+if(loggedInUser) {
+    document.getElementById('username-display').textContent = loggedInUser.username;
+    document.getElementById('role-display').textContent = loggedInUser.role;
+}
+
+logoutButton.addEventListener('click', () => {
+    // Remove os dados do usuário do navegador
+    sessionStorage.removeItem('loggedInUser');
+    // Redireciona para a página de login
+    window.location.href = 'login.html';
+});
         // --- Funções para a Grade de Horários ---
 
 function renderGradeSection() {
