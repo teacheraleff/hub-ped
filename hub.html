@@ -899,14 +899,27 @@
 
         // --- SESSÃO DE AUTENTICAÇÃO E CONTROLE DE ACESSO ---
 
-// Pega o usuário que fez login e foi guardado na sessionStorage
-const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+// **CORREÇÃO APLICADA**
+// Adicionamos um pequeno atraso (setTimeout) para garantir que o sessionStorage
+// da página anterior tenha tempo de ser carregado pelo navegador.
+setTimeout(() => {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
 
-// Se NÃO HOUVER usuário logado, expulsa para a página de login
-if (!loggedInUser) {
-    // IMPORTANTE: Certifique-se que o nome do arquivo de login está correto aqui.
-    window.location.href = 'index.html';
-}
+    // Se, mesmo após a pausa, não houver usuário logado, aí sim ele expulsa.
+    if (!loggedInUser) {
+        console.error("Autenticação falhou: Nenhum usuário encontrado na sessão. Redirecionando para login.");
+        window.location.href = 'index.html';
+    } else {
+        // Se o usuário for encontrado, exibe as informações dele.
+        // Esta parte do código já existia, mas agora está dentro do setTimeout.
+        document.getElementById('username-display').textContent = loggedInUser.username;
+        document.getElementById('role-display').textContent = loggedInUser.role;
+        console.log("Autenticação bem-sucedida para:", loggedInUser.username);
+    }
+}, 50); // Uma pausa de 50 milissegundos é suficiente.
+
+// --- Lógica de Logout ---
+// ... seu código de logout continua o mesmo abaixo ...
 
 // Função para verificar se o usuário logado tem uma das permissões necessárias
 function hasAccess(allowedRoles) {
