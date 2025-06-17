@@ -895,291 +895,90 @@
     <audio id="wrong-sound" src="https://res.cloudinary.com/dqfi22uz0/video/upload/v1749377575/wrong_hdpg0g.mp3" preload="auto"></audio>
 
 
-    <script>
+  <script>
+      // --- INÍCIO DA NOVA ESTRUTURA CORRIGIDA ---
 
-        // --- SESSÃO DE AUTENTICAÇÃO E CONTROLE DE ACESSO ---
+// Declara a variável do utilizador aqui fora, para que todos a possam aceder.
+let loggedInUser = null;
 
-// **CORREÇÃO APLICADA**
-// Adicionamos um pequeno atraso (setTimeout) para garantir que o sessionStorage
-// da página anterior tenha tempo de ser carregado pelo navegador.
-setTimeout(() => {
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-
-    // Se, mesmo após a pausa, não houver usuário logado, aí sim ele expulsa.
-    if (!loggedInUser) {
-        console.error("Autenticação falhou: Nenhum usuário encontrado na sessão. Redirecionando para login.");
-        window.location.href = 'index.html';
-    } else {
-        // Se o usuário for encontrado, exibe as informações dele.
-        // Esta parte do código já existia, mas agora está dentro do setTimeout.
-        document.getElementById('username-display').textContent = loggedInUser.username;
-        document.getElementById('role-display').textContent = loggedInUser.role;
-        console.log("Autenticação bem-sucedida para:", loggedInUser.username);
-    }
-}, 50); // Uma pausa de 50 milissegundos é suficiente.
-
-// --- Lógica de Logout ---
-// ... seu código de logout continua o mesmo abaixo ...
-
-// Função para verificar se o usuário logado tem uma das permissões necessárias
-function hasAccess(allowedRoles) {
-    if (!loggedInUser) return false; // Se não há usuário, não tem acesso
-    return allowedRoles.includes(loggedInUser.role);
-}
-
-// Função para renderizar uma tela de acesso negado
-function renderAccessDenied() {
-    showHeader();
-    document.getElementById('main-title').textContent = 'Acesso Negado';
-    document.getElementById('main-description').textContent = 'Você não tem permissão para visualizar esta seção.';
-    contentArea.innerHTML = `
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200 text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 13.5l-3-3 1.06-1.06L10.5 13.44l4.94-4.94L16.5 9.5l-6 6z" transform="rotate(45 12 12)"></path>
-            </svg>
-            <h3 class="mt-4 text-xl font-semibold text-stone-800">Acesso Restrito</h3>
-            <p class="mt-2 text-stone-600">Por favor, contate um administrador se você acredita que isso é um erro.</p>
-        </section>
-    `;
-}
-
-// --- FIM DA SESSÃO DE AUTENTICAÇÃO ---
-
-        // --- Lógica de Logout ---
-const logoutButton = document.getElementById('logout-button');
-
-// Mostra o nome e cargo do usuário logado
-if(loggedInUser) {
+// Função que inicia o Hub (botões, conteúdo, etc.)
+// Ela só será chamada DEPOIS que o login for confirmado.
+function initializeHub() {
+    // Exibe as informações do utilizador que foram guardadas.
     document.getElementById('username-display').textContent = loggedInUser.username;
     document.getElementById('role-display').textContent = loggedInUser.role;
-}
 
-logoutButton.addEventListener('click', () => {
-    // Remove os dados do usuário do navegador
-    sessionStorage.removeItem('loggedInUser');
-    // Redireciona para a página de login
-    window.location.href = 'index.html';
-});
-        // --- Funções para a Grade de Horários ---
+    // Adiciona a lógica de clique para a navegação principal.
+    const mainNav = document.getElementById('main-navigation');
+    const clickSound = document.getElementById('click-sound');
 
-function renderGradeSection() {
-    setActiveHubButton(null);
-    showHeader();
-    document.getElementById('main-title').textContent = 'Grade de Horários';
-    document.getElementById('main-description').textContent = 'Selecione um professor no menu suspenso para ver a grade de horários individual ou visualize a grade geral.';
-
-    // Cria as opções para o menu suspenso
-    let optionsHtml = '<option value="all">Todos os Professores</option>';
-    Object.keys(scheduleData).forEach(teacher => {
-        optionsHtml += `<option value="${teacher}">${teacher}</option>`;
-    });
-
-    // Define a estrutura da página da Grade com um menu suspenso (<select>)
-    contentArea.innerHTML = `
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div class="grade-select-container">
-                <label for="teacher-select" class="block text-sm font-medium text-stone-700 mb-1">Selecione uma grade:</label>
-                <select id="teacher-select" class="grade-select">
-                    ${optionsHtml}
-                </select>
-            </div>
-            <div id="schedule-grid-container">
-                <!-- A tabela de horários será renderizada aqui -->
-            </div>
-        </section>
-    `;
-
-    // Adiciona o evento "onchange" para o menu suspenso
-    const teacherSelect = document.getElementById('teacher-select');
-    teacherSelect.addEventListener('change', (event) => {
-        const teacherFilter = event.target.value;
-        renderScheduleGrid(teacherFilter); // Re-renderiza a grade com o filtro
-    });
-
-    // Renderiza a grade inicial com "Todos os Professores"
-    renderScheduleGrid('all');
-}
-// Ação: Substitua esta função inteira
-function renderScheduleGrid(teacherFilter) {
-    const gridContainer = document.getElementById('schedule-grid-container');
-    if (!gridContainer) return;
-
-    const days = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+    // Mapeamento dos alvos para as funções que renderizam cada página
+    // (As suas funções de renderização serão coladas mais abaixo)
+    const pageRenderers = {
+        'inicio': renderInicioSection,
+        'slap-levels': renderSlapLevelsSection,
+        'cefr': renderCefrSection,
+        'deep-dive': renderDeepDiveSection,
+        'creators-room': renderCreatorsRoom,
+        'method': renderMethodSection,
+        'teachers-room': renderTeachersRoomSection,
+        'brainflip': renderBrainFlipGameSection,
+        'test-your-english': renderTestYourEnglishSection,
+        'grade': renderGradeSection,
+        'calendario': renderCalendarSection,
+    };
     
-    // Associa uma cor consistente para cada professor
-    const teacherColors = {};
-    let colorIndex = 1;
-    Object.keys(scheduleData).forEach(teacher => {
-        teacherColors[teacher] = `entry-color-${colorIndex}`;
-        colorIndex = (colorIndex % 5) + 1;
-    });
+    mainNav.addEventListener('click', (event) => {
+        const target = event.target.closest('.nav-item');
+        if (!target) return;
 
-    let gridHtml = `<div class="schedule-container">`;
-    
-    // Cabeçalho com os dias da semana
-    days.forEach(day => gridHtml += `<div class="schedule-header">${day}</div>`);
+        clickSound.currentTime = 0;
+        clickSound.play().catch(e => console.error("Erro ao tocar o som:", e));
 
-    // Células dos dias (uma para cada dia da semana)
-    days.forEach(day => {
-        let cellContent = '';
-
-        // Coleta todas as aulas do dia
-        const dailyClasses = [];
-        Object.keys(scheduleData).forEach(teacher => {
-            if (teacherFilter === 'all' || teacherFilter === teacher) {
-                if (scheduleData[teacher][day]) {
-                    Object.keys(scheduleData[teacher][day]).forEach(startTime => {
-                        const classInfo = scheduleData[teacher][day][startTime];
-                        dailyClasses.push({
-                            startTime: startTime,
-                            ...classInfo,
-                            teacher: teacher
-                        });
-                    });
-                }
-            }
-        });
-        
-        // Ordena as aulas pelo horário de início
-        dailyClasses.sort((a, b) => a.startTime.localeCompare(b.startTime));
-
-        // Monta o HTML para cada aula do dia
-        dailyClasses.forEach(classInfo => {
-            const teacherName = teacherFilter === 'all' ? `<em>(${classInfo.teacher.replace('Teacher ', '')})</em>` : '';
-            const colorClass = teacherColors[classInfo.teacher] || 'entry-color-5';
-
-            cellContent += `
-                <div class="class-entry ${colorClass}">
-                    <span class="text-xs text-stone-600">${classInfo.startTime.replace(':00','h')} às ${classInfo.endTime.replace(':00','h')}</span>
-                    <strong>${classInfo.student} ${teacherName}</strong>
-                    <span class="text-sm text-stone-700">${classInfo.level}</span>
-                </div>`;
-        });
-        
-        // Adiciona a célula do dia ao grid
-        gridHtml += `<div class="schedule-cell">${cellContent}</div>`;
-    });
-
-    gridHtml += '</div>'; // Fecha o container
-    gridContainer.innerHTML = gridHtml;
-}
-        // --- Funções para a Seção Calendário ---
-
-let currentDate = new Date();
-
-function renderCalendarSection() {
-    setActiveHubButton(null);
-    showHeader();
-    document.getElementById('main-title').textContent = 'Calendário de Eventos';
-    document.getElementById('main-description').textContent = 'Navegue pelo calendário para ver feriados nacionais e eventos importantes do SLAP.';
-
-    contentArea.innerHTML = `
-        <div id="calendar-wrapper"></div>
-        <div id="calendar-modal" class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 id="modal-date"></h4>
-                    <button class="modal-close-btn" onclick="closeCalendarModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-                <div id="modal-body"></div>
-            </div>
-        </div>
-    `;
-
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-}
-
-// Ação: Substitua esta função inteira
-function generateCalendar(year, month) {
-    const calendarWrapper = document.getElementById('calendar-wrapper');
-    const monthNames = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startDayOfWeek = firstDay.getDay();
-
-    let calendarHtml = `
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <button class="calendar-nav-btn" onclick="changeMonth(-1)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z"/></svg>
-                </button>
-                <h3>${monthNames[month]} ${year}</h3>
-                <button class="calendar-nav-btn" onclick="changeMonth(1)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.59L10 18l6-6l-6-6l-1.41 1.41L13.17 12z"/></svg>
-                </button>
-            </div>
-            <div class="calendar-grid">
-                ${daysOfWeek.map(day => `<div class="calendar-day-header">${day}</div>`).join('')}
-    `;
-
-    for (let i = 0; i < startDayOfWeek; i++) {
-        calendarHtml += `<div></div>`;
-    }
-
-    const today = new Date();
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        let dayClasses = 'calendar-day current-month';
-        let dotsHtml = '';
-
-        if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-            dayClasses += ' today';
+        if (target.classList.contains('dropdown-toggle')) {
+            const dropdown = target.closest('.nav-dropdown');
+            const submenu = dropdown.querySelector('.submenu');
+            const arrow = target.querySelector('.dropdown-arrow');
+            
+            submenu.classList.toggle('open');
+            arrow.classList.toggle('rotate-180');
+            return;
         }
 
-        if (eventData[dateStr]) {
-            const hasHoliday = eventData[dateStr].some(e => e.type === 'holiday');
-            const hasEvent = eventData[dateStr].some(e => e.type === 'event');
-            if (hasHoliday) dotsHtml += '<div class="event-dot dot-holiday"></div>';
-            if (hasEvent) dotsHtml += '<div class="event-dot dot-event"></div>';
+        const pageKey = target.dataset.target;
+        if (pageKey && pageRenderers[pageKey]) {
+            pageRenderers[pageKey]();
+            setActiveNavItem(target);
         }
-
-        calendarHtml += `<div class="${dayClasses}" data-date="${dateStr}" onclick="showCalendarModal('${dateStr}')">${day}${dotsHtml}</div>`;
-    }
-
-    calendarHtml += `</div></div>`;
-    calendarWrapper.innerHTML = calendarHtml;
-}
-
-function changeMonth(direction) {
-    currentDate.setMonth(currentDate.getMonth() + direction);
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
-}
-
-// Ação: Substitua esta função inteira
-function showCalendarModal(dateStr) {
-    if (!eventData[dateStr]) return;
-
-    const modal = document.getElementById('calendar-modal');
-    const modalDate = document.getElementById('modal-date');
-    const modalBody = document.getElementById('modal-body');
-
-    const date = new Date(dateStr.replace(/-/g, '/'));
-    modalDate.textContent = date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    let eventsHtml = '';
-    eventData[dateStr].forEach(event => {
-        const typeClass = event.type === 'holiday' ? 'event-type-holiday' : 'event-type-event';
-        const typeText = event.type === 'holiday' ? 'Feriado' : 'Evento';
-        eventsHtml += `
-            <div class="modal-event-item">
-                <span class="event-type ${typeClass}">${typeText}</span>
-                <p class="text-stone-700">${event.description}</p>
-            </div>
-        `;
     });
-    modalBody.innerHTML = eventsHtml || '<p>Nenhum evento para este dia.</p>';
-    modal.classList.add('visible');
+    
+    // Adiciona a lógica do botão de logout
+    const logoutButton = document.getElementById('logout-button');
+    logoutButton.addEventListener('click', () => {
+        sessionStorage.removeItem('loggedInUser');
+        window.location.href = 'index.html';
+    });
+
+    // Carrega a página inicial por defeito
+    renderInicioSection();
+    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
 }
 
-function closeCalendarModal() {
-    const modal = document.getElementById('calendar-modal');
-    modal.classList.remove('visible');
-}
+// --- VERIFICAÇÃO DE LOGIN ---
+// Espera 50ms para dar tempo ao navegador de carregar a informação da página anterior.
+setTimeout(() => {
+    loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+
+    if (!loggedInUser) {
+        console.error("Autenticação falhou. A redirecionar para o login.");
+        window.location.href = 'index.html';
+    } else {
+        // Se o login foi bem-sucedido, chama a função para montar a página.
+        console.log("Autenticação bem-sucedida para:", loggedInUser.username);
+        initializeHub(); 
+    }
+}, 50);
+
         const motivationalQuotes = [
             { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
             { quote: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
@@ -3968,7 +3767,6 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
     renderInicioSection();
     setActiveNavItem(document.querySelector('[data-target="inicio"]'));
 });
-
     </script>
 
 </body>
