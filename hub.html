@@ -901,6 +901,22 @@
 // Declara a variável do utilizador aqui fora, para que todos a possam aceder.
 let loggedInUser = null;
 
+      document.addEventListener('DOMContentLoaded', () => {
+    // Mapeamento dos alvos para as funções que renderizam cada página
+    const pageRenderers = {
+        'inicio': renderInicioSection,
+        'slap-levels': renderSlapLevelsSection,
+        'cefr': renderCefrSection,
+        'deep-dive': renderDeepDiveSection,
+        'creators-room': renderCreatorsRoom,
+        'method': renderMethodSection,
+        'teachers-room': renderTeachersRoomSection,
+        'brainflip': renderBrainFlipGameSection,
+        'test-your-english': renderTestYourEnglishSection,
+        'grade': renderGradeSection,
+        'calendario': renderCalendarSection,
+    };
+
 // Função que inicia o Hub (botões, conteúdo, etc.)
 // Ela só será chamada DEPOIS que o login for confirmado.
 function initializeHub() {
@@ -3674,21 +3690,6 @@ window.showCalendarModal = showCalendarModal;     // <-- ADICIONE ESTA
 window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
-        document.addEventListener('DOMContentLoaded', () => {
-    // Mapeamento dos alvos para as funções que renderizam cada página
-    const pageRenderers = {
-        'inicio': renderInicioSection,
-        'slap-levels': renderSlapLevelsSection,
-        'cefr': renderCefrSection,
-        'deep-dive': renderDeepDiveSection,
-        'creators-room': renderCreatorsRoom,
-        'method': renderMethodSection,
-        'teachers-room': renderTeachersRoomSection,
-        'brainflip': renderBrainFlipGameSection,
-        'test-your-english': renderTestYourEnglishSection,
-        'grade': renderGradeSection,
-        'calendario': renderCalendarSection,
-    };
 
     // Nova função para gerenciar o estado ativo dos botões
     function setActiveNavItem(element) {
@@ -3762,10 +3763,6 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
             }
         }
     });
-
-    // Carrega a página inicial e define o botão "Início" como ativo
-    renderInicioSection();
-    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
 });
     </script>
 
