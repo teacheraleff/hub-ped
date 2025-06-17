@@ -24,19 +24,18 @@
             <div class="bg-white p-8 rounded-xl shadow-lg border border-stone-200">
                 <form id="login-form">
                     <div class="mb-4">
-                        <label for="username" class="block text-stone-700 text-sm font-bold mb-2">Usuário</label>
+                        <label for="username" class="block text-stone-700 text-sm font-bold mb-2">Utilizador</label>
                         <input type="text" id="username" name="username" required
                                class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1D24B]">
                     </div>
                     <div class="mb-6">
-                        <label for="password" class="block text-stone-700 text-sm font-bold mb-2">Senha</label>
+                        <label for="password" class="block text-stone-700 text-sm font-bold mb-2">Palavra-passe</label>
                         <input type="password" id="password" name="password" required
                                class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1D24B]">
                     </div>
                     
-                    <!-- Mensagem de Erro (inicialmente oculta) -->
                     <div id="error-message" class="text-red-600 text-sm text-center mb-4 hidden">
-                        Usuário ou senha inválidos.
+                        Utilizador ou palavra-passe inválidos.
                     </div>
 
                     <button type="submit"
@@ -52,8 +51,6 @@
     <script>
         // --- Lógica de Login ---
 
-        // 1. Definição dos usuários e senhas.
-        // A verificação será feita com base nesta lista.
         const allowedUsers = {
             "admin": { password: "slap.admin.2024", role: "admin" },
             "leticia": { password: "456", role: "coordenador" },
@@ -64,34 +61,45 @@
         const errorMessage = document.getElementById('error-message');
 
         loginForm.addEventListener('submit', (event) => {
-            // Impede que o formulário recarregue a página, para que nosso script possa funcionar.
             event.preventDefault(); 
 
             const username = loginForm.username.value;
             const password = loginForm.password.value;
 
-            // Busca o usuário na nossa lista
+            // --- DEBUGGING ADICIONADO ---
+            // Estas mensagens só aparecerão na Consola do navegador (F12)
+            console.log("--- Tentativa de Login ---");
+            console.log("Utilizador digitado:", username);
+            console.log("Palavra-passe digitada:", password);
+            // -----------------------------
+
             const user = allowedUsers[username];
 
-            // 2. Verifica se o usuário foi encontrado E se a senha digitada é a mesma da lista.
             if (user && user.password === password) {
-                // Se deu certo:
-                errorMessage.classList.add('hidden'); // Esconde a mensagem de erro
+                // --- DEBUGGING ---
+                console.log("Sucesso! Utilizador encontrado e palavra-passe correta. A redirecionar...");
+                // -----------------
 
-                // 3. Guarda as informações do usuário no navegador.
-                // Isso cria uma "sessão" que dura até a aba ser fechada.
+                errorMessage.classList.add('hidden');
+                
                 const userData = {
                     username: username,
                     role: user.role
                 };
                 sessionStorage.setItem('loggedInUser', JSON.stringify(userData));
 
-                // 4. Redireciona para a página principal do Hub.
-                // O nome do arquivo do Hub deve ser 'hub.html'.
                 window.location.href = 'hub.html'; 
             } else {
-                // Se deu errado:
-                errorMessage.classList.remove('hidden'); // Mostra a mensagem de erro.
+                // --- DEBUGGING ---
+                console.error("Falha! A verificação 'user && user.password === password' foi falsa.");
+                if (!user) {
+                    console.error("Motivo: Utilizador '" + username + "' não foi encontrado na lista 'allowedUsers'.");
+                } else {
+                    console.error("Motivo: A palavra-passe digitada não corresponde à palavra-passe guardada para o utilizador '" + username + "'.");
+                }
+                // -----------------
+                
+                errorMessage.classList.remove('hidden');
             }
         });
     </script>
