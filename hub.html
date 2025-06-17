@@ -886,7 +886,9 @@
 
 
     <script>
-
+let loggedInUser = null;
+        
+// O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
 
 function renderGradeSection() {
@@ -3837,7 +3839,17 @@ window.showCalendarModal = showCalendarModal;     // <-- ADICIONE ESTA
 window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
-        document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- INÍCIO DA ADIÇÃO: CÓDIGO DE VERIFICAÇÃO DE LOGIN ---
+    const userJson = sessionStorage.getItem('loggedInUser');
+    if (userJson) {
+        loggedInUser = JSON.parse(userJson);
+    } else {
+        alert('Acesso negado. É necessário fazer login para continuar.');
+        window.location.href = 'index.html';
+        return; // Impede o resto do código de ser executado
+    }
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
         'inicio': renderInicioSection,
