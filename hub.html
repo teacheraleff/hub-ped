@@ -2679,75 +2679,63 @@ const courseData = [
         window.renderProhibitedContent = renderProhibitedContent;
         
         function renderRegimentoInternoSection() {
-            setActiveHubButton(null); // No active button in nav
-            showHeader();
-            document.getElementById('main-title').textContent = 'Regimento Interno';
-            document.getElementById('main-description').textContent = 'Diretrizes, políticas e procedimentos que orientam a conduta e as práticas de todos os colaboradores do SLAP.';
-            
-            contentArea.innerHTML = `
-                <section class="regimento-section">
-                    
-                    <div class="regimento-topic">
-                        <h4>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" x2="16" y1="2" y2="6"></line><line x1="8" x2="8" y1="2" y2="6"></line><line x1="3" x2="21" y1="10" y2="10"></line></svg>
-                            Normas de Aula
-                        </h4>
-                        <h5>Pontualidade</h5>
-                        <p>Os professores devem estar presentes na sala com no mínimo 5 minutos de antecedência. Atrasos não devem reduzir a duração da aula.</p>
-                        <h5>Preparação</h5>
-                        <p>Verificar material didático, revisar conteúdo e testar recursos audiovisuais antes do início da aula.</p>
-                        <h5>PEF (Planilha de Presença e Falta)</h5>
-                        <p>Preencher no mesmo dia da aula, registrando conteúdo, data, presenças, faltas e observações relevantes.</p>
-                        <h5>Situações Insólitas</h5>
-                        <p>Comunicar imediatamente à coordenação qualquer situação atípica que possa afetar os alunos ou a instituição. Não tente resolver problemas graves de forma autônoma.</p>
-                    </div>
+    setActiveHubButton(null); // No active button in nav
+    showHeader();
+    document.getElementById('main-title').textContent = 'Regimento Interno';
+    document.getElementById('main-description').textContent = 'Clique em cada tópico para expandir e ver as diretrizes, políticas e procedimentos do SLAP.';
 
-                    <div class="regimento-topic">
-                        <h4>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg>
-                            Substituições e Ausências
-                        </h4>
-                        <ul>
-                            <li><strong>Comunicação Prévia:</strong> Ausências previstas devem ser comunicadas à coordenação com pelo menos 48 horas de antecedência.</li>
-                            <li><strong>Processo de Substituição:</strong> A substituição deve ser validada pela coordenação. O professor pode indicar um substituto, mas a decisão final é da gestão.</li>
-                            <li><strong>Passagem de Informações:</strong> O professor titular deve fornecer todas as instruções e materiais necessários para o substituto.</li>
-                            <li><strong>Ausências por Saúde ou Força Maior:</strong> Comunicar à coordenação o mais rápido possível. Atestados médicos são necessários.</li>
-                            <li><strong>Faltas Persistentes:</strong> Faltas recorrentes, mesmo justificadas, podem prejudicar o andamento do curso e estarão sujeitas a medidas administrativas.</li>
-                        </ul>
-                    </div>
+    // Array com todos os tópicos que você listou
+    const topics = [
+        "Pontualidade", "Assiduidade", "Reuniões", "Planejamento pedagógico",
+        "Conduta ética e profissional", "Relacionamento com os alunos",
+        "Relacionamento com pais e responsáveis", "Uso dos materiais da escola",
+        "Colaboração com a equipe escolar", "Comunicação institucional",
+        "Eventos e atividades extras", "Uso das redes sociais",
+        "Acompanhamento pedagógico dos alunos", "Sigilo e confidencialidade",
+        "Vestimenta e apresentação pessoal", "Substituições", "Faltas",
+        "Materiais de trabalho necessários", "Prazos", "Postura e linguagem nas aulas",
+        "Associação de imagem a concorrentes", "Conflito de interesses e aulas externas",
+        "Publicidade", "Nível linguístico", "Observação de aula", "Aniversários",
+        "Hierarquia", "Viagens a trabalho", "Consolidação das Leis do Trabalho (CLT)",
+        "Pagamentos"
+    ];
 
-                    <div class="regimento-topic">
-                        <h4>
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            Relacionamento e Conduta Profissional
-                        </h4>
-                        <h5>Comunicação Geral</h5>
-                        <p>Manter sempre uma postura acolhedora, profissional e respeitosa com alunos, colaboradores, pais e líderes, utilizando os canais oficiais.</p>
-                        <h5>Confidencialidade</h5>
-                        <p>É mandatório salvaguardar todas as informações sensíveis sobre alunos, famílias e assuntos internos da instituição.</p>
-                    </div>
+    // --- MUDANÇA AQUI ---
+    // Agora, o conteúdo de cada caixa é uma lista de tópicos (<ul>)
+    const topicsHtml = topics.map(topic => `
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>${topic}</span>
+                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </div>
+            <div class="faq-answer">
+                <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
+                    <li>(Insira o primeiro ponto sobre este tópico aqui)</li>
+                    <li>(Insira o segundo ponto, se houver)</li>
+                    <li>(Continue adicionando pontos conforme necessário)</li>
+                </ul>
+            </div>
+        </div>
+    `).join('');
 
-                    <div class="regimento-topic">
-                        <h4>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
-                            Diretrizes para Creators
-                        </h4>
-                        <p>É estritamente proibido:</p>
-                        <ul>
-                            <li>Divulgar aulas particulares ou serviços concorrentes.</li>
-                            <li>Manifestar posicionamento político-partidário ou religioso.</li>
-                            <li>Plagiar conteúdo de outros criadores.</li>
-                            <li>Fazer parcerias comerciais sem aprovação prévia da direção.</li>
-                            <li>Publicar conteúdo confidencial, difamatório ou de natureza sexual.</li>
-                            <li>Manter vínculo empregatício ou de parceria com instituições concorrentes.</li>
-                        </ul>
-                    </div>
-                </section>
-            `;
-            if (currentChart) {
-                currentChart.destroy();
-            }
-        }
+    // Insere a nova estrutura na área de conteúdo
+    contentArea.innerHTML = `
+        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <div class="space-y-3">
+                ${topicsHtml}
+            </div>
+        </section>
+    `;
+
+    // Adiciona a funcionalidade de clique para os novos itens
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', toggleFaq);
+    });
+
+    if (currentChart) {
+        currentChart.destroy();
+    }
+}
         
         function renderLinksUteisSection() {
             setActiveHubButton(null); // No active button in nav
