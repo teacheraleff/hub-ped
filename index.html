@@ -63,23 +63,20 @@
         loginForm.addEventListener('submit', (event) => {
             event.preventDefault(); 
 
-            const username = loginForm.username.value;
-            const password = loginForm.password.value;
+            // **CORREÇÃO APLICADA AQUI**
+            // O método .trim() remove espaços em branco do início e do fim das strings.
+            // Isso resolve problemas de digitação ou de "copiar e colar" com espaços extras.
+            const username = loginForm.username.value.trim();
+            const password = loginForm.password.value.trim();
 
-            // --- DEBUGGING ADICIONADO ---
-            // Estas mensagens só aparecerão na Consola do navegador (F12)
-            console.log("--- Tentativa de Login ---");
-            console.log("Utilizador digitado:", username);
-            console.log("Palavra-passe digitada:", password);
-            // -----------------------------
-
+            console.log("--- Tentativa de Login (Após .trim()) ---");
+            console.log("Utilizador tratado:", `'${username}'`);
+            console.log("Palavra-passe tratada:", `'${password}'`);
+            
             const user = allowedUsers[username];
 
             if (user && user.password === password) {
-                // --- DEBUGGING ---
-                console.log("Sucesso! Utilizador encontrado e palavra-passe correta. A redirecionar...");
-                // -----------------
-
+                console.log("Sucesso! A verificação funcionou. A redirecionar...");
                 errorMessage.classList.add('hidden');
                 
                 const userData = {
@@ -90,14 +87,14 @@
 
                 window.location.href = 'hub.html'; 
             } else {
-                // --- DEBUGGING ---
-                console.error("Falha! A verificação 'user && user.password === password' foi falsa.");
+                console.error("Falha! A verificação foi falsa.");
                 if (!user) {
-                    console.error("Motivo: Utilizador '" + username + "' não foi encontrado na lista 'allowedUsers'.");
+                    console.error("Motivo: Utilizador '" + username + "' não encontrado na lista 'allowedUsers'.");
                 } else {
-                    console.error("Motivo: A palavra-passe digitada não corresponde à palavra-passe guardada para o utilizador '" + username + "'.");
+                    console.error("Motivo: A palavra-passe digitada não corresponde à palavra-passe guardada.");
+                    console.log("Tamanho da palavra-passe digitada:", password.length);
+                    console.log("Tamanho da palavra-passe guardada:", user.password.length);
                 }
-                // -----------------
                 
                 errorMessage.classList.remove('hidden');
             }
