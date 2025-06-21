@@ -901,9 +901,9 @@ function renderGradeSection() {
         // --- VISÃO RESTRITA PARA PROFESSORES ---
         document.getElementById('main-description').textContent = 'Visualize sua grade de horários individual.';
 
-        // Mapeia o nome de utilizador para a chave no objeto de dados da grade
-        // Ex: 'victor' -> 'Teacher Victor'
-        const teacherName = loggedInUser.username.charAt(0).toUpperCase() + loggedInUser.username.slice(1);
+        // Extrai o nome do email (ex: 'victor' de 'victor@slapingles.com')
+        const namePart = loggedInUser.username.split('@')[0];
+        const teacherName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
         const teacherKey = `Teacher ${teacherName}`;
 
         // Verifica se o professor tem uma grade de horários nos dados
@@ -1240,7 +1240,36 @@ const scheduleData = {
         // Adicione aqui as aulas da Teacher Jaynni
     },
     "Teacher Anael": {
-        // Adicione aqui as aulas do Teacher Anael
+        "Segunda": {
+            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00" },
+            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00" },
+            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00" },
+            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00" },
+            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00" }
+        },
+        "Terça": {
+            "15:00": { student: "Samantha Lima", level: "a preencher", endTime: "16:00" },
+            "16:00": { student: "Thais Souza", level: "a preencher", endTime: "17:00" },
+            "17:00": { student: "Magno Oliveira", level: "a preencher", endTime: "18:00" },
+            "19:00": { student: "Paulo Macedo", level: "a preencher", endTime: "20:00" },
+            "20:00": { student: "Junior 1", level: "Pre-advanced 1", endTime: "21:00" },
+            "21:00": { student: "Leonardo Souza", level: "a preencher", endTime: "22:00" }
+        },
+        "Quarta": {
+            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00" },
+            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00" },
+            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00" },
+            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00" },
+            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00" }
+        },
+        "Quinta": {
+            "15:00": { student: "Samantha Lima", level: "a preencher", endTime: "16:00" },
+            "16:00": { student: "Thais Souza", level: "a preencher", endTime: "17:00" },
+            "17:00": { student: "Magno Oliveira", level: "a preencher", endTime: "18:00" },
+            "19:00": { student: "Paulo Macedo", level: "a preencher", endTime: "20:00" },
+            "20:00": { student: "Junior 1", level: "a preencher", endTime: "21:00" },
+            "21:00": { student: "Leonardo Souza", level: "a preencher", endTime: "22:00" }
+        }
     },
     "Teacher Felipe": {
         // Adicione aqui as aulas do Teacher Felipe
