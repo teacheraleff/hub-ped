@@ -64,13 +64,14 @@
     </div>
 
     <script>
+document.addEventListener('contextmenu', event => event.preventDefault());
         // --- Lógica de Login Simplificada ---
         document.addEventListener('DOMContentLoaded', () => {
 
             const allowedUsers = {
-                "admin": { password: "slap.admin.2024", role: "admin" },
-                "leticia": { password: "456", role: "coordenador" },
-                "victor": { password: "789", role: "professor" }
+                "aleff@slapingles.com": { password: "Aleff1105*", role: "admin" },
+                "leticia@slapingles.com": { password: "12345*", role: "coordenador" },
+                "victor@slapingles.com": { password: "12345*", role: "professor" }
             };
 
             const loginForm = document.getElementById('login-form');
