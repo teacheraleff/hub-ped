@@ -22,12 +22,12 @@
             <div class="bg-white p-8 rounded-xl shadow-lg border border-stone-200">
                 <form id="login-form">
                     <div class="mb-4">
-                        <label for="username" class="block text-stone-700 text-sm font-bold mb-2">Utilizador</label>
+                        <label for="username" class="block text-stone-700 text-sm font-bold mb-2">E-mail</label>
                         <input type="text" id="username" name="username" required
                                class="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F1D24B]">
                     </div>
                     <div class="mb-6">
-                        <label for="password" class="block text-stone-700 text-sm font-bold mb-2">Palavra-passe</label>
+                        <label for="password" class="block text-stone-700 text-sm font-bold mb-2">Senha</label>
                         <!-- Container relativo para posicionar o ícone -->
                         <div class="relative">
                             <input type="password" id="password" name="password" required
@@ -51,7 +51,7 @@
                     </div>
                     
                     <div id="error-message" class="text-red-600 text-sm text-center mb-4" style="display: none;">
-                        Utilizador ou palavra-passe inválidos.
+                        E-mail ou senha inválidos.
                     </div>
 
                     <button type="submit"
@@ -70,7 +70,12 @@
             const allowedUsers = {
                 "aleff@slapingles.com": { password: "Aleff1105*", role: "admin" },
                 "leticia@slapingles.com": { password: "12345*", role: "coordenador" },
-                "victor@slapingles.com": { password: "12345*", role: "professor" }
+                "victor@slapingles.com": { password: "12345*", role: "professor" },
+                "felipe@slapingles.com": { password: "12345*", role: "professor" },
+                "areli@slapingles.com": { password: "12345*", role: "professor" },
+                "jaynni@slapingles.com": { password: "12345*", role: "professor" },
+                "anael@slapingles.com": { password: "12345*", role: "professor" },
+                "gabriella@slapingles.com": { password: "12345*", role: "professor" }
             };
 
             const loginForm = document.getElementById('login-form');
@@ -80,7 +85,7 @@
             const eyeIcon = document.getElementById('eye-icon');
             const eyeOffIcon = document.getElementById('eye-off-icon');
 
-            // --- Lógica para mostrar/ocultar palavra-passe ---
+            // --- Lógica para mostrar/ocultar senha ---
             if (togglePasswordButton) {
                 togglePasswordButton.addEventListener('click', () => {
                     // Alterna o tipo do input entre 'password' e 'text'
