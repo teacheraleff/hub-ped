@@ -593,11 +593,23 @@
     font-size: 1rem; /* Aumenta um pouco o nome do aluno */
 }
 /* Cores para os professores */
-.entry-color-1 { background-color: #E0F2FE; border-color: #38BDF8; } /* sky-100, sky-500 */
-.entry-color-2 { background-color: #D1FAE5; border-color: #34D399; } /* green-100, green-400 */
-.entry-color-3 { background-color: #FEF3C7; border-color: #FBBF24; } /* amber-100, amber-400 */
-.entry-color-4 { background-color: #FCE7F3; border-color: #EC4899; } /* pink-100, pink-500 */
-.entry-color-5 { background-color: #E5E7EB; border-color: #6B7280; } /* gray-200, gray-500 */
+/* ADICIONE ESTAS LINHAS NO LUGAR */
+.class-entry {
+    background-color: #FEF3C7 !important; /* Fundo amarelo para todas */
+    border-color: #FBBF24 !important;     /* Borda amarela mais escura */
+}
+.class-tag {
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    color: white;
+    margin-bottom: 4px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+.tag-turma { background-color: #2563EB; } /* Tag Azul */
+.tag-vip   { background-color: #9333EA; } /* Tag Roxa */
         /* --- Estilos para o Calendário --- */
 .calendar-container {
     background-color: #ffffff;
@@ -969,14 +981,6 @@ function renderScheduleGrid(teacherFilter) {
     if (!gridContainer) return;
 
     const days = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
-    
-    // Associa uma cor consistente para cada professor
-    const teacherColors = {};
-    let colorIndex = 1;
-    Object.keys(scheduleData).forEach(teacher => {
-        teacherColors[teacher] = `entry-color-${colorIndex}`;
-        colorIndex = (colorIndex % 5) + 1;
-    });
 
     let gridHtml = `<div class="schedule-container">`;
     
@@ -1010,10 +1014,15 @@ function renderScheduleGrid(teacherFilter) {
         // Monta o HTML para cada aula do dia
         dailyClasses.forEach(classInfo => {
             const teacherName = teacherFilter === 'all' ? `<em>(${classInfo.teacher.replace('Teacher ', '')})</em>` : '';
-            const colorClass = teacherColors[classInfo.teacher] || 'entry-color-5';
+            
+            // Define a classe e o texto da tag com base no tipo da aula
+            const tagClass = classInfo.type === 'vip' ? 'tag-vip' : 'tag-turma';
+            const tagText = classInfo.type === 'vip' ? 'VIP' : 'TURMA';
 
+            // Agora a caixinha sempre será amarela (definido no CSS) e terá a tag interna
             cellContent += `
-                <div class="class-entry ${colorClass}">
+                <div class="class-entry">
+                    <span class="class-tag ${tagClass}">${tagText}</span>
                     <span class="text-xs text-stone-600">${classInfo.startTime.replace(':00','h')} às ${classInfo.endTime.replace(':00','h')}</span>
                     <strong>${classInfo.student} ${teacherName}</strong>
                     <span class="text-sm text-stone-700">${classInfo.level}</span>
@@ -1241,26 +1250,26 @@ const scheduleData = {
     },
     "Teacher Anael": {
         "Segunda": {
-            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00" },
-            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00" },
-            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00" },
-            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00" },
-            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00" }
+            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00", type: "vip" },
+            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00", type: "vip" },
+            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00", type: "vip" },
+            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00", type: "vip" },
+            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00", type: "vip" }
         },
         "Terça": {
-            "15:00": { student: "Samantha Lima", level: "a preencher", endTime: "16:00" },
-            "16:00": { student: "Thais Souza", level: "a preencher", endTime: "17:00" },
-            "17:00": { student: "Magno Oliveira", level: "a preencher", endTime: "18:00" },
-            "19:00": { student: "Paulo Macedo", level: "a preencher", endTime: "20:00" },
-            "20:00": { student: "Junior 1", level: "Pre-advanced 1", endTime: "21:00" },
-            "21:00": { student: "Leonardo Souza", level: "a preencher", endTime: "22:00" }
+            "15:00": { student: "Samantha Lima", level: "a preencher", endTime: "16:00", type: "vip" },
+            "16:00": { student: "Thais Souza", level: "a preencher", endTime: "17:00", type: "vip" },
+            "17:00": { student: "Magno Oliveira", level: "a preencher", endTime: "18:00", type: "vip" },
+            "19:00": { student: "Paulo Macedo", level: "a preencher", endTime: "20:00", type: "vip" },
+            "20:00": { student: "Junior 1", level: "Pre-advanced 1", endTime: "21:00", type: "turma" },
+            "21:00": { student: "Leonardo Souza", level: "a preencher", endTime: "22:00", type: "vip" }
         },
         "Quarta": {
-            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00" },
-            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00" },
-            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00" },
-            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00" },
-            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00" }
+            "08:00": { student: "Rallyson Chaves", level: "a preencher", endTime: "09:00", type: "vip" },
+            "15:00": { student: "Arthur Medeiros", level: "a preencher", endTime: "16:00", type: "vip" },
+            "18:00": { student: "Elyonara Lyra", level: "a preencher", endTime: "19:00", type: "vip" },
+            "19:00": { student: "Gabriel Bouret", level: "a preencher", endTime: "20:00", type: "vip" },
+            "20:00": { student: "Carlos Eduardo", level: "a preencher", endTime: "21:00", type: "vip" }
         },
         "Quinta": {
             "15:00": { student: "Samantha Lima", level: "a preencher", endTime: "16:00" },
