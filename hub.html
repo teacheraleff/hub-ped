@@ -691,6 +691,10 @@
 
 .dot-event { background-color: #8671D1; } /* Roxo para eventos SLAP */
 .dot-holiday { background-color: #FF5C3D; } /* Laranja para feriados */
+.dot-gravacao { background-color: #4b5563; } /* Cinza para gravação */
+.dot-opcional { background-color: #22c55e; } /* Verde para opcional */
+.dot-urgente  { background-color: #ef4444; } /* Vermelho para urgente */
+.dot-lembrete { background-color: #f59e0b; } /* Âmbar para lembrete */
 
 /* --- Estilos para o Modal de Eventos --- */
 .modal-overlay {
@@ -758,6 +762,10 @@
 }
 .event-type-holiday { background-color: #FFE4E6; color: #9F1239; } /* red-100, red-800 */
 .event-type-event { background-color: #EFEBFF; color: #4C1D95; } /* violet-100, violet-800 */
+.event-type-gravacao { background-color: #e5e7eb; color: #374151; } /* gray-200, gray-700 */
+.event-type-opcional { background-color: #d1fae5; color: #065f46; } /* green-100, green-800 */
+.event-type-urgente  { background-color: #fee2e2; color: #991b1b; } /* red-200, red-800 */
+.event-type-lembrete { background-color: #fffbeb; color: #b45309; } /* amber-50, amber-700 */
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -1104,11 +1112,20 @@ function generateCalendar(year, month) {
         }
 
         if (eventData[dateStr]) {
-            const hasHoliday = eventData[dateStr].some(e => e.type === 'holiday');
-            const hasEvent = eventData[dateStr].some(e => e.type === 'event');
-            if (hasHoliday) dotsHtml += '<div class="event-dot dot-holiday"></div>';
-            if (hasEvent) dotsHtml += '<div class="event-dot dot-event"></div>';
-        }
+    const hasHoliday = eventData[dateStr].some(e => e.type === 'holiday');
+    const hasEvent = eventData[dateStr].some(e => e.type === 'event');
+    const hasGravacao = eventData[dateStr].some(e => e.type === 'gravacao');
+    const hasOpcional = eventData[dateStr].some(e => e.type === 'opcional');
+    const hasUrgente = eventData[dateStr].some(e => e.type === 'urgente');
+    const hasLembrete = eventData[dateStr].some(e => e.type === 'lembrete');
+
+    if (hasHoliday) dotsHtml += '<div class="event-dot dot-holiday"></div>';
+    if (hasEvent) dotsHtml += '<div class="event-dot dot-event"></div>';
+    if (hasGravacao) dotsHtml += '<div class="event-dot dot-gravacao"></div>';
+    if (hasOpcional) dotsHtml += '<div class="event-dot dot-opcional"></div>';
+    if (hasUrgente) dotsHtml += '<div class="event-dot dot-urgente"></div>';
+    if (hasLembrete) dotsHtml += '<div class="event-dot dot-lembrete"></div>';
+}
 
         calendarHtml += `<div class="${dayClasses}" data-date="${dateStr}" onclick="showCalendarModal('${dateStr}')">${day}${dotsHtml}</div>`;
     }
@@ -1135,15 +1152,36 @@ function showCalendarModal(dateStr) {
 
     let eventsHtml = '';
     eventData[dateStr].forEach(event => {
-        const typeClass = event.type === 'holiday' ? 'event-type-holiday' : 'event-type-event';
-        const typeText = event.type === 'holiday' ? 'Feriado' : 'Evento';
-        eventsHtml += `
-            <div class="modal-event-item">
-                <span class="event-type ${typeClass}">${typeText}</span>
-                <p class="text-stone-700">${event.description}</p>
-            </div>
-        `;
-    });
+        let typeClass = '';
+    let typeText = '';
+
+    if (event.type === 'holiday') {
+        typeClass = 'event-type-holiday';
+        typeText = 'Feriado';
+    } else if (event.type === 'event') {
+        typeClass = 'event-type-event';
+        typeText = 'Evento';
+    } else if (event.type === 'gravacao') {
+        typeClass = 'event-type-gravacao';
+        typeText = 'Gravação';
+    } else if (event.type === 'opcional') {
+        typeClass = 'event-type-opcional';
+        typeText = 'Opcional';
+    } else if (event.type === 'urgente') {
+        typeClass = 'event-type-urgente';
+        typeText = 'Urgente';
+    } else if (event.type === 'lembrete') {
+        typeClass = 'event-type-lembrete';
+        typeText = 'Lembrete';
+    }
+
+    eventsHtml += `
+        <div class="modal-event-item">
+            <span class="event-type ${typeClass}">${typeText}</span>
+            <p class="text-stone-700">${event.description}</p>
+        </div>
+    `;
+});
     modalBody.innerHTML = eventsHtml || '<p>Nenhum evento para este dia.</p>';
     modal.classList.add('visible');
 }
@@ -1308,6 +1346,11 @@ const scheduleData = {
     "2025-06-27": [{ type: "event", description: "Reunião Pedagógica Mensal" }],
     "2025-07-15": [{ type: "event", description: "Início das Inscrições para Novas Turmas" }],
     "2025-07-30": [{ type: "event", description: "Prazo Final: Entrega de Planejamentos" }, { type: "event", description: "Prazo Final: Entrega de Planejamentos" }]
+    "2025-08-05": [{ type: "gravacao", description: "Gravação da aula de revisão para o YouTube" }],
+    "2025-08-12": [{ type: "opcional", description: "Workshop de conversação (Opcional)" }],
+    "2025-08-19": [{ type: "urgente", description: "Urgente: Enviar notas finais dos alunos" }],
+    "2025-08-26": [{ type: "lembrete", description: "Lembrete: Preparar material para o próximo mês" }],
+    "2025-08-28": [{ type: "lembrete", description: "Lembrete: Reunião com a Letícia" }, { type: "urgente", description: "Responder e-mails dos pais" }
 };
 const courseData = [
     {
