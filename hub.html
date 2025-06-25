@@ -784,6 +784,78 @@
 .prize-card:hover {
     transform: translateY(-8px);
 }
+/* --- ESTILOS DO NOVO REGIMENTO INTERNO (COM TAGS) --- */
+.rule-item { 
+    background-color: white; 
+    border-radius: 0.75rem;
+    margin-bottom: 1rem; 
+    overflow: hidden; 
+    border: 1px solid #e7e5e4;
+    transition: box-shadow 0.2s;
+}
+.rule-item:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+.rule-question { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1.25rem;
+    cursor: pointer; 
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: #44403c;
+}
+.rule-answer { 
+    padding: 0 1.25rem; 
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.4s ease-out, padding-bottom 0.4s ease-out; 
+}
+.rule-answer.open { 
+    max-height: 2500px;
+    padding-bottom: 1.25rem;
+    transition: max-height 0.5s ease-in, padding-bottom 0.4s ease-in; 
+}
+.rule-arrow { 
+    transition: transform 0.3s ease; 
+}
+.rule-item.open .rule-arrow { 
+    transform: rotate(90deg); 
+}
+.rule-answer ul {
+    list-style-position: outside;
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-top: 1rem;
+    line-height: 1.75;
+    color: #57534e;
+}
+.rule-answer li {
+    padding-left: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Estilos para as Tags */
+.rule-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f5f5f4;
+}
+.rule-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.tag-diretriz { background-color: #DBEAFE; color: #1E40AF; }
+.tag-politica { background-color: #E0E7FF; color: #3730A3; }
+.tag-comportamento { background-color: #D1FAE5; color: #065F46; }
+.tag-proibido { background-color: #FEE2E2; color: #991B1B; }
+.tag-comunicacao { background-color: #FEF3C7; color: #92400E; }
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -2915,247 +2987,144 @@ document.getElementById('main-description').textContent = 'Onde os melhores comp
     setActiveHubButton(null); // No active button in nav
     showHeader();
     document.getElementById('main-title').textContent = 'Regimento Interno';
-    document.getElementById('main-description').textContent = 'Clique em cada tópico para expandir e ver as diretrizes, políticas e procedimentos do SLAP.';
-
-    // Conteúdo completo para todos os tópicos
-    const specificContent = {
-        "Pontualidade": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O compromisso com a pontualidade é essencial para o bom funcionamento da escola e a experiência do aluno. O professor deve estar logado no Zoom, com equipamentos testados e materiais abertos, no mínimo 5 minutos antes do horário da aula.</li>
-                <li>Atrasos, mesmo que breves, impactam a credibilidade da instituição e a qualidade do serviço prestado. Por isso, atrasos recorrentes serão registrados e discutidos com a coordenação.</li>
-                <li>Em casos de imprevistos, o professor deve comunicar imediatamente a coordenação, justificando o ocorrido e sinalizando o tempo estimado de atraso.</li>
-            </ul>`,
-        "Assiduidade": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A presença regular é um indicador de comprometimento com o trabalho e com os alunos. Professores devem comparecer a todas as aulas programadas, salvo em casos de urgência, doença ou acordo prévio com a coordenação.</li>
-                <li>O excesso de faltas, mesmo justificadas, poderá gerar uma reavaliação da continuidade do professor na equipe, especialmente se houver impacto negativo na retenção de alunos ou no fluxo de aulas.</li>
-                <li>Em caso de ausência prevista, o professor deve solicitar a liberação com no mínimo 24 horas de antecedência, possibilitando a organização de uma substituição adequada.</li>
-            </ul>`,
-        "Reuniões": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Reuniões pedagógicas, administrativas e de alinhamento fazem parte da jornada de trabalho do professor. A participação é obrigatória.</li>
-                <li>O professor que não puder comparecer deve informar previamente e, obrigatoriamente, se atualizar por meio da ata e dos registros fornecidos pela coordenação.</li>
-                <li>As reuniões são oportunidades valiosas de alinhamento com a missão da escola, troca de experiências e crescimento coletivo.</li>
-            </ul>`,
-        "Planejamento pedagógico": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Todos os professores devem desenvolver planos de aula para alunos VIP caso haja divergência de interesses com o conteúdo programático.</li>
-                <li>O planejamento deve estar alinhado com a metodologia do SLAP, priorizando o desenvolvimento da fluência oral, a autonomia do aluno e a personalização do ensino.</li>
-                <li>O não cumprimento dos prazos de entrega dos planos pode resultar em advertência e impactar a renovação de contratos.</li>
-            </ul>`,
-        "Conduta ética e profissional": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor do SLAP deve manter uma conduta ética em todas as suas interações, prezando pela responsabilidade, imparcialidade, respeito e integridade.</li>
-                <li>É vedado fazer comentários pejorativos sobre a escola, alunos, pais ou colegas em qualquer ambiente, físico ou digital.</li>
-                <li>A ética profissional também inclui não se apropriar de ideias, materiais ou práticas de colegas sem a devida autorização.</li>
-            </ul>`,
-        "Relacionamento com os alunos": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O vínculo com os alunos deve ser baseado no respeito, na empatia e na clareza de papéis.</li>
-                <li>É proibido manter qualquer tipo de relacionamento íntimo, pessoal ou financeiro com alunos fora do ambiente institucional, principalmente se isso gerar conflitos de interesse ou afetar a imparcialidade.</li>
-                <li>O professor deve atuar como modelo de comunicação, profissionalismo e respeito cultural, linguístico e social.</li>
-            </ul>`,
-        "Relacionamento com pais e responsáveis": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Quando aplicável, a comunicação com pais e responsáveis deve ser feita com cautela, clareza e sempre mediada ou autorizada pela coordenação.</li>
-                <li>Em hipótese alguma o professor tratar de assuntos administrativos ou financeiros sem autorização da coordenação ou gestão.</li>
-            </ul>`,
-        "Uso dos materiais da escola": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Os materiais didáticos, audiovisuais, slides, atividades e roteiros fornecidos pela escola são de uso exclusivo nas aulas do SLAP.</li>
-                <li>É proibida a reprodução, modificação ou redistribuição desses materiais para uso externo sem autorização expressa da coordenação.</li>
-                <li>O professor também é incentivado a contribuir com sugestões e criações próprias, desde que alinhadas com a proposta pedagógica.</li>
-            </ul>`,
-        "Colaboração com a equipe escolar": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A colaboração é parte fundamental da cultura do SLAP. Espera-se que todos os professores estejam abertos ao diálogo, à escuta ativa e à construção coletiva.</li>
-                <li>Situações de conflito devem ser encaminhadas à coordenação com profissionalismo e descrição, evitando confrontos diretos ou exposição em grupos.</li>
-            </ul>`,
-        "Comunicação institucional": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Toda comunicação com alunos, responsáveis e demais membros da equipe deve acontecer pelos canais oficiais da escola (e-mail institucional, WhatsApp institucional ou plataforma definida).</li>
-                <li>O professor deve responder às mensagens internas com agilidade, salvo situações emergenciais.</li>
-            </ul>`,
-        "Eventos e atividades extras": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A participação em eventos promovidos pelo SLAP, como workshops, conversações especiais, aulas presenciais, publicidades, semanas temáticas, é altamente valorizada e, em alguns casos, obrigatória.</li>
-                <li>O professor pode ser convidado a propor ou conduzir atividades extras. A proatividade nesse sentido será sempre reconhecida.</li>
-            </ul>`,
-        "Uso das redes sociais": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Professores são livres para manter redes sociais pessoais, mas devem zelar pela imagem da instituição.</li>
-                <li>É proibido:
-                    <ul class="list-disc list-inside pl-5">
-                        <li>Criticar a escola, colegas ou alunos publicamente.</li>
-                        <li>Compartilhar imagens de alunos sem autorização da coordenação pedagógica.</li>
-                        <li>Utilizar o nome da escola para promover serviços particulares ou concorrentes.</li>
-                    </ul>
-                </li>
-            </ul>`,
-        "Acompanhamento pedagógico dos alunos": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Cada professor é responsável por acompanhar o progresso de seus alunos, com base em critérios definidos pela escola (participação, fluência, vocabulário, etc).</li>
-                <li>Relatórios formais e feedbacks devem ser enviados nos prazos estipulados.</li>
-                <li>Casos de estagnação, desmotivação ou evolução acelerada devem ser comunicados à coordenação para possíveis ajustes no plano de estudos.</li>
-            </ul>`,
-        "Sigilo e confidencialidade": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Toda e qualquer informação relacionada a dados pessoais, desempenho, dificuldades ou histórico de alunos e famílias deve ser mantida em sigilo.</li>
-                <li>Informações pedagógicas compartilhadas em reuniões internas também são de acesso restrito e não devem ser repassadas externamente.</li>
-            </ul>`,
-        "Vestimenta e apresentação pessoal": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Durante as aulas online, o professor deve estar vestido de forma apropriada, com aparência profissional, mesmo em casa.</li>
-                <li>Cuidado com iluminação, ruídos externos e fundo de tela. É recomendado o uso de fundo neutro ou virtual autorizado.</li>
-            </ul>`,
-        "Substituições": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor deve informar à coordenação qualquer impossibilidade de dar aula com pelo menos 24 horas de antecedência.</li>
-                <li>Em caso de emergência, comunicar assim que possível. A escola providenciará o substituto ou remanejamento.</li>
-                <li>Está vedado ao professor designer um substituto sem autorização prévia ou conhecimento da coordenação pedagógica.</li>
-                <li>O substituto deverá possuir nível linguístico compatível ou próximo do professor substituído para ensinar o nível da turma ou aluno.</li>
-            </ul>`,
-        "Faltas": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>As faltas devem ser comunicadas com antecedência e justificadas de maneira formal.</li>
-                <li>Os pedidos de falta com justificativas pessoais poderão ser autorizados ou negados pela coordenação pedagógica visto que não há urgência ou força maior.</li>
-                <li>Em casos reincidentes, mesmo com justificativa, o professor poderá ser orientado, advertido ou ter sua carga reduzida.</li>
-            </ul>`,
-        "Materiais de trabalho necessários": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor é responsável por garantir:
-                    <ul class="list-disc list-inside pl-5">
-                        <li>Computador funcional</li>
-                        <li>Conexão de internet estável</li>
-                        <li>Câmera e microfone de boa qualidade</li>
-                        <li>Ambiente organizado, silencioso e sem interrupções</li>
-                    </ul>
-                </li>
-                <li>A escola pode fornecer orientações técnicas, mas a infraestrutura é de responsabilidade do docente.</li>
-            </ul>`,
-        "Prazos": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Todos os prazos estabelecidos pela coordenação para entrega de conteúdos, feedbacks, relatórios ou participação em eventos devem ser rigorosamente respeitados.</li>
-                <li>A recorrência de atrasos compromete a credibilidade do professor e será registrada formalmente.</li>
-            </ul>`,
-        "Postura e linguagem nas aulas": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor deve prezar por uma comunicação clara, acessível e educada, adaptando seu vocabulário ao nível dos alunos.</li>
-                <li>É proibido:
-                    <ul class="list-disc list-inside pl-5">
-                        <li>Usar sarcasmo, apelidos ou linguagem ofensiva</li>
-                        <li>Fazer piadas que possam ser mal interpretadas</li>
-                        <li>Expor dificuldades dos alunos de forma vexatória</li>
-                    </ul>
-                </li>
-            </ul>`,
-        "Associação de imagem a concorrentes": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Não é permitido utilizar sua posição no SLAP para divulgar ou associar-se publicamente a cursos concorrentes.</li>
-                <li>Também é vedado o uso de marcas, materiais ou nome da escola em vídeos, eventos ou postagens vinculadas a projetos paralelos concorrentes.</li>
-            </ul>`,
-        "Conflito de interesses e aulas externas": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor pode ter outras atividades profissionais, desde que informe à coordenação e evite conflitos de interesse.</li>
-                <li>É expressamente proibido:
-                    <ul class="list-disc list-inside pl-5">
-                        <li>Oferecer aulas particulares aos alunos do SLAP sem autorização</li>
-                        <li>Usar o relacionamento com alunos para captar clientes para serviços externos</li>
-                        <li>Utilizar materiais da escola em aulas particulares</li>
-                    </ul>
-                </li>
-            </ul>`,
-        "Publicidade": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor não deve utilizar o nome da escola para fins publicitários sem autorização expressa da coordenação.</li>
-                <li>Publicações em redes sociais que mencionem o SLAP devem respeitar a identidade visual, os valores institucionais e a linguagem adequada.</li>
-                <li>É permitido divulgar atividades realizadas no contexto da escola, desde que previamente alinhadas com a coordenação e com o devido cuidado com a imagem dos alunos.</li>
-                <li>As publicidades que contém as participações dos professores por meio do SLAP não incluem remuneração individualizada devido ao contrato vincular o cliente e a escola, sendo um contrato entre empresas.</li>
-                <li>Os professores designados como creators têm, em seu escopo de trabalho, a função fazer parte de projetos de publicidade dentro do SLAP quando convocados.</li>
-            </ul>`,
-        "Nível linguístico": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>O professor deve manter, no mínimo, nível de proficiência B2 (CEFR) na língua inglesa, compatível com o padrão exigido pelo SLAP.</li>
-                <li>A escola poderá solicitar periodicamente demonstrações de aula, certificados de proficiência ou avaliações internas.</li>
-                <li>O aprimoramento constante da competência linguística e didática será incentivado por meio de treinamentos, workshops e feedbacks.</li>
-            </ul>`,
-        "Observação de aula": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A coordenação pedagógica poderá observar aulas ao vivo ou gravadas para fins de avaliação, orientação e desenvolvimento profissional.</li>
-                <li>O professor será avisado previamente em caso de observações programadas, mas também poderá haver observações pontuais sem aviso prévio.</li>
-                <li>O objetivo é garantir a qualidade do ensino, oferecer feedback construtivo e alinhar a prática docente com os valores da escola.</li>
-            </ul>`,
-        "Aniversários": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A cultura do SLAP valoriza o acolhimento e a celebração da vida. Por isso, o professor poderá solicitar uma folga durante o seu aniversário onde a coordenação poderá liberar ou não o professor para celebrar o seu aniversário, sempre priorizando o andamento e desenvolvimento do calendário pedagógico.</li>
-            </ul>`,
-        "Hierarquia": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A estrutura hierárquica do SLAP deve ser respeitada por todos os docentes. Demandas, sugestões e conflitos devem ser direcionados à coordenação pedagógica antes de serem levados a instâncias superiores.</li>
-                <li>A comunicação clara e o respeito às funções de cada membro da equipe são fundamentais para o bom funcionamento da escola.</li>
-            </ul>`,
-        "Viagens a trabalho": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Caso haja necessidade de deslocamento presencial para eventos, treinamentos ou representações, a escola comunicará com antecedência e esclarecerá as condições.</li>
-                <li>Despesas como transporte, alimentação ou hospedagem serão definidas pela coordenação e acordadas previamente com o professor envolvido.</li>
-                <li>A participação deve ser encarada com seriedade e profissionalismo, respeitando os horários e objetivos da viagem.</li>
-            </ul>`,
-        "Consolidação das Leis do Trabalho (CLT)": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>A escola respeita os direitos trabalhistas previstos na legislação brasileira, quando houver vínculo empregatício formal.</li>
-                <li>Em situações de prestação de serviço (autônomos ou PJ), os termos contratuais firmados serão a base da relação de trabalho.</li>
-                <li>Em ambos os casos, o SLAP se compromete a garantir um ambiente de trabalho digno, respeitoso e justo.</li>
-            </ul>`,
-        "Pagamentos": `
-            <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-                <li>Os pagamentos serão realizados conforme acordado em contrato, respeitando datas e valores combinados.</li>
-                <li>Qualquer inconsistência deve ser comunicada à coordenação administrativa por escrito.</li>
-                <li>A pontualidade na entrega das aulas, relatórios e cumprimento de prazos influencia diretamente na regularidade dos pagamentos.</li>
-            </ul>`
-    };
-
-    const placeholderContent = `
-        <ul class="list-disc list-inside space-y-2 py-2 text-stone-600 leading-relaxed">
-            <li>(Conteúdo não preenchido)</li>
-        </ul>`;
-
-    const topics = [
-        "Pontualidade", "Assiduidade", "Reuniões", "Planejamento pedagógico",
-        "Conduta ética e profissional", "Relacionamento com os alunos",
-        "Relacionamento com pais e responsáveis", "Uso dos materiais da escola",
-        "Colaboração com a equipe escolar", "Comunicação institucional",
-        "Eventos e atividades extras", "Uso das redes sociais",
-        "Acompanhamento pedagógico dos alunos", "Sigilo e confidencialidade",
-        "Vestimenta e apresentação pessoal", "Substituições", "Faltas",
-        "Materiais de trabalho necessários", "Prazos", "Postura e linguagem nas aulas",
-        "Associação de imagem a concorrentes", "Conflito de interesses e aulas externas",
-        "Publicidade", "Nível linguístico", "Observação de aula", "Aniversários",
-        "Hierarquia", "Viagens a trabalho", "Consolidação das Leis do Trabalho (CLT)",
-        "Pagamentos"
-    ];
-
-    const topicsHtml = topics.map(topic => `
-        <div class="faq-item">
-            <div class="faq-question">
-                <span>${topic}</span>
-                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            </div>
-            <div class="faq-answer">
-                ${specificContent[topic] || placeholderContent}
-            </div>
-        </div>
-    `).join('');
-
+    document.getElementById('main-description').textContent = 'Diretrizes, políticas e procedimentos essenciais do SLAP.';
+    
     contentArea.innerHTML = `
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div class="space-y-3">
-                ${topicsHtml}
+        <section id="regimento-container">
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Pontualidade, Assiduidade e Faltas</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                    <div class="rule-tags">
+                        <span class="rule-tag tag-diretriz">Diretriz Essencial</span>
+                        <span class="rule-tag tag-comportamento">Comportamento</span>
+                    </div>
+                    <ul>
+                        <li>O compromisso com a <strong>pontualidade</strong> é essencial. O professor deve estar logado no Zoom, com equipamentos testados e materiais abertos, no mínimo 5 minutos antes do horário da aula.</li>
+                        <li>Atrasos, mesmo que breves, impactam a credibilidade da instituição. Atrasos recorrentes serão registrados e discutidos com a coordenação.</li>
+                        <li>A <strong>assiduidade</strong> é um indicador de comprometimento. Professores devem comparecer a todas as aulas programadas, salvo em casos de urgência ou acordo prévio.</li>
+                        <li>As <strong>faltas</strong> devem ser comunicadas com antecedência de no mínimo 24 horas e justificadas formalmente. Pedidos sem urgência poderão ser negados pela coordenação.</li>
+                        <li>O excesso de faltas, mesmo justificadas, poderá gerar uma reavaliação da continuidade do professor na equipe.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Planejamento, Prazos e Reuniões</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                    <div class="rule-tags">
+                        <span class="rule-tag tag-politica">Política da Escola</span>
+                        <span class="rule-tag tag-diretriz">Diretriz Essencial</span>
+                    </div>
+                    <ul>
+                        <li>Todos os professores devem desenvolver <strong>planos de aula</strong> para alunos VIP caso haja divergência de interesses com o conteúdo programático. O planejamento deve estar alinhado com a metodologia SLAP.</li>
+                         <li>Todos os <strong>prazos</strong> estabelecidos pela coordenação para entrega de conteúdos, feedbacks e relatórios devem ser rigorosamente respeitados. A recorrência de atrasos compromete a credibilidade do professor.</li>
+                        <li>A participação em <strong>reuniões</strong> pedagógicas, administrativas e de alinhamento é obrigatória. Ausências devem ser justificadas previamente, e o professor deve se atualizar sobre o conteúdo discutido.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Conduta e Relacionamento Profissional</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                     <div class="rule-tags">
+                        <span class="rule-tag tag-comportamento">Comportamento</span>
+                        <span class="rule-tag tag-proibido">Proibido</span>
+                    </div>
+                    <ul>
+                        <li>A conduta deve ser <strong>ética e profissional</strong> em todas as interações. Comentários pejorativos sobre a escola, alunos ou colegas são estritamente proibidos.</li>
+                        <li>É proibido manter relacionamento íntimo, pessoal ou financeiro com alunos.</li>
+                        <li>A comunicação com pais/responsáveis deve ser sempre mediada ou autorizada pela coordenação. Assuntos financeiros não devem ser tratados pelo professor.</li>
+                        <li>A colaboração com a equipe é fundamental. Situações de conflito devem ser encaminhadas à coordenação com profissionalismo.</li>
+                         <li>A <strong>postura</strong> na aula deve ser educada e a linguagem clara. É proibido usar sarcasmo, apelidos ou fazer piadas que possam ser mal interpretadas.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Materiais, Imagem e Redes Sociais</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                     <div class="rule-tags">
+                        <span class="rule-tag tag-politica">Política da Escola</span>
+                        <span class="rule-tag tag-proibido">Proibido</span>
+                    </div>
+                    <ul>
+                        <li>Os <strong>materiais didáticos</strong> do SLAP são de uso exclusivo para as aulas da escola e não podem ser redistribuídos ou usados em aulas particulares.</li>
+                        <li>Professores são livres para manter <strong>redes sociais</strong> pessoais, mas devem zelar pela imagem da instituição.</li>
+                        <li>É proibido usar o nome ou materiais do SLAP para promover serviços concorrentes, bem como divulgar ou associar-se publicamente a concorrentes.</li>
+                        <li>A <strong>vestimenta e apresentação pessoal</strong> durante as aulas devem ser apropriadas e profissionais, mesmo em casa.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Acompanhamento Pedagógico e Desenvolvimento</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                    <div class="rule-tags">
+                        <span class="rule-tag tag-diretriz">Diretriz Essencial</span>
+                        <span class="rule-tag tag-comunicacao">Comunicação</span>
+                    </div>
+                    <ul>
+                        <li>Cada professor é responsável pelo <strong>acompanhamento pedagógico</strong> de seus alunos, enviando relatórios e feedbacks nos prazos definidos.</li>
+                        <li>A coordenação poderá realizar <strong>observações de aula</strong> (avisadas ou não) para fins de avaliação e desenvolvimento profissional.</li>
+                        <li>O professor deve manter, no mínimo, <strong>nível de proficiência B2 (CEFR)</strong>. A escola pode solicitar demonstrações ou certificados.</li>
+                        <li>A participação em <strong>eventos e atividades extras</strong> é altamente valorizada e, em alguns casos, obrigatória.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-question">
+                    <span>Hierarquia, Contrato e Pagamentos</span>
+                    <svg class="rule-arrow w-5 h-5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div class="rule-answer">
+                    <div class="rule-tags">
+                        <span class="rule-tag tag-politica">Política da Escola</span>
+                        <span class="rule-tag tag-comunicacao">Comunicação</span>
+                    </div>
+                    <ul>
+                        <li>A estrutura <strong>hierárquica</strong> do SLAP deve ser respeitada. Demandas devem ser direcionadas primeiro à coordenação pedagógica.</li>
+                        <li>É expressamente proibido oferecer aulas particulares aos alunos do SLAP (<strong>conflito de interesses</strong>).</li>
+                        <li>O SLAP respeita os direitos previstos na <strong>CLT</strong> ou os termos de contratos <strong>PJ</strong>, garantindo um ambiente de trabalho justo.</li>
+                        <li>Os <strong>pagamentos</strong> serão realizados conforme acordado em contrato. Inconsistências devem ser comunicadas à administração.</li>
+                    </ul>
+                </div>
             </div>
         </section>
     `;
 
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', toggleFaq);
+    // JavaScript para fazer o accordion funcionar
+    document.querySelectorAll('.rule-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const ruleItem = button.closest('.rule-item');
+            const answer = ruleItem.querySelector('.rule-answer');
+            const isOpening = !ruleItem.classList.contains('open');
+
+            document.querySelectorAll('.rule-item.open').forEach(openItem => {
+                if (openItem !== ruleItem) {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.rule-answer').classList.remove('open');
+                }
+            });
+
+            ruleItem.classList.toggle('open');
+            answer.classList.toggle('open');
+        });
     });
 
     if (currentChart) {
