@@ -2727,8 +2727,10 @@ const courseData = [
         }
         function renderSlapDojoSection() {
     setActiveHubButton('nav-slap-dojo'); // Define o botão do Dojo como ativo
-    showHeader('SLAP Dojo'); // Mostra o cabeçalho com o título da página
-
+    showHeader();
+document.getElementById('main-title').textContent = 'SLAP Dojo';
+document.getElementById('main-description').textContent = 'Onde os melhores competem, evoluem e são recompensados.';
+            
     contentArea.innerHTML = `
         <header class="text-center mb-12">
             <p class="text-lg text-stone-600 mt-2">Onde os melhores competem, evoluem e são recompensados.</p>
