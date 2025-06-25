@@ -1836,84 +1836,99 @@ const courseData = [
         }
 
         function renderInicioSection() {
-            setActiveHubButton('nav-inicio');
-            hideHeader();
-            
-            const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
-             const greetings = ["Bem-vindo!", "Welcome!", "Bienvenue!", "Willkommen!", "¡Bienvenido!", "ようこそ!"];
+    setActiveHubButton('nav-inicio');
+    hideHeader();
+    
+    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    // Saudações base para a animação
+    const baseGreetings = ["Bem-vindo", "Welcome", "Bienvenue", "Willkommen", "¡Bienvenido", "ようこそ"];
 
-            contentArea.innerHTML = `
-                <section>
-                    <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8 text-center">
-                         <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-32 h-auto mx-auto rounded-lg mb-4">
-                        <h2 class="text-4xl md:text-5xl font-bold h-16 flex items-center justify-center">
-                           <span id="welcome-animation" style="transition: opacity 0.5s ease-in-out;"></span>
-                        </h2>
-                        <p class="mt-2 text-lg">Seu hub pedagógico para integrar, facilitar e potencializar o ensino no SLAP.</p>
-                    </div>
-                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 text-center">
-                        <button onclick="window.renderTestYourEnglishSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8671D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2z"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
-                            <span class="font-semibold text-stone-700">English Quiz</span>
-                        </button>
-                        <button onclick="window.renderPdiSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#84C7DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span class="font-semibold text-stone-700">PDI</span>
-                        </button>
-                        <button onclick="window.renderLinksUteisSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF5C3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
-                            <span class="font-semibold text-stone-700">Links Úteis</span>
-                        </button>
-                        <button onclick="window.renderRegimentoInternoSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span class="font-semibold text-stone-700">Regimento Interno</span>
-                        </button>
-                    </div>
-                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white text-stone-800 p-6 rounded-xl shadow-lg flex flex-col">
-                            <h3 class="text-2xl font-bold text-center sm:text-left text-stone-800 mb-2">Destaque do Mês</h3>
-                            <p class="text-xl font-bold text-center sm:text-left text-[#FF5C3D] mb-4">${employeeOfTheMonth.name}</p>
-                             <div class="flex flex-col sm:flex-row items-center gap-6">
-                                <img src="${employeeOfTheMonth.photo}" onerror="this.onerror=null;this.src='https://placehold.co/150/e0e0e0/ffffff?text=Foto'" alt="Destaque do Mês: ${employeeOfTheMonth.name}" class="w-32 h-32 rounded-full object-cover flex-shrink-0">
-                                <div class="text-center sm:text-left">
-                                    <p class="text-stone-600 leading-relaxed">${employeeOfTheMonth.reason}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg flex flex-col justify-center">
-                            <h3 class="text-2xl font-bold text-white mb-4 text-center">Frase do Dia</h3>
-                            <div class="flex flex-col items-center gap-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c.25 0 .25.25.25.5v3.5c0 .25-.25.5-.25.5H16c-1.25 0-2 .75-2 2z"></path></svg>
-                                <blockquote class="text-xl italic text-stone-300 text-center">
-                                    "${randomQuote.quote}"
-                                </blockquote>
-                                <cite class="text-stone-400 font-semibold not-italic">- ${randomQuote.author}</cite>
-                            </div>
+    contentArea.innerHTML = `
+        <section>
+            <div class="bg-[#F1D24B] text-stone-800 p-8 rounded-xl shadow-lg mb-8 text-center">
+                 <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-32 h-auto mx-auto rounded-lg mb-4">
+                <h2 class="text-4xl md:text-5xl font-bold h-16 flex items-center justify-center">
+                   <span id="welcome-animation" style="transition: opacity 0.5s ease-in-out;"></span>
+                </h2>
+                <p class="mt-2 text-lg">Seu hub pedagógico para integrar, facilitar e potencializar o ensino no SLAP.</p>
+            </div>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 text-center">
+                <button onclick="window.renderTestYourEnglishSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8671D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2z"></path><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+                    <span class="font-semibold text-stone-700">English Quiz</span>
+                </button>
+                <button onclick="window.renderPdiSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#84C7DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span class="font-semibold text-stone-700">PDI</span>
+                </button>
+                <button onclick="window.renderLinksUteisSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF5C3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"></path></svg>
+                    <span class="font-semibold text-stone-700">Links Úteis</span>
+                </button>
+                <button onclick="window.renderRegimentoInternoSection()" class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition-transform flex flex-col items-center justify-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span class="font-semibold text-stone-700">Regimento Interno</span>
+                </button>
+            </div>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white text-stone-800 p-6 rounded-xl shadow-lg flex flex-col">
+                    <h3 class="text-2xl font-bold text-center sm:text-left text-stone-800 mb-2">Destaque do Mês</h3>
+                    <p class="text-xl font-bold text-center sm:text-left text-[#FF5C3D] mb-4">${employeeOfTheMonth.name}</p>
+                     <div class="flex flex-col sm:flex-row items-center gap-6">
+                        <img src="${employeeOfTheMonth.photo}" onerror="this.onerror=null;this.src='https://placehold.co/150/e0e0e0/ffffff?text=Foto'" alt="Destaque do Mês: ${employeeOfTheMonth.name}" class="w-32 h-32 rounded-full object-cover flex-shrink-0">
+                        <div class="text-center sm:text-left">
+                            <p class="text-stone-600 leading-relaxed">${employeeOfTheMonth.reason}</p>
                         </div>
                     </div>
-                </section>
-            `;
-             // Welcome animation logic
-            let greetingIndex = 0;
-            const welcomeElement = document.getElementById('welcome-animation');
-            if (welcomeElement) {
-                if (window.welcomeInterval) clearInterval(window.welcomeInterval);
-                
-                const updateGreeting = () => {
-                    welcomeElement.style.opacity = 0;
-                    setTimeout(() => {
-                        greetingIndex = (greetingIndex + 1) % greetings.length;
-                        welcomeElement.textContent = greetings[greetingIndex];
-                        welcomeElement.style.opacity = 1;
-                    }, 500);
-                };
-                
-                welcomeElement.textContent = greetings[0];
-                welcomeElement.style.opacity = 1;
+                </div>
+                <div class="bg-stone-800 text-white p-6 rounded-xl shadow-lg flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Frase do Dia</h3>
+                    <div class="flex flex-col items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F1D24B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c.25 0 .25.25.25.5v3.5c0 .25-.25.5-.25.5H16c-1.25 0-2 .75-2 2z"></path></svg>
+                        <blockquote class="text-xl italic text-stone-300 text-center">
+                            "${randomQuote.quote}"
+                        </blockquote>
+                        <cite class="text-stone-400 font-semibold not-italic">- ${randomQuote.author}</cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+    `;
 
-                window.welcomeInterval = setInterval(updateGreeting, 2500);
+    // --- LÓGICA DA ANIMAÇÃO (NOVA VERSÃO PERSONALIZADA) ---
+    const welcomeElement = document.getElementById('welcome-animation');
+    if (welcomeElement) {
+        if (window.welcomeInterval) clearInterval(window.welcomeInterval);
+        
+        const firstName = loggedInUser.name.split(' ')[0];
+        // Cria as saudações personalizadas
+        const personalizedGreetings = baseGreetings.map(g => {
+            // Caso especial para o japonês para adicionar 'san'
+            if (g === "ようこそ") {
+                 return `${g}、${firstName}さん!`;
             }
-        }
+            // Para as outras, adiciona vírgula e o nome
+            return `${g}, ${firstName}!`;
+        });
+        
+        let greetingIndex = 0;
+        
+        const updateGreeting = () => {
+            welcomeElement.style.opacity = 0;
+            setTimeout(() => {
+                welcomeElement.textContent = personalizedGreetings[greetingIndex];
+                welcomeElement.style.opacity = 1;
+                greetingIndex = (greetingIndex + 1) % personalizedGreetings.length;
+            }, 500); // 0.5s para o efeito de fade
+        };
+        
+        // Chamada inicial
+        updateGreeting(); 
+        
+        // Define o intervalo para trocar a saudação
+        window.welcomeInterval = setInterval(updateGreeting, 2500);
+    }
+}
 
         function renderSlapLevelsSection() {
             setActiveHubButton('nav-slap-levels');
