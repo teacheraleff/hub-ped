@@ -863,6 +863,12 @@
             </div>
         </div>
     </nav>
+<div class="mt-4">
+        <a href="index.html" id="logout-button" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-red-50 hover:text-red-600 transition-colors flex items-center font-semibold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair
+        </a>
+    </div>
 </aside>
     
             <main class="flex-1 p-4 sm:p-6 md:p-8">
@@ -4163,6 +4169,18 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
         window.location.href = 'index.html';
         return; // Impede o resto do código de ser executado
     }
+// --- Lógica para o botão de Sair ---
+const logoutButton = document.getElementById('logout-button');
+if (logoutButton) {
+    logoutButton.addEventListener('click', (event) => {
+        event.preventDefault(); // Impede o link de navegar imediatamente
+        sessionStorage.removeItem('loggedInUser'); // Limpa a sessão do usuário
+        // Opcional: Adicionar um pequeno delay para o usuário perceber a ação
+        setTimeout(() => {
+            window.location.href = 'index.html'; // Redireciona para a página de login
+        }, 100);
+    });
+}
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
         'inicio': renderInicioSection,
