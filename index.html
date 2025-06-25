@@ -67,16 +67,17 @@
         // --- Lógica de Login Simplificada ---
         document.addEventListener('DOMContentLoaded', () => {
 
+            // ALTERAÇÃO 1: Adicionei a propriedade 'name' a cada utilizador.
             const allowedUsers = {
-                "aleff@slapingles.com": { password: "Aleff1105*", role: "admin" },
-                "rodrigo@slapingles.com": { password: "12345*", role: "coordenador" },
-                "leticia@slapingles.com": { password: "12345*", role: "coordenador" },
-                "victor@slapingles.com": { password: "12345*", role: "professor" },
-                "felipe@slapingles.com": { password: "12345*", role: "professor" },
-                "areli@slapingles.com": { password: "12345*", role: "professor" },
-                "jaynni@slapingles.com": { password: "12345*", role: "professor" },
-                "anael@slapingles.com": { password: "12345*", role: "professor" },
-                "gabriella@slapingles.com": { password: "12345*", role: "professor" }
+                "aleff@slapingles.com": { password: "Aleff1105*", role: "admin", name: "Aleff Rodrigues" },
+                "rodrigo@slapingles.com": { password: "12345*", role: "coordenador", name: "Rodrigo" },
+                "leticia@slapingles.com": { password: "12345*", role: "coordenador", name: "Letícia Laganaro" },
+                "victor@slapingles.com": { password: "12345*", role: "professor", name: "Victor Teixeira" },
+                "felipe@slapingles.com": { password: "12345*", role: "professor", name: "Felipe Carnelós" },
+                "areli@slapingles.com": { password: "12345*", role: "professor", name: "Areli Nunes" },
+                "jaynni@slapingles.com": { password: "12345*", role: "professor", name: "Jaynni Nascimento" },
+                "anael@slapingles.com": { password: "12345*", role: "professor", name: "Anael D Castilho" },
+                "gabriella@slapingles.com": { password: "12345*", role: "professor", name: "Gabriella" }
             };
 
             const loginForm = document.getElementById('login-form');
@@ -86,20 +87,15 @@
             const eyeIcon = document.getElementById('eye-icon');
             const eyeOffIcon = document.getElementById('eye-off-icon');
 
-            // --- Lógica para mostrar/ocultar senha ---
             if (togglePasswordButton) {
                 togglePasswordButton.addEventListener('click', () => {
-                    // Alterna o tipo do input entre 'password' e 'text'
                     const isPassword = passwordInput.type === 'password';
                     passwordInput.type = isPassword ? 'text' : 'password';
-
-                    // Alterna a visibilidade dos ícones
                     eyeIcon.classList.toggle('hidden');
                     eyeOffIcon.classList.toggle('hidden');
                 });
             }
 
-            // --- Lógica do formulário de login ---
             if (loginForm) {
                 loginForm.addEventListener('submit', (event) => {
                     event.preventDefault(); 
@@ -111,9 +107,11 @@
                     if (user && user.password === password) {
                         errorMessage.style.display = 'none';
                         
+                        // ALTERAÇÃO 2: Agora estamos a guardar o 'name' juntamente com o resto dos dados.
                         sessionStorage.setItem('loggedInUser', JSON.stringify({
                             username: username,
-                            role: user.role
+                            role: user.role,
+                            name: user.name // <-- Esta é a linha chave!
                         }));
 
                         window.location.href = 'hub.html'; 
