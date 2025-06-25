@@ -4175,27 +4175,30 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 
        document.addEventListener('DOMContentLoaded', () => {
     
-    // --- INÍCIO DA ADIÇÃO: CÓDIGO DE VERIFICAÇÃO DE LOGIN ---
+    // --- CORREÇÃO DA VERIFICAÇÃO DE LOGIN ---
     const userJson = sessionStorage.getItem('loggedInUser');
     if (userJson) {
+        // Atribui o objeto do usuário à variável global
         loggedInUser = JSON.parse(userJson);
     } else {
+        // Se não houver ninguém logado, impede o acesso
         alert('Acesso negado. É necessário fazer login para continuar.');
         window.location.href = 'index.html';
-        return; // Impede o resto do código de ser executado
+        return; 
     }
-// --- Lógica para o botão de Sair ---
-const logoutButton = document.getElementById('logout-button');
-if (logoutButton) {
-    logoutButton.addEventListener('click', (event) => {
-        event.preventDefault(); // Impede o link de navegar imediatamente
-        sessionStorage.removeItem('loggedInUser'); // Limpa a sessão do usuário
-        // Opcional: Adicionar um pequeno delay para o usuário perceber a ação
-        setTimeout(() => {
-            window.location.href = 'index.html'; // Redireciona para a página de login
-        }, 100);
-    });
-}
+
+    // --- LÓGICA DO BOTÃO DE SAIR ---
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (event) => {
+            event.preventDefault(); 
+            sessionStorage.removeItem('loggedInUser'); 
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 100);
+        });
+    }
+    // --- FIM DA CORREÇÃO ---
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
         'inicio': renderInicioSection,
