@@ -766,6 +766,24 @@
 .event-type-opcional { background-color: #d1fae5; color: #065f46; } /* green-100, green-800 */
 .event-type-urgente  { background-color: #fee2e2; color: #991b1b; } /* red-200, red-800 */
 .event-type-lembrete { background-color: #fffbeb; color: #b45309; } /* amber-50, amber-700 */
+        .podium-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.podium-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+.podium-1 { border-color: #ffd700; } /* Gold */
+.podium-2 { border-color: #c0c0c0; } /* Silver */
+.podium-3 { border-color: #cd7f32; } /* Bronze */
+
+.prize-card {
+    transition: transform 0.3s ease-in-out;
+    border-bottom-width: 8px;
+}
+.prize-card:hover {
+    transform: translateY(-8px);
+}
     </style>
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -819,6 +837,7 @@
     <div class="submenu pl-6 mt-1 space-y-1">
         <button data-target="brainflip" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">BrainFlip</button>
         <button data-target="test-your-english" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">English Quiz</button>
+        <button data-target="slap-dojo" class="nav-item submenu-item w-full text-left px-4 py-2 rounded-lg text-stone-600 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors">SLAP Dojo</button>
     </div>
 </div>
 
@@ -2706,7 +2725,64 @@ const courseData = [
                 currentChart.destroy();
             }
         }
-        
+        function renderSlapDojoSection() {
+    setActiveHubButton('nav-slap-dojo'); // Define o botão do Dojo como ativo
+    showHeader('SLAP Dojo'); // Mostra o cabeçalho com o título da página
+
+    contentArea.innerHTML = `
+        <header class="text-center mb-12">
+            <p class="text-lg text-stone-600 mt-2">Onde os melhores competem, evoluem e são recompensados.</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto bg-blue-100 text-blue-800 p-4 rounded-xl text-center mb-10 border border-blue-200">
+            <p class="font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Temporada Atual: Julho a Dezembro de 2025
+            </p>
+        </div>
+
+        <section id="podium-section" class="mb-12">
+            <div id="top-3-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-5xl mx-auto">
+                </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-stone-700 mb-6 text-center">Classificação Geral</h2>
+            <div class="bg-white rounded-xl shadow-md border border-stone-200 overflow-hidden">
+                <div id="ranking-list" class="divide-y divide-stone-200">
+                    </div>
+            </div>
+        </section>
+
+        <section id="prizes-section" class="max-w-5xl mx-auto mt-20 text-center">
+            <h2 class="text-3xl font-bold text-stone-700 mb-4">Recompensas do Dojo</h2>
+            <p class="text-stone-500 mb-10">O pódio ao final da temporada garante prémios incríveis!</p>
+            <div class="flex flex-wrap justify-center items-end gap-8">
+                <div class="prize-card w-full sm:w-2/5 md:w-1/4 bg-white rounded-2xl shadow-lg p-6 border-gray-300 order-2 md:order-1">
+                    <div class="text-5xl mb-4">🥈</div>
+                    <h3 class="text-2xl font-bold text-gray-600 mb-2">2º lugar</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Ganhe uma <strong>Alexa Echo Dot</strong> e <strong>R$500 no Caju</strong> (R$300 livre + R$200 alimentação).</p>
+                </div>
+                <div class="prize-card w-full sm:w-3/5 md:w-1/3 bg-white rounded-2xl shadow-2xl p-8 border-yellow-400 order-1 md:order-2">
+                     <div class="text-6xl mb-4">🥇</div>
+                     <h3 class="text-3xl font-extrabold text-yellow-500 mb-3">1º lugar — O SLAPPER do Semestre</h3>
+                    <p class="text-stone-700 font-semibold text-base leading-relaxed">O grande prémio! <strong>R$1.000 no Caju</strong> (livre), <strong>jantar especial</strong> pago pelo SLAP e <strong>1 dia de folga</strong>.</p>
+                </div>
+                <div class="prize-card w-full sm:w-2/5 md:w-1/4 bg-white rounded-2xl shadow-lg p-6 border-orange-400 order-3 md:order-3">
+                     <div class="text-5xl mb-4">🥉</div>
+                     <h3 class="text-2xl font-bold text-orange-500 mb-2">3º lugar</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Uma recompensa de <strong>R$250 no Caju</strong> (alimentação) e uma <strong>lembrancinha especial</strong> enviada para casa.</p>
+                </div>
+            </div>
+            <p class="text-xs text-stone-400 mt-4">*Folga sujeita a alinhamento com a coordenação pedagógica.</p>
+        </section>
+    `;
+
+    // Chama a função para desenhar o ranking depois de inserir o HTML
+    renderRanking();
+}
         function renderDeepDiveSection() {
             setActiveHubButton('nav-deep-dive');
             showHeader();
@@ -3441,6 +3517,88 @@ const teachersData = [
         selfDescription: 'Uma pessoa peculiar e espontânea. Uma caixa de surpresas, uma montanha-russa de emoções. Sempre quebrando padrões sem ferir ninguém. Fiel aos seus valores e extremamente ético.'
     }
 ];
+        // DADOS DOS PROFESSORES PARA O RANKING
+const rankingTeachersData = [
+    { id: 'leticia-laganaro', name: 'Letícia Laganaro', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/w_160,h_160,c_fill,g_face,f_auto,q_auto/v1749540047/IMG_5218_khmacs.jpg', points: 0 },
+    { id: 'aleff-rodrigues', name: 'Aleff Rodrigues', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749540047/IMG_5219_tn7xuv.jpg', points: 0 },
+    { id: 'jaynni-nascimento', name: 'Jaynni Nascimento', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749540046/IMG_5217_dptxe3.jpg', points: 0 },
+    { id: 'anael-castilho', name: 'Anael D Castilho', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749540102/AVATAR_MASC_LARANJA_onmyg9.png', points: 0 },
+    { id: 'victor-teixeira', name: 'Victor Teixeira', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/w_160,h_160,c_fill,g_face,f_auto,q_auto/v1749540098/AVATAR_MASC_AZUL_mg0oos.png', points: 0 },
+    { id: 'felipe-carnelos', name: 'Felipe Carnelós', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/w_160,h_160,c_fill,g_face,f_auto,q_auto/v1749540050/IMG_5221_bbx425.jpg', points: 0 },
+    { id: 'areli-nunes', name: 'Areli Nunes', photo: 'https://res.cloudinary.com/dqfi22uz0/image/upload/w_160,h_160,c_fill,g_face,f_auto,q_auto/v1749540047/IMG_5216_lc2pex.jpg', points: 0 },
+];
+
+// Função para determinar o tier e a cor com base nos pontos
+function getTier(points) {
+    if (points >= 1200) return { name: 'Diamante', color: 'bg-blue-100 text-blue-800', icon: '💎' };
+    if (points >= 1000) return { name: 'Ouro', color: 'bg-yellow-100 text-yellow-800', icon: '🥇' };
+    if (points >= 800) return { name: 'Prata', color: 'bg-gray-200 text-gray-800', icon: '🥈' };
+    if (points >= 600) return { name: 'Bronze', color: 'bg-orange-100 text-orange-800', icon: '🥉' };
+    return { name: 'Competidor', color: 'bg-green-100 text-green-800', icon: '⚔️' };
+}
+
+// Função principal para renderizar o ranking
+function renderRanking() {
+    rankingTeachersData.sort((a, b) => b.points - a.points);
+
+    const top3Container = document.getElementById('top-3-container');
+    const rankingListContainer = document.getElementById('ranking-list');
+    
+    if (!top3Container || !rankingListContainer) return; // Sai da função se os elementos não existirem
+
+    let top3Html = '';
+    let listHtml = '';
+
+    rankingTeachersData.forEach((teacher, index) => {
+        const rank = index + 1;
+        const tier = getTier(teacher.points);
+
+        if (rank <= 3) {
+            let orderClass = 'order-2';
+            let placeIndicator = '';
+            const paddingClass = 'p-8';
+
+            if (rank === 1) {
+                orderClass = 'order-1 md:order-2';
+                placeIndicator = `<span class="absolute top-4 right-4 text-4xl font-black text-yellow-400">1º</span>`;
+            } else if (rank === 2) {
+                orderClass = 'order-2 md:order-1';
+                placeIndicator = `<span class="absolute top-4 right-4 text-4xl font-black text-gray-400">2º</span>`;
+            } else if (rank === 3) {
+                orderClass = 'order-3';
+                placeIndicator = `<span class="absolute top-4 right-4 text-4xl font-black text-orange-400">3º</span>`;
+            }
+
+            top3Html += `
+                <div class="podium-card relative bg-white rounded-2xl shadow-lg border-4 ${paddingClass} text-center ${orderClass} podium-${rank}">
+                     ${placeIndicator}
+                    <img src="${teacher.photo}" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=Foto'" alt="${teacher.name}" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white shadow-md">
+                    <h3 class="text-xl font-bold text-stone-800">${teacher.name}</h3>
+                    <p class="text-3xl font-bold text-[#F1D24B] my-2">${teacher.points.toLocaleString('pt-BR')} PTS</p>
+                    <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full ${tier.color}">${tier.icon} ${tier.name}</span>
+                </div>
+            `;
+        } 
+        else {
+            listHtml += `
+                <div class="flex items-center p-4">
+                    <div class="w-12 text-center text-lg font-bold text-stone-500">#${rank}</div>
+                    <div class="flex-shrink-0 mx-4">
+                        <img src="${teacher.photo}" onerror="this.onerror=null;this.src='https://placehold.co/48x48/e0e0e0/ffffff?text=Foto'" alt="${teacher.name}" class="w-12 h-12 rounded-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-base font-semibold text-stone-700">${teacher.name}</p>
+                        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded-full ${tier.color}">${tier.name}</span>
+                    </div>
+                    <div class="w-24 text-right text-lg font-bold text-stone-800">${teacher.points.toLocaleString('pt-BR')}</div>
+                </div>
+            `;
+        }
+    });
+
+    top3Container.innerHTML = top3Html;
+    rankingListContainer.innerHTML = listHtml;
+}
         function renderTeachersRoomSection() {
             setActiveHubButton('nav-teachers-room');
             showHeader();
@@ -4214,6 +4372,7 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
         'method': renderMethodSection,
         'teachers-room': renderTeachersRoomSection,
         'brainflip': renderBrainFlipGameSection,
+        'slap-dojo': renderSlapDojoSection,
         'test-your-english': renderTestYourEnglishSection,
         'grade': renderGradeSection,
         'calendario': renderCalendarSection,
