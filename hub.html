@@ -1842,6 +1842,23 @@ const courseData = [
     const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
     // Saudações base para a animação
     const baseGreetings = ["Bem-vindo", "Welcome", "Bienvenue", "Willkommen", "¡Bienvenido", "ようこそ"];
+    
+    // --- LÓGICA DE SAUDAÇÃO CORRIGIDA ---
+    let finalGreetings = [];
+    // Primeiro, verificamos se o utilizador está logado E se possui a propriedade 'name'
+    if (loggedInUser && loggedInUser.name && typeof loggedInUser.name === 'string') {
+        const firstName = loggedInUser.name.split(' ')[0];
+        // Se tiver nome, cria as saudações personalizadas
+        finalGreetings = baseGreetings.map(g => {
+            if (g === "ようこそ") {
+                 return `${g}、${firstName}さん!`;
+            }
+            return `${g}, ${firstName}!`;
+        });
+    } else {
+        // Se não tiver nome (ou for nulo), usa as saudações genéricas
+        finalGreetings = baseGreetings.map(g => `${g}!`);
+    }
 
     contentArea.innerHTML = `
         <section>
@@ -1895,30 +1912,19 @@ const courseData = [
         </section>
     `;
 
-    // --- LÓGICA DA ANIMAÇÃO (NOVA VERSÃO PERSONALIZADA) ---
+    // --- LÓGICA DA ANIMAÇÃO (AGORA USANDO `finalGreetings`) ---
     const welcomeElement = document.getElementById('welcome-animation');
     if (welcomeElement) {
         if (window.welcomeInterval) clearInterval(window.welcomeInterval);
-        
-        const firstName = loggedInUser.name.split(' ')[0];
-        // Cria as saudações personalizadas
-        const personalizedGreetings = baseGreetings.map(g => {
-            // Caso especial para o japonês para adicionar 'san'
-            if (g === "ようこそ") {
-                 return `${g}、${firstName}さん!`;
-            }
-            // Para as outras, adiciona vírgula e o nome
-            return `${g}, ${firstName}!`;
-        });
         
         let greetingIndex = 0;
         
         const updateGreeting = () => {
             welcomeElement.style.opacity = 0;
             setTimeout(() => {
-                welcomeElement.textContent = personalizedGreetings[greetingIndex];
+                welcomeElement.textContent = finalGreetings[greetingIndex];
                 welcomeElement.style.opacity = 1;
-                greetingIndex = (greetingIndex + 1) % personalizedGreetings.length;
+                greetingIndex = (greetingIndex + 1) % finalGreetings.length;
             }, 500); // 0.5s para o efeito de fade
         };
         
@@ -1929,7 +1935,6 @@ const courseData = [
         window.welcomeInterval = setInterval(updateGreeting, 2500);
     }
 }
-
         function renderSlapLevelsSection() {
             setActiveHubButton('nav-slap-levels');
             showHeader();
