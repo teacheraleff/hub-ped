@@ -1003,7 +1003,7 @@
 
     <script>
 let loggedInUser = null;
-        
+let clickSound, correctSound, wrongSound;
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
 
@@ -3334,9 +3334,6 @@ document.getElementById('main-description').textContent = 'Onde os melhores comp
         let currentQuestionIndex = 0;
         let score = 0;
         
-        const clickSound = document.getElementById('click-sound');
-        const correctSound = document.getElementById('correct-sound');
-        const wrongSound = document.getElementById('wrong-sound');
 
         function renderTestYourEnglishSection() {
             setActiveHubButton(null); // No active button in nav
@@ -4392,7 +4389,9 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
        document.addEventListener('DOMContentLoaded', () => {
-    
+    clickSound = document.getElementById('click-sound');
+    correctSound = document.getElementById('correct-sound');
+    wrongSound = document.getElementById('wrong-sound');
     // --- CORREÇÃO DA VERIFICAÇÃO DE LOGIN ---
     const userJson = sessionStorage.getItem('loggedInUser');
     if (userJson) {
