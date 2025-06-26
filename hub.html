@@ -1003,7 +1003,7 @@
 
     <script>
 let loggedInUser = null;
-let clickSound, correctSound, wrongSound;
+        
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
 
@@ -2455,142 +2455,72 @@ const courseData = [
                 currentChart.destroy();
             }
         }
-// Ação: Adicione esta nova função inteira ao seu script.
-function renderCreativeBlockSection() {
-    const dynamicContentArea = document.getElementById('creators-room-dynamic-content');
-    if (!dynamicContentArea) return;
 
-    // Conteúdo HTML do gerador
-    dynamicContentArea.innerHTML = `
-        <div class="text-center mt-8">
-            <h3 class="text-3xl sm:text-4xl font-bold text-stone-800">Desbloqueio Criativo</h3>
-            <p class="text-stone-600 mt-2 mb-8 max-w-xl mx-auto">Precisando de inspiração? Clique no botão e gere uma nova ideia de conteúdo instantaneamente!</p>
 
-            <div id="idea-box" class="relative bg-stone-100 border-2 border-dashed border-stone-300 rounded-xl p-6 min-h-[150px] flex items-center justify-center mb-8">
-                <p id="idea-text" class="text-lg sm:text-xl font-medium text-stone-700">Sua próxima grande ideia aparecerá aqui...</p>
-                <button id="copy-button" title="Copiar ideia" class="absolute top-3 right-3 bg-stone-200 hover:bg-stone-300 text-stone-600 p-2 rounded-full transition-all opacity-0 pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                </button>
-                <span id="copy-feedback" class="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full opacity-0 transition-opacity">Copiado!</span>
-            </div>
-
-            <button id="generate-button" class="w-full sm:w-auto bg-[#F1D24B] hover:bg-yellow-500 text-stone-800 font-bold text-lg py-4 px-12 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-                Gerar Nova Ideia ✨
-            </button>
-        </div>
-    `;
-
-    // --- LÓGICA DO GERADOR ---
-    const generateButton = document.getElementById('generate-button');
-    const ideaText = document.getElementById('idea-text');
-    const ideaBox = document.getElementById('idea-box');
-    const copyButton = document.getElementById('copy-button');
-    const copyFeedback = document.getElementById('copy-feedback');
-    const clickSound = document.getElementById('click-sound');
-
-    // IMPORTANTE: Copie e cole aqui o array 'ideaBank' com as 200 ideias.
-    const ideaBank = [
-        "Crie um Reels explicando a diferença entre 'will' e 'going to' com uma cena de filme.", "Faça um Carrossel mostrando 3 usos surpreendentes do Present Perfect.", "Grave um vídeo curto sobre um erro comum com preposições (ex: in/on/at).", "Explique a diferença entre 'say' e 'tell' de uma forma divertida.", "Crie um Quiz nos Stories: 'much' vs 'many'.", "Faça um vídeo rápido sobre a pronúncia correta do '-ed' em verbos regulares.", "Mostre como usar 'used to' para falar de hábitos passados.", "Crie uma dica visual para nunca mais confundir 'borrow' e 'lend'.", "Explique o Zero Conditional com exemplos de fatos científicos.", "Demonstre o First Conditional usando planos para o fim de semana.", "Crie um post sobre o Second Conditional para situações hipotéticas ('If I were a millionaire...').", "Explique o Third Conditional usando um arrependimento de um personagem de série.", "Faça um guia rápido sobre a Voz Passiva e quando usá-la.", "Mostre a diferença entre Gerúndio e Infinitivo após certos verbos (like, want, enjoy).", "Crie um vídeo sobre 'Reported Speech' transformando falas de filmes.", "Faça um Carrossel sobre os principais Modal Verbs (can, could, should, must).", "Explique a diferença entre 'who' e 'which' em Relative Clauses.", "Dê 3 dicas para usar os artigos 'a', 'an' e 'the' corretamente.", "Faça um quiz rápido sobre Tag Questions. 'It's a beautiful day, ___?'", "Crie um vídeo sobre o Past Perfect com uma linha do tempo visual.", "Diferencie 'for', 'since' e 'ago' com exemplos práticos.", "Explique os Phrasal Verbs mais comuns com 'look' (look for, look at, look after).", "Crie um post sobre a ordem dos adjetivos em inglês (opinion, size, age...).", "Faça um vídeo sobre o uso de 'some' e 'any' em perguntas e negativas.", "Explique a diferença entre 'too' e 'enough' com exemplos visuais.", "Faça um guia sobre os Quantifiers (a few, a little, a lot of).", "Mostre como usar 'so' e 'such' para dar ênfase.", "Crie um vídeo sobre a diferença entre 'I wish' e 'I hope'.", "Explique como usar 'would rather' para expressar preferências.", "Faça um post sobre 'Relative Pronouns' (who, whom, whose, which, that).", "Desmistifique o uso de 'in spite of' e 'despite'.", "Crie um guia sobre os principais conectivos (linking words) como 'however', 'therefore', 'although'.", "Faça um vídeo sobre o uso de 'must' e 'have to' para obrigação.", "Explique a diferença sutil entre 'should', 'ought to' e 'had better'.", "Crie um carrossel sobre o uso de 'either/or' e 'neither/nor'.", "Mostre como formar perguntas indiretas (embedded questions).", "Faça um vídeo sobre o uso de 'used to', 'be used to' e 'get used to'.", "Explique a causative form: 'have/get something done'.", "Crie um post sobre o uso de apóstrofos para posse (Genitive Case) e contrações.", "Faça um guia rápido sobre os diferentes tipos de condicionais (0, 1, 2, 3, mixed).", "Ensine 5 phrasal verbs essenciais para viagens internacionais.", "Faça um vídeo com vocabulário de negócios para uma entrevista de emprego.", "Mostre 3 gírias (slangs) que estão em alta no inglês atualmente.", "Crie um conteúdo sobre falsos cognatos (false friends) que podem causar confusão.", "Faça um post com vocabulário para descrever diferentes tipos de comida.", "Ensine expressões idiomáticas relacionadas a cores (ex: 'feeling blue').", "Liste 5 palavras que são sinônimos de 'very good'.", "Faça um vídeo sobre vocabulário para usar no aeroporto.", "Crie um carrossel com vocabulário sobre diferentes profissões.", "Ensine 4 phrasal verbs com o verbo 'get'.", "Mostre vocabulário relacionado a tecnologia (apps, social media, gadgets).", "Crie um post sobre expressões idiomáticas com partes do corpo (ex: 'break a leg').", "Ensine a diferença entre 'trip', 'travel' e 'journey'.", "Faça um vídeo sobre vocabulário para descrever personalidades.", "Crie um conteúdo sobre vocabulário de emergência (médico, polícia).", "Liste 5 maneiras de dizer 'I don't know' de forma mais elaborada.", "Ensine vocabulário relacionado ao clima (sunny, cloudy, raining).", "Faça um post com vocabulário para compras (sale, discount, receipt).", "Mostre a diferença entre 'house' e 'home'.", "Crie um vídeo sobre vocabulário para usar em um hotel.", "Ensine vocabulário para descrever filmes (genre, plot, cast, sequel).", "Faça um carrossel sobre vocabulário financeiro (budget, savings, investment, loan).", "Mostre 5 adjetivos para descrever um livro (gripping, thought-provoking, dull).", "Crie um post com vocabulário sobre a natureza (forest, river, mountain, desert).", "Ensine 5 expressões com a palavra 'time' (on time, in time, kill time).", "Faça um vídeo com vocabulário para usar na academia (gym).", "Liste sinônimos para a palavra 'important' (crucial, essential, vital, significant).", "Ensine vocabulário para falar sobre música (lyrics, melody, chorus, genre).", "Crie um post sobre vocabulário de redes sociais (feed, story, DM, influencer).", "Faça um vídeo sobre diferentes tipos de moradia (apartment, house, condo, dorm).", "Ensine vocabulário relacionado a sentimentos complexos (nostalgia, empathy, anxiety).", "Crie um guia com vocabulário para uma apresentação de negócios.", "Mostre 5 maneiras de dizer 'I'm tired' (I'm exhausted, I'm worn out, I'm beat).", "Faça um post sobre phrasal verbs com 'turn' (turn on, turn off, turn up, turn down).", "Ensine vocabulário para falar sobre o meio ambiente (recycling, pollution, climate change).", "Crie um carrossel com vocabulário para descrever arte (painting, sculpture, abstract).", "Faça um vídeo com expressões úteis para uma ligação telefônica em inglês.", "Ensine a diferença entre 'job', 'work' e 'career'.", "Mostre vocabulário para descrever diferentes tipos de relacionamentos (friendship, acquaintance, colleague).", "Crie um post sobre expressões idiomáticas relacionadas a animais (let the cat out of the bag).", "Faça um vídeo sobre a pronúncia do som 'th' (think vs. this).", "Crie um post com 5 palavras que têm letras silenciosas (ex: 'know', 'island').", "Demonstre a diferença de pronúncia entre 'ship' e 'sheep' (minimal pairs).", "Ensine a entonação correta para fazer perguntas em inglês.", "Faça um desafio de trava-línguas (tongue twister) para praticar a pronúncia.", "Grave um vídeo sobre a pronúncia de palavras que terminam em '-tion' (ex: 'nation').", "Explique a diferença entre o sotaque americano e britânico em 3 palavras.", "Crie um quiz: 'Como se pronuncia esta palavra?' com palavras difíceis (ex: 'choir').", "Mostre como os sons se conectam em frases ('linking sounds'), ex: 'an apple'.", "Faça um vídeo sobre a pronúncia da letra 'R' no inglês americano.", "Ensine a diferença de som entre 'beach' e 'bitch'.", "Crie um post sobre 'word stress' e como ele pode mudar o significado de uma palavra.", "Demonstre a pronúncia correta de marcas famosas (Nike, Apple, etc.).", "Faça um dueto no TikTok/Reels com um falante nativo, imitando a pronúncia.", "Liste 3 erros comuns de pronúncia cometidos por brasileiros.", "Explique o que é o 'Schwa' sound (ə) e mostre exemplos.", "Crie um vídeo sobre a pronúncia de números ordinais (fifth, sixth, etc.).", "Faça um guia de pronúncia para os nomes dos estados americanos.", "Ensine a diferença entre a pronúncia de 'can' e 'can't'.", "Grave um 'read along' (leia junto) de um parágrafo curto, focando na pronúncia.", "Abra uma caixinha de perguntas com o tema: 'Qual sua maior dúvida em inglês?'.", "Faça uma enquete: 'Qual sotaque de inglês você acha mais legal? Americano ou Britânico?'.", "Peça para os seguidores completarem uma frase nos comentários: 'If I had a million dollars, I would...'", "Crie um desafio: 'Tente pronunciar esta palavra difícil' e mostre a forma correta.", "Faça um post 'This or That' (Isto ou Aquilo) com preferências (coffee or tea?).", "Use o sticker de quiz dos Stories para um teste rápido de vocabulário.", "Peça para os seguidores descreverem seu dia usando apenas 3 palavras em inglês.", "Crie um post 'Adivinhe o filme pelos emojis' e peça as respostas nos comentários.", "Faça uma live de 'tira-dúvidas' sobre um tema específico.", "Peça para os seguidores traduzirem uma expressão brasileira para o inglês da forma mais engraçada.", "Crie um post 'Construa uma história': comece com uma frase e peça para cada comentário continuar.", "Faça uma enquete sobre qual será o tema do próximo vídeo.", "Use o sticker de 'sua vez' nos Stories com um tema: 'Mostre seu livro em inglês favorito'.", "Peça para os seguidores enviarem áudios pronunciando uma palavra e dê feedback.", "Crie um filtro para o Instagram/TikTok com uma expressão em inglês.", "Faça um post 'Duas verdades e uma mentira' sobre a língua inglesa.", "Promova um 'Study with me' ao vivo, com música e timer Pomodoro.", "Peça para os seguidores darem legendas em inglês para uma foto engraçada.", "Crie um desafio de 7 dias com uma pequena tarefa de inglês por dia.", "Faça um 'React' a vídeos de estrangeiros tentando falar português.", "Faça um vídeo sobre uma tradição cultural de um país de língua inglesa (ex: Thanksgiving).", "Compare uma diferença cultural engraçada entre o Brasil e os EUA/Reino Unido.", "Liste 3 fatos curiosos sobre a língua inglesa que pouca gente sabe.", "Crie um conteúdo sobre a origem de uma palavra ou expressão famosa.", "Explique por que o Halloween é tão popular nos EUA.", "Mostre 5 comidas estranhas ou típicas de países de língua inglesa.", "Faça um vídeo sobre como funciona o sistema de gorjetas (tipping) nos EUA.", "Crie um post sobre feriados que só existem em países de língua inglesa.", "Explique uma referência cultural de uma série famosa (ex: 'Friends' ou 'The Office').", "Faça um tour virtual por um ponto turístico famoso (ex: Times Square).", "Compare o sistema de ensino do Brasil com o dos EUA/Reino Unido.", "Crie um conteúdo sobre a história da bandeira de um país de língua inglesa.", "Fale sobre a etiqueta e os costumes em uma refeição de negócios.", "Mostre 3 superstições comuns em países de língua inglesa.", "Explique como o 'Black Friday' começou.", "Faça um vídeo sobre esportes populares (Baseball, American Football).", "Crie um post sobre as diferenças entre o inglês falado na Irlanda, Escócia e Inglaterra.", "Fale sobre a monarquia britânica e seu vocabulário específico.", "Desmistifique um estereótipo sobre um país de língua inglesa.", "Crie um guia sobre como se comportar em um pub britânico.", "Compartilhe uma história engraçada sobre um erro que você cometeu aprendendo inglês.", "Mostre um trecho dos bastidores de uma aula do SLAP (com permissão).", "Conte a história de um aluno que teve uma grande evolução (case de sucesso).", "Faça um vídeo 'Um dia na minha vida como professor(a) de inglês'.", "Mostre seu cantinho de estudos/trabalho e como você se organiza.", "Compartilhe uma situação em que falar inglês te salvou ou abriu uma porta.", "Faça um vídeo mostrando como você prepara uma aula do zero.", "Entreviste um colega professor sobre a sua jornada com o inglês.", "Compartilhe um perrengue que você passou em uma viagem internacional.", "Mostre seus livros ou materiais de estudo de inglês favoritos.", "Crie um vídeo sobre 'O que eu gostaria de saber quando comecei a aprender inglês'.", "Faça um 'tour' pelo seu material didático ou plataforma de ensino.", "Compartilhe uma meta pessoal de aprendizado (ex: aprender um novo sotaque).", "Mostre o processo de gravação de um vídeo de conteúdo.", "Faça uma retrospectiva do seu ano como professor/creator.", "Compartilhe uma história emocionante de um aluno.", "Responda às perguntas mais frequentes que você recebe.", "Mostre como você corrige redações ou exercícios dos alunos.", "Faça um vídeo sobre as alegrias e os desafios de ser professor de inglês.", "Compartilhe como foi sua primeira experiência dando aula.", "Faça um vídeo sobre o erro de usar 'I have' para dizer a idade.", "Explique a confusão comum entre 'fun' e 'funny'.", "Crie um post sobre o uso incorreto de 'actually' vs 'atualmente'.", "Mostre por que 'pretend' não significa 'pretender'.", "Faça um vídeo corrigindo o uso de 'sensible' vs 'sensitive'.", "Liste 3 preposições que brasileiros costumam errar.", "Explique a diferença entre 'make' e 'do' com exemplos práticos.", "Crie um carrossel sobre erros comuns ao usar o Genitive Case ('s).", "Faça um vídeo rápido sobre o erro de omitir o sujeito em frases.", "Corrija o uso de 'very' e mostre alternativas mais ricas (huge, tiny, etc.).", "Explique por que não se deve usar 'discuss about'.", "Mostre a diferença de uso entre 'good' (adjetivo) e 'well' (advérbio).", "Crie um post sobre o erro de usar 'people is'.", "Faça um vídeo explicando a confusão entre 'lose' e 'miss'.", "Corrija a pronúncia de palavras como 'world', 'work' e 'word'.", "Explique o erro comum de usar o infinitivo após modais ('I can to swim').", "Crie um post sobre a confusão entre 'advise' (verbo) e 'advice' (substantivo).", "Faça um vídeo sobre o erro de usar 'for' em vez de 'to' para indicar finalidade.", "Mostre como evitar o erro de usar duplo negativo em uma frase.", "Explique por que 'informations' e 'advices' estão incorretos (substantivos incontáveis).", "Faça um vídeo sobre 'Como melhorar seu listening em 3 passos'.", "Crie um post com os 5 melhores aplicativos gratuitos para aprender inglês.", "Ensine como usar flashcards de forma eficaz (active recall).", "Faça um guia sobre como definir metas realistas de aprendizado de idiomas.", "Compartilhe 3 técnicas para memorizar vocabulário novo.", "Faça um vídeo sobre a importância de cometer erros no aprendizado.", "Crie um post 'Como encontrar um parceiro de conversação online'.", "Ensine como usar o 'shadowing' para melhorar a pronúncia.", "Faça um guia sobre como ler seu primeiro livro em inglês.", "Compartilhe dicas para se manter motivado nos estudos.", "Crie um carrossel sobre 'Como criar um ambiente de imersão em casa'.", "Faça um vídeo explicando o método Pomodoro para estudar.", "Dê dicas de como usar músicas para aprender inglês.", "Crie um post sobre os melhores dicionários e tradutores online.", "Ensine como usar séries e filmes para aprender vocabulário e pronúncia.", "Faça um vídeo sobre 'Pensar em inglês: como começar?'.", "Compartilhe um plano de estudos semanal para um aluno iniciante.", "Crie um post sobre 'Como praticar a escrita todos os dias'.", "Ensine como dar e receber feedback em inglês durante a prática.", "Faça um vídeo sobre a importância da revisão espaçada (spaced repetition)."
-    ];
-    let lastIdeaIndex = -1;
-
-    generateButton.addEventListener('click', () => {
-        if (clickSound) clickSound.play().catch(e => console.error(e));
-
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * ideaBank.length);
-        } while (ideaBank.length > 1 && newIndex === lastIdeaIndex);
-        
-        lastIdeaIndex = newIndex;
-        const newIdea = ideaBank[newIndex];
-
-        ideaBox.classList.add('pulsate');
-        ideaText.style.opacity = '0';
-
-        setTimeout(() => {
-            ideaText.textContent = newIdea;
-            ideaText.style.opacity = '1';
-            copyButton.style.opacity = '1';
-            copyButton.style.pointerEvents = 'auto';
-        }, 150);
-
-        setTimeout(() => ideaBox.classList.remove('pulsate'), 500);
-    });
-
-    copyButton.addEventListener('click', () => {
-        const tempTextArea = document.createElement('textarea');
-        tempTextArea.value = ideaText.textContent;
-        document.body.appendChild(tempTextArea);
-        tempTextArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempTextArea);
-        
-        copyFeedback.style.opacity = '1';
-        setTimeout(() => { copyFeedback.style.opacity = '0'; }, 2000);
-    });
-}
-
-        // Ação: Substitua sua função renderCreatorsRoom() inteira por esta.
-function renderCreatorsRoom() {
-    setActiveHubButton(null);
-    showHeader();
-    document.getElementById('main-title').textContent = 'Creators Room';
-    document.getElementById('main-description').textContent = 'Diretrizes, ferramentas e inspiração para criar conteúdo de alto impacto para o SLAP.';
-
-    contentArea.innerHTML = `
-        <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div id="creators-room-tabs" class="creators-tab-container">
-                <button data-subtarget="good-practices" class="creators-tab">Boas Práticas</button>
-                <button data-subtarget="prohibited" class="creators-tab">O Que NÃO Fazer</button>
-                <button data-subtarget="glossary" class="creators-tab">Glossário</button>
-                <button data-subtarget="funnel" class="creators-tab">Funil de Conteúdo</button>
-                <!-- BOTÃO NOVO ADICIONADO AQUI -->
-                <button data-subtarget="creative-block" class="creators-tab">Desbloqueio Criativo</button>
-            </div>
-            <div id="creators-room-dynamic-content">
-                <!-- O conteúdo da sub-aba será carregado aqui -->
-            </div>
-        </section>
-    `;
-
-    // Lógica para alternar entre as abas
-    const tabContainer = document.getElementById('creators-room-tabs');
-    tabContainer.addEventListener('click', (e) => {
-        if (e.target.matches('.creators-tab')) {
-            const subtarget = e.target.dataset.subtarget;
-
-            // Remove a classe 'active' de todas e a adiciona à clicada
-            tabContainer.querySelectorAll('.creators-tab').forEach(tab => tab.classList.remove('active'));
-            e.target.classList.add('active');
-
-            // Renderiza o conteúdo correspondente
-            switch (subtarget) {
-                case 'prohibited':
-                    renderProhibitedContent();
-                    break;
-                case 'glossary':
-                    renderGlossaryContent();
-                    break;
-                case 'funnel':
-                    renderContentFunnel();
-                    break;
-                case 'creative-block': // Lógica nova adicionada para o gerador
-                    renderCreativeBlockSection();
-                    break;
-                case 'good-practices':
-                default:
-                    renderGoodPracticesContent();
-                    break;
-            }
+        function renderCreatorsRoom() {
+            setActiveHubButton('nav-creators-room');
+            showHeader();
+            window.renderGoodPracticesContent(); // Default to Good Practices when Creators Room is opened
         }
-    });
 
-    // Carrega o conteúdo da primeira aba por padrão
-    renderGoodPracticesContent();
-    // Ativa o primeiro botão visualmente
-    tabContainer.querySelector('[data-subtarget="good-practices"]').classList.add('active');
-}
+        function renderMethodSection() {
+            setActiveHubButton('nav-method');
+            showHeader();
+            document.getElementById('main-title').textContent = 'Método SLAP: Guia de Ensino Dinâmico';
+            document.getElementById('main-description').textContent = 'Nosso método é um guia para planejar aulas de inglês engajadoras, progressivas e com foco na prática ativa. Ele é dividido em quatro fases: SPARK, LEARN, APPLY e PERFORM.';
+            
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                       <div class="method-phase-card method-phase-spark p-6">
+                            <h3 class="text-xl font-bold mb-4">SPARK</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
+                        </div>
+                        <div class="method-phase-card method-phase-learn p-6">
+                            <h3 class="text-xl font-bold mb-4">LEARN</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
+                        </div>
+                         <div class="method-phase-card method-phase-apply p-6">
+                            <h3 class="text-xl font-bold mb-4">APPLY</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
+                        </div>
+                        <div class="method-phase-card method-phase-perform p-6">
+                            <h3 class="text-xl font-bold mb-4">PERFORM</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.</p>
+                        </div>
+                    </div>
+                     <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Exemplos de Atividades por Fase</h3>
+                    <div class="space-y-3">
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#F1D24B] mr-3"></span>Spark</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Atividades com séries e músicas</li><li>Quebra-gelos</li><li>Warm-ups</li><li>Lead-ins leves para introdução de tema</li></ul></div>
+                        </div>
+                         <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#84C7DF] mr-3"></span>Learn</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Apresentação de frases e vocabulário</li><li>Comparação de estruturas</li><li>Atividades explicativas</li></ul></div>
+                        </div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#8671D1] mr-3"></span>Apply</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Fill the gaps</li><li>Unscrambling</li><li>Perguntas dirigidas com base no conteúdo aprendido</li></ul></div>
+                        </div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#FF5C3D] mr-3"></span>Perform</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Perguntas abertas</li><li>Debates</li><li>Roleplays e simulações</li></ul></div>
+                        </div>
+                    </div>
+                </section>
+            `;
+            if (currentChart) {
+                currentChart.destroy();
+            }
+             document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
+        };
         
         const certifications = [
             { name: "TKT", description: "Teaching Knowledge Test", bonus: "R$30/mês" },
@@ -3334,6 +3264,9 @@ document.getElementById('main-description').textContent = 'Onde os melhores comp
         let currentQuestionIndex = 0;
         let score = 0;
         
+        const clickSound = document.getElementById('click-sound');
+        const correctSound = document.getElementById('correct-sound');
+        const wrongSound = document.getElementById('wrong-sound');
 
         function renderTestYourEnglishSection() {
             setActiveHubButton(null); // No active button in nav
@@ -4389,9 +4322,7 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
        document.addEventListener('DOMContentLoaded', () => {
-    clickSound = document.getElementById('click-sound');
-    correctSound = document.getElementById('correct-sound');
-    wrongSound = document.getElementById('wrong-sound');
+    
     // --- CORREÇÃO DA VERIFICAÇÃO DE LOGIN ---
     const userJson = sessionStorage.getItem('loggedInUser');
     if (userJson) {
