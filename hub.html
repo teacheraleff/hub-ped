@@ -1012,6 +1012,9 @@
 
     <script>
 let loggedInUser = null;
+let clickSound, correctSound, wrongSound;
+let currentChart;
+let contentArea, mainHeader; 
         
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
@@ -1921,8 +1924,6 @@ const courseData = [
         };
 
         let currentChart;
-        const contentArea = document.getElementById('content-area');
-        const mainHeader = document.getElementById('main-header');
 
         // Funções de renderização principais, agora anexadas ao objeto window
         function setActiveHubButton(buttonId) {
@@ -4411,7 +4412,12 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
        document.addEventListener('DOMContentLoaded', () => {
-    
+    contentArea = document.getElementById('content-area');
+    mainHeader = document.getElementById('main-header');
+    clickSound = document.getElementById('click-sound');
+    correctSound = document.getElementById('correct-sound');
+    wrongSound = document.getElementById('wrong-sound');
+
     // --- CORREÇÃO DA VERIFICAÇÃO DE LOGIN ---
     const userJson = sessionStorage.getItem('loggedInUser');
     if (userJson) {
