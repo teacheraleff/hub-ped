@@ -12,15 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: SLAP Brand Colors: #F1D24B (Primary Yellow), #FF5C3D (Secondary Orange/Red), #84C7DF (Secondary Light Blue), #8671D1 (Secondary Purple) -->
     <style>
-/* Ação: Adicione este código dentro da sua tag <style> */
-@keyframes pulsate-animation {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.7); }
-  70% { transform: scale(1.02); box-shadow: 0 0 15px 10px rgba(45, 212, 191, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(45, 212, 191, 0); }
-}
-.pulsate {
-  animation: pulsate-animation 0.8s ease-out;
-}
         html, body {
             height: 100%;
         }
@@ -1012,9 +1003,6 @@
 
     <script>
 let loggedInUser = null;
-let clickSound, correctSound, wrongSound;
-let currentChart;
-let contentArea, mainHeader; 
         
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
@@ -1489,30 +1477,6 @@ const scheduleData = {
         { type: "urgente", description: "Volta às aulas dos alunos VIP" },
         { type: "urgente", description: "Volta às aulas das turmas" }]
 };
-
-const ideaBank = [
-    "Faça um 'react' a um vídeo viral da sua área.",
-    "Crie um tutorial de 5 minutos sobre uma habilidade que você domina.",
-    "Desafio: Tente fazer algo novo pela primeira vez e grave o processo.",
-    "Um dia na minha vida como [sua profissão/hobby].",
-    "Review honesto do produto X que todo mundo está falando.",
-    "Perguntas e Respostas: Peça para seus seguidores enviarem perguntas.",
-    "Mostre sua rotina de trabalho/estudos (home office, escritório, etc).",
-    "Faça um 'unboxing' de algo que você comprou recentemente.",
-    "Liste os 5 maiores erros que iniciantes cometem em [sua área].",
-    "Cozinhe uma receita e mostre o resultado (dando certo ou errado!).",
-    "Faça um tour pelo seu setup de gravação/trabalho.",
-    "Conte a história de como você começou no [seu hobby/profissão].",
-    "Explique um conceito complexo da sua área de forma simples (ELIF5).",
-    "Reaja aos seus vídeos antigos ou trabalhos do passado.",
-    "Crie uma lista de 'Top 3' de livros, filmes ou ferramentas que você recomenda.",
-    "Mostre os bastidores de um projeto em que você está trabalhando.",
-    "Desminta um mito popular sobre [sua área].",
-    "Compartilhe sua maior falha e o que você aprendeu com ela.",
-    "Faça uma paródia ou um vídeo de comédia sobre um tema do seu nicho.",
-    "Responda a um comentário polêmico ou uma crítica de forma construtiva."
-];
-
 const courseData = [
     {
         name: "Starter 1",
@@ -1924,6 +1888,8 @@ const courseData = [
         };
 
         let currentChart;
+        const contentArea = document.getElementById('content-area');
+        const mainHeader = document.getElementById('main-header');
 
         // Funções de renderização principais, agora anexadas ao objeto window
         function setActiveHubButton(buttonId) {
@@ -2491,67 +2457,70 @@ const courseData = [
         }
 
 
-        // Ação: Substitua sua função renderCreatorsRoomSection() inteira por esta:
-function renderCreatorsRoomSection() {
-    setActiveHubButton('creator-hub');
-    showHeader();
-    mainHeader.textContent = "Creator's Room";
-    contentArea.innerHTML = `
-        <div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden">
-            <div class="flex flex-wrap border-b border-gray-700">
-                <button data-tab="pdi" class="creator-tab-btn active text-sm sm:text-base py-3 px-4 md:py-4 md:px-6 font-semibold text-white border-b-2 border-teal-400 focus:outline-none">
-                    <i class="fas fa-tasks mr-2"></i>PDI
-                </button>
-                <button data-tab="creative-block" class="creator-tab-btn text-sm sm:text-base py-3 px-4 md:py-4 md:px-6 font-semibold text-gray-400 hover:bg-gray-700/50 focus:outline-none">
-                    <i class="fas fa-lightbulb mr-2"></i>Desbloqueio Criativo
-                </button>  <button data-tab="links" class="creator-tab-btn text-sm sm:text-base py-3 px-4 md:py-4 md:px-6 font-semibold text-gray-400 hover:bg-gray-700/50 focus:outline-none">
-                    <i class="fas fa-link mr-2"></i>Links Úteis
-                </button>
-            </div>
-            <div id="creator-dynamic-content">
-                </div>
-        </div>
-    `;
-
-    const tabsContainer = contentArea.querySelector('.flex');
-    const dynamicContentArea = document.getElementById('creator-dynamic-content');
-
-    // Função para lidar com a troca de abas
-    const switchTab = (tabId) => {
-        // Atualiza a aparência dos botões
-        document.querySelectorAll('.creator-tab-btn').forEach(btn => {
-            btn.classList.remove('active', 'text-white', 'border-teal-400');
-            btn.classList.add('text-gray-400');
-        });
-        const activeButton = document.querySelector(`.creator-tab-btn[data-tab="${tabId}"]`);
-        activeButton.classList.add('active', 'text-white', 'border-teal-400');
-        activeButton.classList.remove('text-gray-400');
-
-        // Renderiza o conteúdo da aba
-        switch (tabId) {
-            case 'pdi':
-                renderPdiSection();
-                break;
-            case 'creative-block': // <-- NOVA LÓGICA ADICIONADA
-                renderCreativeBlockSection();
-                break;
-            case 'links':
-                renderLinksUteisSection();
-                break;
+        function renderCreatorsRoom() {
+            setActiveHubButton('nav-creators-room');
+            showHeader();
+            window.renderGoodPracticesContent(); // Default to Good Practices when Creators Room is opened
         }
-    };
 
-    // Adiciona o event listener
-    tabsContainer.addEventListener('click', (event) => {
-        const tabButton = event.target.closest('.creator-tab-btn');
-        if (tabButton) {
-            switchTab(tabButton.dataset.tab);
-        }
-    });
-
-    // Carrega a aba inicial
-    switchTab('pdi');
-}
+        function renderMethodSection() {
+            setActiveHubButton('nav-method');
+            showHeader();
+            document.getElementById('main-title').textContent = 'Método SLAP: Guia de Ensino Dinâmico';
+            document.getElementById('main-description').textContent = 'Nosso método é um guia para planejar aulas de inglês engajadoras, progressivas e com foco na prática ativa. Ele é dividido em quatro fases: SPARK, LEARN, APPLY e PERFORM.';
+            
+            contentArea.innerHTML = `
+                <section class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                       <div class="method-phase-card method-phase-spark p-6">
+                            <h3 class="text-xl font-bold mb-4">SPARK</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349726/SPARK_oohlnr.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=SPARK'" alt="Imagem SPARK" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa fase serve para ativar o interesse e a curiosidade dos alunos. É um momento de quebra de gelo, onde o professor apresenta uma imagem, vídeo, pergunta ou situação que desperte atenção e provoque uma reação emocional ou cognitiva. O objetivo aqui não é ensinar, mas preparar o terreno para o aprendizado, deixando os alunos mais engajados e curiosos sobre o que virá.</p>
+                        </div>
+                        <div class="method-phase-card method-phase-learn p-6">
+                            <h3 class="text-xl font-bold mb-4">LEARN</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/LEARN_vwakoa.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=LEARN'" alt="Imagem LEARN" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Essa é a fase de ensino direto do conteúdo, com explicações claras, visualmente organizadas e, quando possível, com apoio de exemplos e repetições guiadas. O foco aqui é clareza, simplicidade e progressão lógica. Tudo que é novo é apresentado nessa fase, respeitando o nível de proficiência do aluno. Pode incluir explicações visuais, exercícios simples, etc.</p>
+                        </div>
+                         <div class="method-phase-card method-phase-apply p-6">
+                            <h3 class="text-xl font-bold mb-4">APPLY</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350106/APPLY_kivovl.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=APPLY'" alt="Imagem APPLY" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>Aqui os alunos aplicam o que aprenderam de maneira mais ativa. É uma fase de prática mais autônoma, mas ainda com suporte. As atividades são pensadas para gerar produção, percepção, interação ou reconhecimento do conteúdo, com uma ligação mais direta com a vida real ou com o uso comunicativo da língua. Pode envolver jogos, desafios, atividades em dupla, listening, leitura, prática controlada, etc.</p>
+                        </div>
+                        <div class="method-phase-card method-phase-perform p-6">
+                            <h3 class="text-xl font-bold mb-4">PERFORM</h3>
+                            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749350100/PERFORM_m2x6cw.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/e0e0e0/ffffff?text=PERFORM'" alt="Imagem PERFORM" class="w-full h-40 object-contain mx-auto rounded-lg mb-4">
+                            <p>É a fase final, de consolidação e performance espontânea. Aqui o aluno precisa usar o que aprendeu de forma mais livre, sem depender tanto do apoio do professor. Pode ser uma mini apresentação, uma conversa real, um jogo criativo ou uma simulação. O objetivo é que o aluno demonstre domínio do conteúdo e coloque em prática em um contexto mais natural e autêntico.</p>
+                        </div>
+                    </div>
+                     <h3 class="text-lg font-semibold mt-8 mb-4 text-stone-800">Exemplos de Atividades por Fase</h3>
+                    <div class="space-y-3">
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#F1D24B] mr-3"></span>Spark</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Atividades com séries e músicas</li><li>Quebra-gelos</li><li>Warm-ups</li><li>Lead-ins leves para introdução de tema</li></ul></div>
+                        </div>
+                         <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#84C7DF] mr-3"></span>Learn</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Apresentação de frases e vocabulário</li><li>Comparação de estruturas</li><li>Atividades explicativas</li></ul></div>
+                        </div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#8671D1] mr-3"></span>Apply</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Fill the gaps</li><li>Unscrambling</li><li>Perguntas dirigidas com base no conteúdo aprendido</li></ul></div>
+                        </div>
+                        <div class="faq-item bg-stone-100">
+                            <div class="faq-question"><span class="flex items-center"><span class="w-3 h-3 rounded-full bg-[#FF5C3D] mr-3"></span>Perform</span><svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
+                            <div class="faq-answer bg-stone-100"><ul class="list-disc list-inside"><li>Perguntas abertas</li><li>Debates</li><li>Roleplays e simulações</li></ul></div>
+                        </div>
+                    </div>
+                </section>
+            `;
+            if (currentChart) {
+                currentChart.destroy();
+            }
+             document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', toggleFaq);
+            });
+        };
         
         const certifications = [
             { name: "TKT", description: "Teaching Knowledge Test", bonus: "R$30/mês" },
@@ -2830,65 +2799,6 @@ function renderCreatorsRoomSection() {
                 currentChart.destroy();
             }
         }
-// Ação: Adicione esta nova função inteira ao seu script, junto com as outras funções 'render'.
-function renderCreativeBlockSection() {
-    const dynamicContentArea = document.getElementById('creator-dynamic-content');
-    if (!dynamicContentArea) return;
-
-    dynamicContentArea.innerHTML = `
-        <div class="text-center p-4 md:p-8 bg-gray-800 rounded-b-lg">
-            <h3 class="text-2xl font-bold text-teal-300 mb-4">Gerador de Ideias</h3>
-            <p class="text-gray-400 mb-6">Pressionado por ideias? Clique no botão abaixo para gerar um novo tema para o seu próximo vídeo!</p>
-            
-            <div id="idea-box" class="min-h-[120px] bg-gray-900 rounded-lg p-6 flex items-center justify-center mb-6 border-2 border-dashed border-gray-700">
-                <span id="idea-text" class="text-xl text-gray-300 font-medium">Sua próxima grande ideia aparece aqui...</span>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                 <button id="generate-button" class="w-full sm:w-auto bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
-                    <i class="fas fa-lightbulb mr-2"></i>Gerar Nova Ideia
-                </button>
-                <button id="copy-button" class="w-full sm:w-auto bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 hidden">
-                    <i class="fas fa-copy mr-2"></i>Copiar Ideia
-                </button>
-            </div>
-            <span id="copy-feedback" class="text-green-400 mt-4 h-6 block"></span>
-        </div>
-    `;
-
-    const generateButton = document.getElementById('generate-button');
-    const ideaText = document.getElementById('idea-text');
-    const ideaBox = document.getElementById('idea-box');
-    const copyButton = document.getElementById('copy-button');
-    const copyFeedback = document.getElementById('copy-feedback');
-
-    generateButton.addEventListener('click', () => {
-        if (clickSound) clickSound.play().catch(e => console.error(e));
-        
-        const randomIndex = Math.floor(Math.random() * ideaBank.length);
-        const newIdea = ideaBank[randomIndex];
-        
-        ideaText.textContent = newIdea;
-        copyButton.classList.remove('hidden');
-        copyFeedback.textContent = '';
-
-        // Animação para feedback visual
-        ideaBox.classList.remove('pulsate');
-        void ideaBox.offsetWidth; // Truque para reiniciar a animação
-        ideaBox.classList.add('pulsate');
-    });
-
-    copyButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(ideaText.textContent).then(() => {
-            copyFeedback.textContent = 'Copiado para a área de transferência!';
-            setTimeout(() => { copyFeedback.textContent = '' }, 2000);
-        }).catch(err => {
-            copyFeedback.textContent = 'Falha ao copiar.';
-            console.error('Erro ao copiar texto: ', err);
-        });
-    });
-}
-
         function renderSlapDojoSection() {
     setActiveHubButton('nav-slap-dojo'); // Define o botão do Dojo como ativo
     showHeader();
@@ -3353,6 +3263,10 @@ document.getElementById('main-description').textContent = 'Onde os melhores comp
         let currentQuizQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
+        
+        const clickSound = document.getElementById('click-sound');
+        const correctSound = document.getElementById('correct-sound');
+        const wrongSound = document.getElementById('wrong-sound');
 
         function renderTestYourEnglishSection() {
             setActiveHubButton(null); // No active button in nav
@@ -4408,12 +4322,7 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
        document.addEventListener('DOMContentLoaded', () => {
-    contentArea = document.getElementById('content-area');
-    mainHeader = document.getElementById('main-header');
-    clickSound = document.getElementById('click-sound');
-    correctSound = document.getElementById('correct-sound');
-    wrongSound = document.getElementById('wrong-sound');
-
+    
     // --- CORREÇÃO DA VERIFICAÇÃO DE LOGIN ---
     const userJson = sessionStorage.getItem('loggedInUser');
     if (userJson) {
