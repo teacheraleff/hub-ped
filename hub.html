@@ -4328,18 +4328,30 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
     if (userJson) {
         // Atribui o objeto do usuário à variável global
         loggedInUser = JSON.parse(userJson);
-// --- NOVO CÓDIGO DE PERSONALIZAÇÃO ---
+// --- NOVO CÓDIGO DE PERSONALIZAÇÃO (VERSÃO 2.0) ---
 if (loggedInUser) {
-    // Encontra os elementos que vamos alterar
     const userPhotoElement = document.getElementById('user-photo');
     const hubTitleElement = document.getElementById('hub-title');
 
-    // Pega o primeiro nome do utilizador a partir dos dados guardados
+    // Pega o primeiro nome do utilizador
     const firstName = loggedInUser.name.split(' ')[0];
 
-    // Atualiza a foto e o título com os dados do utilizador
+    // Procura pelo professor correspondente no array 'teachersData' usando o email/username
+    const matchedTeacher = teachersData.find(teacher => teacher.email === loggedInUser.username);
+
+    // Define a URL da foto a ser usada
+    let photoUrl;
+    if (matchedTeacher && matchedTeacher.photo) {
+        // Se encontrou um professor correspondente e ele tem uma foto, usa essa foto
+        photoUrl = matchedTeacher.photo;
+    } else {
+        // Se não encontrou ou o professor não tem foto, usa uma imagem padrão
+        photoUrl = 'https://res.cloudinary.com/dqfi22uz0/image/upload/v1749540098/AVATAR_MASC_AZUL_mg0oos.png';
+    }
+
+    // Atualiza a foto e o título
     if (userPhotoElement) {
-        userPhotoElement.src = loggedInUser.photo;
+        userPhotoElement.src = photoUrl;
         userPhotoElement.alt = `Foto de ${loggedInUser.name}`;
     }
     if (hubTitleElement) {
