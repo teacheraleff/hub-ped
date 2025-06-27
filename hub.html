@@ -866,9 +866,9 @@
             
             <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6 flex flex-col">
     <div class="mb-6 text-center">
-        <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/e0e0e0/ffffff?text=LOGO'" alt="SLAP Logo" class="w-24 h-auto mx-auto rounded-lg">
-    </div>
-    <h1 class="text-xl font-bold text-stone-800 mb-6 text-center">Hub Pedagógico</h1>
+    <img id="user-photo" src="https://placehold.co/96x96/e0e0e0/ffffff?text=... " alt="Foto do Utilizador" class="w-24 h-auto mx-auto rounded-lg">
+</div>
+<h1 id="hub-title" class="text-xl font-bold text-stone-800 mb-6 text-center">Hub Pedagógico</h1>
     <nav id="main-navigation" class="space-y-1 flex-1">
         <!-- Início -->
         <button data-target="inicio" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-yellow-50 hover:text-[#F1D24B] transition-colors flex items-center font-semibold">
@@ -4328,6 +4328,25 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
     if (userJson) {
         // Atribui o objeto do usuário à variável global
         loggedInUser = JSON.parse(userJson);
+// --- NOVO CÓDIGO DE PERSONALIZAÇÃO ---
+if (loggedInUser) {
+    // Encontra os elementos que vamos alterar
+    const userPhotoElement = document.getElementById('user-photo');
+    const hubTitleElement = document.getElementById('hub-title');
+
+    // Pega o primeiro nome do utilizador a partir dos dados guardados
+    const firstName = loggedInUser.name.split(' ')[0];
+
+    // Atualiza a foto e o título com os dados do utilizador
+    if (userPhotoElement) {
+        userPhotoElement.src = loggedInUser.photo;
+        userPhotoElement.alt = `Foto de ${loggedInUser.name}`;
+    }
+    if (hubTitleElement) {
+        hubTitleElement.textContent = `Hub do ${firstName}`;
+    }
+}
+// --- FIM DO NOVO CÓDIGO ---
     } else {
         // Se não houver ninguém logado, impede o acesso
         alert('Acesso negado. É necessário fazer login para continuar.');
