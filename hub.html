@@ -187,27 +187,6 @@
             padding-left: 0.25rem;
             margin-bottom: 0.5rem;
         }
-        
-        /* Links Úteis Styles */
-        .links-uteis-section .faq-item {
-             background-color: white;
-             border: 1px solid #e7e5e4;
-             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        }
-        .links-uteis-section .faq-answer ul {
-            padding: 0.5rem 0;
-        }
-        .links-uteis-section .faq-answer a {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            transition: background-color 0.2s;
-        }
-        .links-uteis-section .faq-answer a:hover {
-            background-color: #FFFBEB; /* yellow-50 */
-        }
 
         /* Test Your English Styles */
         .quiz-option {
@@ -2632,100 +2611,6 @@ const courseData = [
     audioSrc: "https://res.cloudinary.com/dqfi22uz0/video/upload/v1750824506/deep_dive_-_professor_problema_e_professor_invisivel_yk75ds.mp3" // Substitua pelo link do áudio
   }
         ];
-        
-        const usefulLinks = {
-            "Verbo To Be": [
-                { title: "Aula 1: Verbo To Be - Explicação Completa (YouTube)", url: "https://www.youtube.com/watch?v=3R-IH-V7lwQ" },
-                { title: "Aula 2: Verbo To Be - Gramática e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=vX1TCxH_NZs" },
-                { title: "Exercício 1: Pratique o Verbo To Be (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=8406" },
-                { title: "Exercício 2: Verbo To Be - Preencha os Espaços (British Council)", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/verb-be" },
-                { title: "Exercício 3: Teste Interativo - Verbo To Be (Perfect English Grammar)", url: "https://www.perfect-english-grammar.com/verb-to-be-exercise-1.html" }
-            ],
-            "Simple Present": [
-                { title: "Aula 1: Simple Present Tense - Aula Explicativa (YouTube)", url: "https://www.youtube.com/watch?v=7dq0YJS_56c" },
-                { title: "Aula 2: Simple Present com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=ACDlqL7HpWI" },
-                { title: "Exercício 1: Simple Present - Pratique Aqui (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=11340" },
-                { title: "Exercício 2: British Council - Simple Present Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/present-simple" },
-                { title: "Exercício 3: Perfect English Grammar - Simple Present Quiz", url: "https://www.perfect-english-grammar.com/simple-present-exercise-1.html" }
-            ],
-            "Simple Past": [
-                 { title: "Aula 1: Simple Past Tense - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=5dGk4rQZEk4" },
-                 { title: "Aula 2: Simple Past com Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=zjvccXmrmXA" },
-                 { title: "Exercício 1: Pratique Simple Past (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15870" },
-                 { title: "Exercício 2: British Council - Simple Past Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/past-simple-regular-verbs" },
-                 { title: "Exercício 3: Perfect English Grammar - Past Simple Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
-            ],
-            "How Many / How Much": [
-                 { title: "Aula 1: How Many vs How Much (YouTube - English with Lucy)", url: "https://www.youtube.com/watch?v=ppD_S_32a2I" },
-                 { title: "Aula 2: Quantifiers - How Many e How Much (YouTube)", url: "https://www.youtube.com/watch?v=Ovd1SYqDBa0" },
-                 { title: "Exercício 1: Pratique How Many / How Much (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2237" },
-                 { title: "Exercício 2: British Council - Quantifiers Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/much-many-lot-little-few" },
-                 { title: "Exercício 3: Perfect English Grammar - How Many / How Much Quiz", url: "https://www.perfect-english-grammar.com/how-many-how-much-exercise-1.html" }
-            ],
-            "Genitive Case": [
-                 { title: "Aula 1: Genitive Case - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=TAYcNEb3dUM" },
-                 { title: "Aula 2: Possessive Case - Genitive (YouTube)", url: "https://www.youtube.com/watch?v=Urs8G8iR6-A" },
-                 { title: "Exercício 1: Pratique Genitive Case (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1835" },
-                 { title: "Exercício 2: British Council - Possessives Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/possessives" },
-                 { title: "Exercício 3: Perfect English Grammar - Possessive Case Quiz", url: "https://www.perfect-english-grammar.com/possessive-case-exercise-1.html" }
-            ],
-             "Causative Form": [
-                 { title: "Aula 1: Causative Form - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=QXgYgC-qhRQ" },
-                 { title: "Aula 2: Causative Have / Get (YouTube)", url: "https://www.youtube.com/watch?v=XYRTTl_NbMQ" },
-                 { title: "Exercício 1: Pratique Causative Form (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2705" },
-                 { title: "Exercício 2: British Council - Causative Practice", url: "https://learnenglish.britishcouncil.org/grammar/b2-c1-grammar/causative-verbs-have-something-done" },
-                 { title: "Exercício 3: Perfect English Grammar - Causative Quiz", url: "https://www.perfect-english-grammar.com/causative-exercise-1.html" }
-            ],
-             "Zero Conditional": [
-                 { title: "Aula 1: Zero Conditional (BBC Learning English)", url: "https://www.youtube.com/watch?v=1t2s4WbWf5c" },
-                 { title: "Aula 2: Zero Conditional - Explained (YouTube)", url: "https://www.youtube.com/watch?v=Afk-TqOtu4s" },
-                 { title: "Exercício 1: Pratique Zero Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1433" },
-                 { title: "Exercício 2: British Council - Zero Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-zero-conditional" },
-                 { title: "Exercício 3: Perfect English Grammar - Zero Conditional Quiz", url: "https://www.perfect-english-grammar.com/zero-conditional-exercise-1.html" }
-            ],
-            "First Conditional": [
-                 { title: "Aula 1: First Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=frY2lxk8qBo" },
-                 { title: "Aula 2: First Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=5UiG0xOKp1I" },
-                 { title: "Exercício 1: Pratique First Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1438" },
-                 { title: "Exercício 2: British Council - First Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-first-conditional" },
-                 { title: "Exercício 3: Perfect English Grammar - First Conditional Quiz", url: "https://www.perfect-english-grammar.com/first-conditional-exercise-1.html" }
-            ],
-            "Second Conditional": [
-                 { title: "Aula 1: Second Conditional - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=dAzX0iYdFXo" },
-                 { title: "Aula 2: Second Conditional - Exercícios (YouTube)", url: "https://www.youtube.com/watch?v=73fWk7riJok" },
-                 { title: "Exercício 1: Pratique Second Conditional (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1441" },
-                 { title: "Exercício 2: British Council - Second Conditional Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/conditionals-second-conditional" },
-                 { title: "Exercício 3: Perfect English Grammar - Second Conditional Quiz", url: "https://www.perfect-english-grammar.com/second-conditional-exercise-1.html" }
-            ],
-            "Verbos no Passado": [
-                 { title: "Aula 1: Verbos no Passado - Explicação (YouTube)", url: "https://www.youtube.com/watch?v=fVd20G9YFwg" },
-                 { title: "Aula 2: Verbos Regulares e Irregulares no Passado (YouTube)", url: "https://www.youtube.com/watch?v=6iMzxR1qtxo" },
-                 { title: "Exercício 1: Pratique Verbos no Passado (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=15870" },
-                 { title: "Exercício 2: British Council - Past Verbs Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/past-simple-regular-verbs" },
-                 { title: "Exercício 3: Perfect English Grammar - Past Verbs Quiz", url: "https://www.perfect-english-grammar.com/past-simple-exercise-1.html" }
-            ],
-            "Should": [
-                 { title: "Aula 1: Should - Uso e Explicação (YouTube)", url: "https://www.youtube.com/watch?v=FZtEZGxLMjs" },
-                 { title: "Aula 2: Should - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=R12t3DF8Hf0" },
-                 { title: "Exercício 1: Pratique Should (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=1839" },
-                 { title: "Exercício 2: British Council - Should Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/should-and-shouldnt-for-advice" },
-                 { title: "Exercício 3: Perfect English Grammar - Should Quiz", url: "https://www.perfect-english-grammar.com/modal-verbs-of-obligation-exercise-1.html" }
-            ],
-            "Would": [
-                 { title: "Aula 1: Would - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=0hrWZ18xgLM" },
-                 { title: "Aula 2: Would - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=rxzVhHcEYvs" },
-                 { title: "Exercício 1: Pratique Would (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2331" },
-                 { title: "Exercício 2: British Council - Would Practice", url: "https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/would" },
-                 { title: "Exercício 3: Perfect English Grammar - Would Quiz", url: "https://www.perfect-english-grammar.com/conditionals-exercise-1.html" }
-            ],
-            "Could": [
-                 { title: "Aula 1: Could - Explicação e Uso (YouTube)", url: "https://www.youtube.com/watch?v=dtK9CcrlKXc" },
-                 { title: "Aula 2: Could - Exercícios e Exemplos (YouTube)", url: "https://www.youtube.com/watch?v=ln77HkqHHR0" },
-                 { title: "Exercício 1: Pratique Could (English Exercises Online)", url: "https://www.englishexercises.org/makeagame/viewgame.asp?id=2432" },
-                 { title: "Exercício 2: British Council - Could Practice", url: "https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/can-and-could-for-ability" },
-                 { title: "Exercício 3: Perfect English Grammar - Could Quiz", url: "https://www.perfect-english-grammar.com/can-could-be-able-to-exercise-1.html" }
-            ]
-        };
 
         function renderPdiSection() {
             setActiveHubButton(null); // No active button in nav
@@ -3133,38 +3018,6 @@ document.getElementById('main-description').textContent = 'Onde os melhores comp
         currentChart.destroy();
     }
 }
-        
-        function renderLinksUteisSection() {
-            setActiveHubButton(null); // No active button in nav
-            showHeader();
-            document.getElementById('main-title').textContent = 'Links Úteis';
-            document.getElementById('main-description').textContent = 'Um repositório central de aulas em vídeo e exercícios interativos para os principais tópicos gramaticais.';
-
-            contentArea.innerHTML = `
-                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 links-uteis-section">
-                    ${Object.entries(usefulLinks).map(([title, links]) => `
-                        <div class="faq-item">
-                            <div class="faq-question">
-                                <span>${title}</span>
-                                <svg class="faq-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                            </div>
-                            <div class="faq-answer">
-                                <ul class="divide-y divide-stone-200">
-                                    ${links.map(link => `
-                                        <li class="py-3">
-                                            <a href="${link.url}" target="_blank" class="hover:underline transition-colors">${link.title}</a>
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                        </div>
-                    `).join('')}
-                </section>
-            `;
-             document.querySelectorAll('.faq-question').forEach(button => {
-                button.addEventListener('click', toggleFaq);
-            });
-        }
         
         // --- QUIZ DATA AND FUNCTIONS ---
         const quizData = [
@@ -4306,7 +4159,6 @@ function renderRanking() {
         window.renderMethodSection = renderMethodSection;
         window.renderPdiSection = renderPdiSection;
         window.renderRegimentoInternoSection = renderRegimentoInternoSection;
-        window.renderLinksUteisSection = renderLinksUteisSection;
         window.renderTeachersRoomSection = renderTeachersRoomSection;
         window.renderTeacherDossier = renderTeacherDossier;
         window.renderBrainFlipGameSection = renderBrainFlipGameSection;
