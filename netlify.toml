@@ -1,2 +1,0 @@
-[build]
-  ignore = "find . -type f -print0 | xargs -0 sed -i 's/AIzaSy[A-Za-z0-9_-]*/FIREBASE_API_KEY_PLACEHOLDER/g'"
