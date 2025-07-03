@@ -4243,19 +4243,6 @@ window.showCalendarModal = showCalendarModal;     // <-- ADICIONE ESTA
 window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 // ...// Add new game function to window
 
-       document.addEventListener('DOMContentLoaded', () => {
-
-    // --- LÓGICA DO BOTÃO DE SAIR ---
-    const logoutButton = document.getElementById('logout-button');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', (event) => {
-            event.preventDefault(); 
-            sessionStorage.removeItem('loggedInUser'); 
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 100);
-        });
-    }
     // --- FIM DA CORREÇÃO ---
     // Mapeamento dos alvos para as funções que renderizam cada página
     const pageRenderers = {
