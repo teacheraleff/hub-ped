@@ -12,6 +12,21 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: SLAP Brand Colors: #F1D24B (Primary Yellow), #FF5C3D (Secondary Orange/Red), #84C7DF (Secondary Light Blue), #8671D1 (Secondary Purple) -->
     <style>
+<!-- Firebase SDKs (Software Development Kits) -->
+<script type="module">
+  // Importa as funções necessárias dos módulos do Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  // Torna as funções acessíveis globalmente para que seus outros scripts possam usá-las
+  window.firebase = {
+    initializeApp,
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously,
+    signOut
+  };
+</script>
         html, body {
             height: 100%;
         }
@@ -933,7 +948,7 @@
         </div>
     </nav>
 <div class="mt-4">
-        <a href="index.html" id="logout-button" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-red-50 hover:text-red-600 transition-colors flex items-center font-semibold">
+        <button onclick="logout()" id="logout-button" class="nav-item w-full text-left px-4 py-2.5 rounded-lg text-stone-700 hover:bg-red-50 hover:text-red-600 transition-colors flex items-center font-semibold">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
             Sair
         </a>
@@ -980,6 +995,66 @@
 
 
     <script>
+// --- INÍCIO DO CÓDIGO DE AUTENTICAÇÃO FIREBASE ---
+
+// Suas configurações do Firebase (já preenchidas!)
+const firebaseConfig = {
+  apiKey: "AIzaSyBTOn7Bc7PaZR30mlA90ySwS4VjEHfI05U",
+  authDomain: "hub-ped-55970.firebaseapp.com",
+  projectId: "hub-ped-55970",
+  storageBucket: "hub-ped-55970.appspot.com",
+  messagingSenderId: "30411787355",
+  appId: "1:30411787355:web:41c29fcac45de5725d037e"
+};
+
+// Inicializa o Firebase
+const app = window.firebase.initializeApp(firebaseConfig);
+const auth = window.firebase.getAuth(app);
+
+// Observador do estado de autenticação (a "mágica" acontece aqui)
+window.firebase.onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Utilizador está logado!
+    console.log("Utilizador logado:", user);
+    
+    // Define os dados do utilizador logado
+    loggedInUser = {
+      uid: user.uid,
+      name: user.displayName || "Professor(a)", // Usa o nome de exibição ou um padrão
+      photoURL: user.photoURL || 'https://placehold.co/96x96/F1D24B/44403c?text=SLAP', // Usa a foto ou um placeholder
+      email: user.email || 'email.nao.fornecido@slap.com', // Adiciona um email padrão
+      role: (user.email && (user.email.includes('coord') || user.email.includes('aleff'))) ? 'coordenador' : 'professor'
+    };
+
+    // Atualiza a interface com os dados do utilizador
+    document.getElementById('user-photo').src = loggedInUser.photoURL;
+    document.getElementById('hub-title').textContent = `Hub de ${loggedInUser.name.split(' ')[0]}`;
+
+    // Agora que o utilizador está logado, carregue a página inicial
+    renderInicioSection();
+    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
+
+  } else {
+    // Ninguém logado, tenta fazer login anônimo para ter um UID
+    console.log("Nenhum utilizador. Tentando login anônimo...");
+    window.firebase.signInAnonymously(auth).catch((error) => {
+      console.error("Erro no login anônimo:", error);
+    });
+  }
+});
+
+// --- FIM DO CÓDIGO DE AUTENTICAÇÃO ---
+
+function logout() {
+  window.firebase.signOut(auth).then(() => {
+    console.log('Logout bem-sucedido.');
+    // Redireciona para uma página de "deslogado" ou simplesmente recarrega
+    window.location.href = "index.html"; 
+  }).catch((error) => {
+    console.error('Erro no logout:', error);
+  });
+}
+
 let loggedInUser = null;
         
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
@@ -4264,9 +4339,6 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
         }
     });
 
-    // Carrega a página inicial e define o botão "Início" como ativo
-    renderInicioSection();
-    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
 });
 
     </script>
