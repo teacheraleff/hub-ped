@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br"> 
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -839,75 +839,7 @@
 </head>
 <body class="bg-stone-50 text-stone-800">
 
-    <!-- Tela de Login (inicialmente visível) -->
-<div id="login-view" class="min-h-screen flex items-center justify-center bg-stone-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-        <div class="text-center">
-            <img src="https://res.cloudinary.com/dqfi22uz0/image/upload/v1749349751/DBB440C2-684E-4DCF-9CD3-B2DDC18F1E53_3_vgocga.jpg" alt="Logo SLAP" class="w-24 h-auto mx-auto rounded-lg mb-4">
-            <h2 class="text-2xl font-bold text-stone-800">Aceder ao Hub Pedagógico</h2>
-        </div>
-        
-        <!-- Formulário de Login -->
-        <form id="login-form" class="space-y-4">
-            <div>
-                <label for="login-email" class="text-sm font-medium text-stone-700">Email</label>
-                <input type="email" id="login-email" required class="w-full mt-1 p-2 border border-stone-300 rounded-md">
-            </div>
-            <div>
-                <label for="login-password" class="text-sm font-medium text-stone-700">Palavra-passe</label>
-                <input type="password" id="login-password" required class="w-full mt-1 p-2 border border-stone-300 rounded-md">
-            </div>
-            <p id="login-error" class="text-sm text-red-600 h-4"></p>
-            <div>
-                <button type="submit" class="w-full bg-[#F1D24B] text-stone-800 font-bold py-2 px-4 rounded-md hover:bg-yellow-500 transition-colors">
-                    Entrar
-                </button>
-            </div>
-        </form>
-
-        <!-- Link para se registar (opcional, mas recomendado) -->
-        <p class="text-sm text-center text-stone-600">
-            Ainda não tem conta? 
-            <button id="show-signup" class="font-medium text-[#F1D24B] hover:underline">Registe-se aqui</button>
-        </p>
-    </div>
-</div>
-
-<!-- Tela de Registo (inicialmente oculta) -->
-<div id="signup-view" class="min-h-screen hidden items-center justify-center bg-stone-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
-        <h2 class="text-2xl font-bold text-center text-stone-800">Criar Nova Conta</h2>
-        
-        <!-- Formulário de Registo -->
-        <form id="signup-form" class="space-y-4">
-            <div>
-                <label for="signup-name" class="text-sm font-medium text-stone-700">Nome Completo</label>
-                <input type="text" id="signup-name" required class="w-full mt-1 p-2 border border-stone-300 rounded-md">
-            </div>
-            <div>
-                <label for="signup-email" class="text-sm font-medium text-stone-700">Email</label>
-                <input type="email" id="signup-email" required class="w-full mt-1 p-2 border border-stone-300 rounded-md">
-            </div>
-            <div>
-                <label for="signup-password" class="text-sm font-medium text-stone-700">Palavra-passe</label>
-                <input type="password" id="signup-password" required class="w-full mt-1 p-2 border border-stone-300 rounded-md">
-            </div>
-            <p id="signup-error" class="text-sm text-red-600 h-4"></p>
-            <div>
-                <button type="submit" class="w-full bg-[#F1D24B] text-stone-800 font-bold py-2 px-4 rounded-md hover:bg-yellow-500 transition-colors">
-                    Registar
-                </button>
-            </div>
-        </form>
-
-        <p class="text-sm text-center text-stone-600">
-            Já tem conta? 
-            <button id="show-login" class="font-medium text-[#F1D24B] hover:underline">Faça login</button>
-        </p>
-    </div>
-</div>
-
-    <div id="app-container" class="hidden">
+    <div id="app-container">
         <div id="app" class="min-h-screen md:flex">
             
             <aside class="md:w-64 bg-white md:border-r border-b border-stone-200 p-4 md:p-6 flex flex-col">
@@ -1501,8 +1433,7 @@ const scheduleData = {
     "2025-07-07": [{ type: "gravacao", description: "Gravação de vídeo às 13h (Praia)" }], 
     "2025-07-08": [{ type: "gravacao", description: "Gravação de vídeos às 15h (Salão de Festas)" }],
     "2025-07-09": [{ type: "gravacao", description: "Gravação de vídeos às 13h (Praia)" }],
-    "2025-07-10": [{ type: "gravacao", description: "Gravação de vídeos às 14h (Apto. de Aleff + Área externa)" },
-                   { type: "lembrete", description: "Pérsia com o time às 19h" }],
+    "2025-07-10": [{ type: "gravacao", description: "Gravação de vídeos às 14h (apartamento de Aleff e área externa do condomínio)" }],
     "2025-07-11": [
         { type: "lembrete", description: "Reunião Pedagógica às 14h às 15h30 (Salão de Festas)" },
         { type: "gravacao", description: "Gravação de vídeos das 15h30 às 20h [com pausa] (Salão de Festas)" }
@@ -4339,152 +4270,6 @@ window.closeCalendarModal = closeCalendarModal;   // <-- ADICIONE ESTA
 });
 
     </script>
-<script type="module">
-  // Importe as funções que precisa
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { 
-    getAuth, 
-    onAuthStateChanged, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut,
-    updateProfile 
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
-  // --- 1. CONFIGURAÇÃO ---
-  // A sua configuração específica do Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyBTOn7Bc7PaZR30mlA90ySwS4VjEHfI05U",
-    authDomain: "hub-ped-55970.firebaseapp.com",
-    projectId: "hub-ped-55970",
-    storageBucket: "hub-ped-55970.appspot.com",
-    messagingSenderId: "30411787355",
-    appId: "1:30411787355:web:41c29fcac45de5725d037e"
-  };
-
-  // Inicialize o Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  // --- 2. ELEMENTOS DO HTML ---
-  const loginView = document.getElementById('login-view');
-  const signupView = document.getElementById('signup-view');
-  const hubView = document.getElementById('app-container'); // O seu conteúdo principal
-  const loginForm = document.getElementById('login-form');
-  const signupForm = document.getElementById('signup-form');
-  const logoutButton = document.getElementById('logout-button');
-
-  // --- 3. FUNÇÕES DE AUTENTICAÇÃO ---
-
-  // Função para REGISTAR um novo utilizador
-  const handleSignUp = async (event) => {
-    event.preventDefault();
-    const name = signupForm['signup-name'].value;
-    const email = signupForm['signup-email'].value;
-    const password = signupForm['signup-password'].value;
-    const errorEl = document.getElementById('signup-error');
-    errorEl.textContent = '';
-
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(userCredential.user, { displayName: name });
-      
-      await setDoc(doc(db, "users", userCredential.user.uid), {
-        name: name,
-        email: email,
-        role: "professor" // Define a função padrão aqui
-      });
-      // O onAuthStateChanged vai tratar de mostrar o hub
-    } catch (error) {
-      console.error("Erro no registo:", error.message);
-      errorEl.textContent = "Erro ao registar. Verifique os dados.";
-    }
-  };
- 
-  // Função para FAZER LOGIN
-  const handleSignIn = async (event) => {
-    event.preventDefault();
-    const email = loginForm['login-email'].value;
-    const password = loginForm['login-password'].value;
-    const errorEl = document.getElementById('login-error');
-    errorEl.textContent = '';
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // O onAuthStateChanged vai tratar de mostrar o hub
-    } catch (error) {
-      console.error("Erro no login:", error.message);
-      errorEl.textContent = "Email ou palavra-passe inválidos.";
-    }
-  };
-
-  // Função para FAZER LOGOUT
-  const handleSignOut = async () => {
-    try {
-        await signOut(auth);
-        // O onAuthStateChanged vai tratar de mostrar a tela de login
-    } catch (error) {
-        console.error("Erro ao fazer logout:", error);
-    }
-  };
-
-  // --- 4. O "POLÍCIA DE TRÂNSITO" ---
-  // Esta função observa o estado da autenticação e decide o que mostrar
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // Utilizador está logado!
-      console.log("Utilizador logado:", user.displayName);
-      
-      // AQUI ESTÁ A MAGIA: Conectamos o utilizador do Firebase à sua variável existente
-      window.loggedInUser = {
-        name: user.displayName,
-        username: user.email,
-        // Mais tarde, vamos buscar a 'role' do banco de dados
-        role: 'professor' // Por agora, deixamos um valor padrão
-      };
-
-      // Esconde as telas de login/registo e mostra o hub
-      loginView.style.display = 'none';
-      signupView.style.display = 'none';
-      hubView.classList.remove('hidden');
-
-    } else {
-      // Utilizador não está logado
-      console.log("Nenhum utilizador logado.");
-      window.loggedInUser = null;
-      
-      // Mostra a tela de login e esconde o hub
-      loginView.style.display = 'flex';
-      signupView.style.display = 'none';
-      hubView.classList.add('hidden');
-    }
-  });
-
-  // --- 5. LIGAR OS BOTÕES ÀS FUNÇÕES ---
-  if(loginForm) loginForm.addEventListener('submit', handleSignIn);
-  if(signupForm) signupForm.addEventListener('submit', handleSignUp);
-  if(logoutButton) logoutButton.addEventListener('click', handleSignOut);
-
-  // Botões para alternar entre login e registo
-  const showSignupBtn = document.getElementById('show-signup');
-  const showLoginBtn = document.getElementById('show-login');
-
-  if(showSignupBtn) {
-    showSignupBtn.addEventListener('click', () => {
-        loginView.style.display = 'none';
-        signupView.style.display = 'flex';
-    });
-  }
-  
-  if(showLoginBtn) {
-    showLoginBtn.addEventListener('click', () => {
-        loginView.style.display = 'flex';
-        signupView.style.display = 'none';
-    });
-  }
-
-</script>
 </body>
 </html>
