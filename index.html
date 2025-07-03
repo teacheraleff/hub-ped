@@ -851,6 +851,21 @@
 .tag-proibido { background-color: #FEE2E2; color: #991B1B; }
 .tag-comunicacao { background-color: #FEF3C7; color: #92400E; }
     </style>
+<!-- Firebase SDKs (Software Development Kits) -->
+<script type="module">
+  // Importa as funções necessárias dos módulos do Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signInAnonymously, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+  // Torna as funções acessíveis globalmente para que seus outros scripts possam usá-las
+  window.firebase = {
+    initializeApp,
+    getAuth,
+    onAuthStateChanged,
+    signInAnonymously,
+    signOut
+  };
+</script>
 </head>
 <body class="bg-stone-50 text-stone-800">
 
@@ -995,19 +1010,21 @@
 
 
     <script>
+
+
+function logout() {
+  window.firebase.signOut(auth).then(() => {
+    console.log('Logout bem-sucedido.');
+    window.location.href = "index.html"; 
+  }).catch((error) => {
+    console.error('Erro no logout:', error);
+  });
+}
+
+let loggedInUser = null;
 // --- INÍCIO DO CÓDIGO DE AUTENTICAÇÃO FIREBASE ---
 
-// Suas configurações do Firebase (já preenchidas!)
-const firebaseConfig = {
-  apiKey: "AIzaSyBTOn7Bc7PaZR30mlA90ySwS4VjEHfI05U",
-  authDomain: "hub-ped-55970.firebaseapp.com",
-  projectId: "hub-ped-55970",
-  storageBucket: "hub-ped-55970.appspot.com",
-  messagingSenderId: "30411787355",
-  appId: "1:30411787355:web:41c29fcac45de5725d037e"
-};
-
-// Inicializa o Firebase
+// Inicializa o Firebase usando o objeto 'firebaseConfig' que o Netlify injetou
 const app = window.firebase.initializeApp(firebaseConfig);
 const auth = window.firebase.getAuth(app);
 
@@ -1020,9 +1037,9 @@ window.firebase.onAuthStateChanged(auth, (user) => {
     // Define os dados do utilizador logado
     loggedInUser = {
       uid: user.uid,
-      name: user.displayName || "Professor(a)", // Usa o nome de exibição ou um padrão
-      photoURL: user.photoURL || 'https://placehold.co/96x96/F1D24B/44403c?text=SLAP', // Usa a foto ou um placeholder
-      email: user.email || 'email.nao.fornecido@slap.com', // Adiciona um email padrão
+      name: user.displayName || "Professor(a)",
+      photoURL: user.photoURL || 'https://placehold.co/96x96/F1D24B/44403c?text=SLAP',
+      email: user.email || 'email.nao.fornecido@slap.com',
       role: (user.email && (user.email.includes('coord') || user.email.includes('aleff'))) ? 'coordenador' : 'professor'
     };
 
@@ -1031,8 +1048,6 @@ window.firebase.onAuthStateChanged(auth, (user) => {
     document.getElementById('hub-title').textContent = `Hub de ${loggedInUser.name.split(' ')[0]}`;
 
     // Agora que o utilizador está logado, carregue a página inicial
-    renderInicioSection();
-    setActiveNavItem(document.querySelector('[data-target="inicio"]'));
 
   } else {
     // Ninguém logado, tenta fazer login anônimo para ter um UID
@@ -1043,20 +1058,7 @@ window.firebase.onAuthStateChanged(auth, (user) => {
   }
 });
 
-// --- FIM DO CÓDIGO DE AUTENTICAÇÃO ---
-
-function logout() {
-  window.firebase.signOut(auth).then(() => {
-    console.log('Logout bem-sucedido.');
-    // Redireciona para uma página de "deslogado" ou simplesmente recarrega
-    window.location.href = "index.html"; 
-  }).catch((error) => {
-    console.error('Erro no logout:', error);
-  });
-}
-
-let loggedInUser = null;
-        
+// --- FIM DO CÓDIGO DE AUTENTICAÇÃO ---        
 // O resto do seu código (as funções renderGradeSection, etc.) continua abaixo...
         // Ação: Substitua sua função renderGradeSection() inteira por esta:
 
